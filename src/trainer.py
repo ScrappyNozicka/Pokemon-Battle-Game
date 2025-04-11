@@ -32,4 +32,5 @@ class Trainer:
                     pokeball.catch(pokemon_in_nature)
                     self.space_on_belt -= 1
                     return
+        else:
             raise NoEmptyPokeballError()

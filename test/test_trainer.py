@@ -1,6 +1,7 @@
-from src.trainer import Trainer
+from src.trainer import Trainer, NoEmptyPokeballError
 from src.pokemon import Pokemon
 from src.pokeball import Pokeball
+import pytest
 
 
 def test_trainer_has_empty_belt():
@@ -20,7 +21,6 @@ def test_throw_pokeball_catches_pokemon_if_pokeballs_available():
     assert first_pokeball.pokemon == test_pokemon
 
 
-# test catching multiple pokemon subsequently
 def test_throw_pokeball_catches_multiple_pokemon_subsequently():
     test_trainer = Trainer()
     test_pokemon1 = Pokemon("Bob", 3, 4, "move")
@@ -45,28 +45,22 @@ def test_throw_pokeball_catch_pokemon_while_some_pokemon_caught_already():
     assert second_pokeball.pokemon == test_pokemon2
 
 
-# def test throw pokeball does not catch pokemon if no available pokeballs
-
-
-# def test_throw_pokeball_does_not_catch_pokemon_if_no_available_pokeballs():
-#     test_pokemon1 = "Bob", 3, 4, "move"
-#     test_pokemon2 = "Humphrey", 7, 4, "bash"
-#     test_pokemon3 = "Adalbert", 3, 3, "pokemon knowledge"
-#     test_pokemon4 = "Redvers", 6, 8, "stuff"
-#     test_pokemon5 = "Algernon", 2, 9, "bite"
-#     test_pokemon6 = "Pancrazio", 5, 6, "gesturing"
-#     test_trainer = Trainer(
-#         prefilled_pokemon=[
-#             test_pokemon1,
-#             test_pokemon2,
-#             test_pokemon3,
-#             test_pokemon4,
-#             test_pokemon5,
-#             test_pokemon6,
-#         ]
-#     )
-#     test_pokemon7 = ("Nebudchanezzar", 7, 4, "dreaming")
-#     with pytest.raises(
-#         NoEmptyPokeballError, match="Sorry no empty pokeballs available"
-#     ):
-#         test_trainer.throw_pokeball(test_pokemon7)
+def test_throw_pokeball_does_not_catch_pokemon_if_no_available_pokeballs():
+    test_pokemon1 = ("Bob", 3, 4, "move")
+    test_pokemon2 = ("Humphrey", 7, 4, "bash")
+    test_pokemon3 = ("Adalbert", 3, 3, "pokemon knowledge")
+    test_pokemon4 = ("Redvers", 6, 8, "stuff")
+    test_pokemon5 = ("Algernon", 2, 9, "bite")
+    test_pokemon6 = ("Pancrazio", 5, 6, "gesturing")
+    test_pokemon7 = ("Nebudchanezzar", 7, 4, "dreaming")
+    test_trainer = Trainer()
+    test_trainer.throw_pokeball(test_pokemon1)
+    test_trainer.throw_pokeball(test_pokemon2)
+    test_trainer.throw_pokeball(test_pokemon3)
+    test_trainer.throw_pokeball(test_pokemon4)
+    test_trainer.throw_pokeball(test_pokemon5)
+    test_trainer.throw_pokeball(test_pokemon6)
+    with pytest.raises(
+        NoEmptyPokeballError, match="Sorry no empty pokeballs available"
+    ):
+        test_trainer.throw_pokeball(test_pokemon7)
