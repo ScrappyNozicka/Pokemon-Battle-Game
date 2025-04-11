@@ -1,15 +1,16 @@
 class Pokeball:
     def __init__(self):
-        self.Pokemon = None
+        self.pokemon = None
 
     def catch(self, encountered_pokemon):
-        if self.Pokemon is None:
-            self.Pokemon = encountered_pokemon
+        if self.pokemon is None:
+            self.pokemon = encountered_pokemon
+            print(f"{encountered_pokemon} succesfully captured!")
         else:
-            print("This pokeball is full")
+            print("This pokeball is full.")
 
     def is_empty(self):
-        if self.Pokemon is None:
+        if self.pokemon is None:
             return True
         else:
             return False
