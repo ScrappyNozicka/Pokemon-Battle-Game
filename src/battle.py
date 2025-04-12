@@ -45,8 +45,10 @@ class Battle:
 
     def __str__(self):
         print(
-            f"""Battle initiated:
+            f"""Battle between:
               {self.pokemon_1.name}
-              versus
-              {self.pokemon_2.name}"""
+              {self.pokemon_2.name}
+              Next turn: {self.pokemon_1.name
+                          if self.pokemon_1_turn
+                          else self.pokemon_2.name}"""
         )
