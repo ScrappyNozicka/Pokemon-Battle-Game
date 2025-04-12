@@ -34,6 +34,13 @@ class FirePokemon(Pokemon):
         self.strong_against = "grass"
         self.weak_against = "water"
 
+    def __str__(self):
+        print(
+            f"""{self.name} {self.type} type,
+            HP: {self.hit_points}, AP: {self.attack_damage},
+            Move: {self.move}"""
+        )
+
 
 class WaterPokemon(Pokemon):
     def __init__(self, name, hit_points, attack_damage, move):
@@ -41,6 +48,13 @@ class WaterPokemon(Pokemon):
         self.type = "water"
         self.strong_against = "fire"
         self.weak_against = "grass"
+
+    def __str__(self):
+        print(
+            f"""{self.name} {self.type} type,
+            HP: {self.hit_points}, AP: {self.attack_damage},
+            Move: {self.move}"""
+        )
 
 
 class GrassPokemon(Pokemon):
@@ -50,6 +64,13 @@ class GrassPokemon(Pokemon):
         self.strong_against = "water"
         self.weak_against = "fire"
 
+    def __str__(self):
+        print(
+            f"""{self.name} {self.type} type,
+            HP: {self.hit_points}, AP: {self.attack_damage},
+            Move: {self.move}"""
+        )
+
 
 class NormalPokemon(Pokemon):
     def __init__(self, name, hit_points, attack_damage, move):
@@ -57,3 +78,10 @@ class NormalPokemon(Pokemon):
         self.type = "normal"
         self.strong_against = None
         self.weak_against = None
+
+    def __str__(self):
+        print(
+            f"""{self.name} {self.type} type,
+            HP: {self.hit_points}, AP: {self.attack_damage},
+            Move: {self.move}"""
+        )

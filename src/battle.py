@@ -42,3 +42,11 @@ class Battle:
             return self.pokemon_2
         else:
             return self.pokemon_1
+
+    def __str__(self):
+        print(
+            f"""Battle initiated:
+              {self.pokemon_1.name}
+              versus
+              {self.pokemon_2.name}"""
+        )

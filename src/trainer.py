@@ -34,3 +34,9 @@ class Trainer:
                     return
         else:
             raise NoEmptyPokeballError()
+
+    def __str__(self):
+        print(
+            f"""You have {6 - self.space_on_belt} pokemon/s with you,
+            you can catch {self.space_on_belt} more."""
+        )
