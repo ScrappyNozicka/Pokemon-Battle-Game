@@ -50,8 +50,7 @@ def test_pokemon_has_fainted():
     test_pokemon.take_damage(opponent_damage)
     test_pokemon.take_damage(opponent_damage)
     test_pokemon.take_damage(opponent_damage)
-    test_pokemon.has_fainted(opponent_damage)
-    assert test_pokemon.has_fainted(opponent_damage) is True
+    assert test_pokemon.has_fainted() is True
 
 
 # test fire

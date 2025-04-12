@@ -4,17 +4,16 @@ class Pokemon:
         self.hit_points = hit_points
         self.attack_damage = attack_damage
         self.move = move
-        self.damage_taken = 0
 
     def use_move(self):
         return f"{self.name} used {self.move}"
 
     def take_damage(self, opponent_damage):
-        self.damage_taken += opponent_damage
-        return self.hit_points - self.damage_taken
+        self.hit_points -= opponent_damage
+        return self.hit_points
 
-    def has_fainted(self, opponent_damage):
-        if self.hit_points <= self.damage_taken:
+    def has_fainted(self):
+        if self.hit_points <= 0:
             return True
         else:
             return False
@@ -24,7 +23,7 @@ class Pokemon:
             return 0.5
         if self.strong_against == opponent.type:
             return 1.5
-        if self.type is not opponent.strong_against or opponent.weak_against:
+        else:
             return 1
 
 
