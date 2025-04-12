@@ -35,10 +35,10 @@ class FirePokemon(Pokemon):
         self.weak_against = "water"
 
     def __str__(self):
-        print(
-            f"""{self.name} {self.type} type,
-            HP: {self.hit_points}, AP: {self.attack_damage},
-            Move: {self.move}"""
+        return (
+            f"{self.name} {self.type} type,\n"
+            f"HP: {self.hit_points}, AP: {self.attack_damage},\n"
+            f"Move: {self.move}"
         )
 
 
@@ -50,10 +50,10 @@ class WaterPokemon(Pokemon):
         self.weak_against = "grass"
 
     def __str__(self):
-        print(
-            f"""{self.name} {self.type} type,
-            HP: {self.hit_points}, AP: {self.attack_damage},
-            Move: {self.move}"""
+        return (
+            f"{self.name} {self.type} type,\n"
+            f"HP: {self.hit_points}, AP: {self.attack_damage},\n"
+            f"Move: {self.move}"
         )
 
 
@@ -65,10 +65,10 @@ class GrassPokemon(Pokemon):
         self.weak_against = "fire"
 
     def __str__(self):
-        print(
-            f"""{self.name} {self.type} type,
-            HP: {self.hit_points}, AP: {self.attack_damage},
-            Move: {self.move}"""
+        return (
+            f"{self.name} {self.type} type,\n"
+            f"HP: {self.hit_points}, AP: {self.attack_damage},\n"
+            f"Move: {self.move}"
         )
 
 
@@ -80,8 +80,8 @@ class NormalPokemon(Pokemon):
         self.weak_against = None
 
     def __str__(self):
-        print(
-            f"""{self.name} {self.type} type,
-            HP: {self.hit_points}, AP: {self.attack_damage},
-            Move: {self.move}"""
+        return (
+            f"{self.name} {self.type} type,\n"
+            f"HP: {self.hit_points}, AP: {self.attack_damage},\n"
+            f"Move: {self.move}"
         )

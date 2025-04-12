@@ -30,3 +30,17 @@ def test_pokeball_is_empty_with_full_ball():
     test_pokeball.catch("Infernus")
     test_pokeball.is_empty()
     assert test_pokeball.is_empty() is False
+
+
+def test_pokeball_str_method_return_expected_output_when_empty():
+    test_pokeball = Pokeball()
+    expected_output = "This pokeball is empty and ready to be used."
+    assert str(test_pokeball) == expected_output
+
+
+def test_pokeball_str_method_return_expected_output_when_full():
+    test_pokeball = Pokeball()
+    test_pokeball.catch("Infernus")
+    print(test_pokeball)
+    expected_output = "This pokeball has Infernus in it."
+    assert str(test_pokeball) == expected_output

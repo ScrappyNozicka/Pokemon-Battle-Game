@@ -105,3 +105,42 @@ def test_get_multiplier_returns_1_when_neither_strong_nor_weak_against():
     opponent = GrassPokemon("Herbus", 45, 3, "grow")
 
     assert test_pokemon.get_multiplier(opponent) == 1
+
+
+def test_fire_pokemon_str_method_return_expected_output():
+    test_pokemon = FirePokemon("Infernus", 30, 2, "flamethrow")
+    expected_output = (
+        "Infernus fire type,\n" "HP: 30, AP: 2,\n" "Move: flamethrow"
+    )
+    assert str(test_pokemon) == expected_output
+
+
+def test_water_pokemon_str_method_return_expected_output():
+    test_pokemon = WaterPokemon("Voda", 60, 5, "hurricane")
+    expected_output = "Voda water type,\n" "HP: 60, AP: 5,\n" "Move: hurricane"
+    assert str(test_pokemon) == expected_output
+
+
+def test_grass_pokemon_str_method_return_expected_output():
+    test_pokemon = GrassPokemon("Herbus", 45, 3, "grow")
+    expected_output = "Herbus grass type,\n" "HP: 45, AP: 3,\n" "Move: grow"
+    assert str(test_pokemon) == expected_output
+
+
+def test_normal_pokemon_str_method_return_expected_output():
+    test_pokemon = NormalPokemon("Typicus", 10, 4, "complain")
+    expected_output = (
+        "Typicus normal type,\n" "HP: 10, AP: 4,\n" "Move: complain"
+    )
+    assert str(test_pokemon) == expected_output
+
+
+def test_normal_pokemon_str_method_return_expected_output_with_damage():
+    test_pokemon = NormalPokemon("Typicus", 10, 4, "complain")
+    opponent_damage = 2
+    test_pokemon.take_damage(opponent_damage)
+    test_pokemon.take_damage(opponent_damage)
+    expected_output = (
+        "Typicus normal type,\n" "HP: 6, AP: 4,\n" "Move: complain"
+    )
+    assert str(test_pokemon) == expected_output

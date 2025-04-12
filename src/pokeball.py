@@ -16,7 +16,7 @@ class Pokeball:
             return False
 
     def __str__(self):
-        if self.is_empty:
-            print("This pokeball is empty and ready to be used.")
+        if not self.pokemon:
+            return "This pokeball is empty and ready to be used."
         else:
-            print(f"This pokeball has {self.pokemon.name} in it.")
+            return f"This pokeball has {self.pokemon} in it."

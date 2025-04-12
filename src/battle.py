@@ -44,11 +44,11 @@ class Battle:
             return self.pokemon_1
 
     def __str__(self):
-        print(
-            f"""Battle between:
-              {self.pokemon_1.name}
-              {self.pokemon_2.name}
-              Next turn: {self.pokemon_1.name
+        return (
+            f"Battle between:\n"
+            f"{self.pokemon_1.name}\n"
+            f"{self.pokemon_2.name}\n"
+            f"Next turn: {self.pokemon_1.name
                           if self.pokemon_1_turn
-                          else self.pokemon_2.name}"""
+                          else self.pokemon_2.name}"
         )
