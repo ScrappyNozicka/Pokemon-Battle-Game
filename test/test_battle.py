@@ -71,7 +71,7 @@ def test_battle_has_get_second_pokemon_winner():
     assert winner.name == "Infernus"
 
 
-def test_batttle_print_expected_output():
+def test_batttle_str_method_return_expected_output():
     test_pokemon_01 = FirePokemon("Infernus", 30, 2, "flamethrow")
     test_pokemon_02 = GrassPokemon("Herbus", 45, 3, "grow")
     test_battle = Battle(test_pokemon_01, test_pokemon_02)
