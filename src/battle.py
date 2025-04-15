@@ -19,7 +19,7 @@ class Battle:
         next_pokemon = (
             self.pokemon_1 if self.pokemon_1_turn else self.pokemon_2
         )
-        print(f"It's {next_pokemon.name} turn")      
+        print(f"It's {next_pokemon.name} turn")
         if self.pokemon_1_turn:
             self.pokemon_2.take_damage(self.__get_damage())
             print(

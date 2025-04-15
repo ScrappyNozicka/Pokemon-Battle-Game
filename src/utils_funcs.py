@@ -49,6 +49,7 @@ def pokemon_table_display(data):
     console.print(table)
     return table
 
+
 def create_pokemon_instance(pokemon_dict):
     name = pokemon_dict["Name"]
     type_ = pokemon_dict["Type"]
@@ -66,6 +67,7 @@ def create_pokemon_instance(pokemon_dict):
         return NormalPokemon(name, hit_points, attack_damage, move)
     else:
         raise ValueError(f"Unknown Pokémon type: {type_}")
+
 
 def get_pokemon_data(id_num):
     data = pokemon_data_reader()

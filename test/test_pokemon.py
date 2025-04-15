@@ -56,28 +56,28 @@ def test_pokemon_has_fainted():
 # test fire
 def test_pokemon_fire_is_strong_against_grass_weak_against_water():
     test_pokemon = FirePokemon("Infernus", 30, 2, "flamethrow")
-    assert test_pokemon.type == "fire"
-    assert test_pokemon.strong_against == "grass"
-    assert test_pokemon.weak_against == "water"
+    assert test_pokemon.type == "Fire"
+    assert test_pokemon.strong_against == "Grass"
+    assert test_pokemon.weak_against == "Water"
 
 
 def test_pokemon_water_is_strong_against_fire_weak_against_grass():
     test_pokemon = WaterPokemon("Voda", 60, 5, "hurricane")
-    assert test_pokemon.type == "water"
-    assert test_pokemon.strong_against == "fire"
-    assert test_pokemon.weak_against == "grass"
+    assert test_pokemon.type == "Water"
+    assert test_pokemon.strong_against == "Fire"
+    assert test_pokemon.weak_against == "Grass"
 
 
 def test_pokemon_grass_is_strong_against_water_weak_against_fire():
     test_pokemon = GrassPokemon("Herbus", 45, 3, "grow")
-    assert test_pokemon.type == "grass"
-    assert test_pokemon.strong_against == "water"
-    assert test_pokemon.weak_against == "fire"
+    assert test_pokemon.type == "Grass"
+    assert test_pokemon.strong_against == "Water"
+    assert test_pokemon.weak_against == "Fire"
 
 
 def test_pokemon_normal_is_strong_and_weak_against_none():
     test_pokemon = NormalPokemon("Typicus", 10, 4, "complain")
-    assert test_pokemon.type == "normal"
+    assert test_pokemon.type == "Normal"
     assert test_pokemon.strong_against is None
     assert test_pokemon.weak_against is None
 
@@ -110,27 +110,27 @@ def test_get_multiplier_returns_1_when_neither_strong_nor_weak_against():
 def test_fire_pokemon_str_method_return_expected_output():
     test_pokemon = FirePokemon("Infernus", 30, 2, "flamethrow")
     expected_output = (
-        "Infernus fire type,\n" "HP: 30, AP: 2,\n" "Move: flamethrow"
+        "Infernus Fire type,\n" "HP: 30, AP: 2,\n" "Move: flamethrow"
     )
     assert str(test_pokemon) == expected_output
 
 
 def test_water_pokemon_str_method_return_expected_output():
     test_pokemon = WaterPokemon("Voda", 60, 5, "hurricane")
-    expected_output = "Voda water type,\n" "HP: 60, AP: 5,\n" "Move: hurricane"
+    expected_output = "Voda Water type,\n" "HP: 60, AP: 5,\n" "Move: hurricane"
     assert str(test_pokemon) == expected_output
 
 
 def test_grass_pokemon_str_method_return_expected_output():
     test_pokemon = GrassPokemon("Herbus", 45, 3, "grow")
-    expected_output = "Herbus grass type,\n" "HP: 45, AP: 3,\n" "Move: grow"
+    expected_output = "Herbus Grass type,\n" "HP: 45, AP: 3,\n" "Move: grow"
     assert str(test_pokemon) == expected_output
 
 
 def test_normal_pokemon_str_method_return_expected_output():
     test_pokemon = NormalPokemon("Typicus", 10, 4, "complain")
     expected_output = (
-        "Typicus normal type,\n" "HP: 10, AP: 4,\n" "Move: complain"
+        "Typicus Normal type,\n" "HP: 10, AP: 4,\n" "Move: complain"
     )
     assert str(test_pokemon) == expected_output
 
@@ -141,6 +141,6 @@ def test_normal_pokemon_str_method_return_expected_output_with_damage():
     test_pokemon.take_damage(opponent_damage)
     test_pokemon.take_damage(opponent_damage)
     expected_output = (
-        "Typicus normal type,\n" "HP: 6, AP: 4,\n" "Move: complain"
+        "Typicus Normal type,\n" "HP: 6, AP: 4,\n" "Move: complain"
     )
     assert str(test_pokemon) == expected_output

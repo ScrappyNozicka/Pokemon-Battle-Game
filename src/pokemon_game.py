@@ -2,7 +2,7 @@ from utils_funcs import (
     input_manager,
     pokemon_data_reader,
     pokemon_table_display,
-    get_pokemon_data
+    get_pokemon_data,
 )
 from battle import Battle
 
@@ -46,7 +46,7 @@ def main_script():
         trainer_02 = input_manager("What's the defender's trainer name?")
         pokemon_02_id = input_manager("What's the defender's pokemon id?")
         pokemon_01 = get_pokemon_data(pokemon_01_id)
-        pokemon_02 = get_pokemon_data(pokemon_02_id) 
+        pokemon_02 = get_pokemon_data(pokemon_02_id)
 
         if not pokemon_01 or not pokemon_02:
             print("One or both Pokémon could not be found. Please try again.")
@@ -54,7 +54,7 @@ def main_script():
             return
 
         print(f"\n{trainer_01} has chosen:\n{pokemon_01}")
-        print(f"\n{trainer_02} has chosen:\n{pokemon_02}\n") 
+        print(f"\n{trainer_02} has chosen:\n{pokemon_02}\n")
 
         battle = Battle(pokemon_01, pokemon_02)
         battle.get_winner()
