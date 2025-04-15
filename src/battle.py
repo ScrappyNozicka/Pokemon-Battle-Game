@@ -16,6 +16,10 @@ class Battle:
         return damage
 
     def take_turn(self):
+        next_pokemon = (
+            self.pokemon_1 if self.pokemon_1_turn else self.pokemon_2
+        )
+        print(f"It's {next_pokemon.name} turn")      
         if self.pokemon_1_turn:
             self.pokemon_2.take_damage(self.__get_damage())
             print(
@@ -27,10 +31,6 @@ class Battle:
                 f"{self.pokemon_1.name} has taken {self.__get_damage()} damage"
             )
         self.pokemon_1_turn = not self.pokemon_1_turn
-        next_pokemon = (
-            self.pokemon_1 if self.pokemon_1_turn else self.pokemon_2
-        )
-        print(f"And now it's {next_pokemon.name} turn")
 
     def get_winner(self):
         while (
@@ -39,8 +39,12 @@ class Battle:
         ):
             self.take_turn()
         if self.pokemon_1.has_fainted():
+            winner = self.pokemon_2
+            print(f"\n\n{winner.name} is the winner!!\n\n")
             return self.pokemon_2
         else:
+            winner = self.pokemon_1
+            print(f"\n\n{winner.name} is the winner!!\n\n")
             return self.pokemon_1
 
     def __str__(self):

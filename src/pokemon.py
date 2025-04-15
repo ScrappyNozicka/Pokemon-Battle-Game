@@ -30,9 +30,9 @@ class Pokemon:
 class FirePokemon(Pokemon):
     def __init__(self, name, hit_points, attack_damage, move):
         super().__init__(name, hit_points, attack_damage, move)
-        self.type = "fire"
-        self.strong_against = "grass"
-        self.weak_against = "water"
+        self.type = "Fire"
+        self.strong_against = "Grass"
+        self.weak_against = "Water"
 
     def __str__(self):
         return (
@@ -45,9 +45,9 @@ class FirePokemon(Pokemon):
 class WaterPokemon(Pokemon):
     def __init__(self, name, hit_points, attack_damage, move):
         super().__init__(name, hit_points, attack_damage, move)
-        self.type = "water"
-        self.strong_against = "fire"
-        self.weak_against = "grass"
+        self.type = "Water"
+        self.strong_against = "Fire"
+        self.weak_against = "Grass"
 
     def __str__(self):
         return (
@@ -60,9 +60,9 @@ class WaterPokemon(Pokemon):
 class GrassPokemon(Pokemon):
     def __init__(self, name, hit_points, attack_damage, move):
         super().__init__(name, hit_points, attack_damage, move)
-        self.type = "grass"
-        self.strong_against = "water"
-        self.weak_against = "fire"
+        self.type = "Grass"
+        self.strong_against = "Water"
+        self.weak_against = "Fire"
 
     def __str__(self):
         return (
@@ -75,7 +75,7 @@ class GrassPokemon(Pokemon):
 class NormalPokemon(Pokemon):
     def __init__(self, name, hit_points, attack_damage, move):
         super().__init__(name, hit_points, attack_damage, move)
-        self.type = "normal"
+        self.type = "Normal"
         self.strong_against = None
         self.weak_against = None
 
