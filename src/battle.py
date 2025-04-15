@@ -19,16 +19,16 @@ class Battle:
         next_pokemon = (
             self.pokemon_1 if self.pokemon_1_turn else self.pokemon_2
         )
-        print(f"It's {next_pokemon.name} turn")
+        print(f"It's {next_pokemon.name} turn!")
         if self.pokemon_1_turn:
             self.pokemon_2.take_damage(self.__get_damage())
             print(
-                f"{self.pokemon_2.name} has taken {self.__get_damage()} damage"
+                f"{self.pokemon_2.name} has taken {self.__get_damage()} damage.\n"
             )
         else:
             self.pokemon_1.take_damage(self.__get_damage())
             print(
-                f"{self.pokemon_1.name} has taken {self.__get_damage()} damage"
+                f"{self.pokemon_1.name} has taken {self.__get_damage()} damage.\n"
             )
         self.pokemon_1_turn = not self.pokemon_1_turn
 
@@ -40,11 +40,11 @@ class Battle:
             self.take_turn()
         if self.pokemon_1.has_fainted():
             winner = self.pokemon_2
-            print(f"\n\n{winner.name} is the winner!!\n\n")
+            print(f"{winner.name} is the winner!!")
             return self.pokemon_2
         else:
             winner = self.pokemon_1
-            print(f"\n\n{winner.name} is the winner!!\n\n")
+            print(f"{winner.name} is the winner!!")
             return self.pokemon_1
 
     def __str__(self):

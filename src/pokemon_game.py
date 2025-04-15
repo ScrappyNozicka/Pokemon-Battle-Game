@@ -2,7 +2,7 @@ from utils_funcs import (
     input_manager,
     pokemon_data_reader,
     pokemon_table_display,
-    get_pokemon_data,
+    get_pokemon_data
 )
 from battle import Battle
 
@@ -10,10 +10,10 @@ from battle import Battle
 def pokemon_game():
     print(
         """
-    ~~~~~~~~~~~~~~~~~~~~~~~~
-          Welcome to
-    Pokemon Battle Simulator
-    ~~~~~~~~~~~~~~~~~~~~~~~~
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                              Welcome to
+                        Pokemon Battle Simulator
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     """
     )
@@ -22,13 +22,13 @@ def pokemon_game():
 
 def main_script():
     response = input_manager(
-        "Please specify:\n"
-        "[l]ist available pokemon, [p]lay a match or [e]xit the game."
+        "Please specify: "
+        "[l]ist available pokemon, [p]lay a match or [e]xit the game.\n"
     )
     while response.lower() not in "lpe":
         response = input_manager(
-            "Invalid input. Please specify:\n"
-            "[l]ist available pokemon, [p]lay a match or [e]xit the game."
+            "Invalid input. Please specify: "
+            "[l]ist available pokemon, [p]lay a match or [e]xit the game.\n"
         )
 
     if response.lower() == "e":
@@ -41,12 +41,12 @@ def main_script():
         main_script()
 
     if response.lower() == "p":
-        trainer_01 = input_manager("What's the challenger's trainer name?")
-        pokemon_01_id = input_manager("What's the challenger's pokemon id?")
-        trainer_02 = input_manager("What's the defender's trainer name?")
-        pokemon_02_id = input_manager("What's the defender's pokemon id?")
+        trainer_01 = input_manager("What's the challenger's trainer name?\n")
+        pokemon_01_id = input_manager("What's the challenger's pokemon id?\n")
+        trainer_02 = input_manager("What's the defender's trainer name?\n")
+        pokemon_02_id = input_manager("What's the defender's pokemon id?\n")
         pokemon_01 = get_pokemon_data(pokemon_01_id)
-        pokemon_02 = get_pokemon_data(pokemon_02_id)
+        pokemon_02 = get_pokemon_data(pokemon_02_id) 
 
         if not pokemon_01 or not pokemon_02:
             print("One or both Pokémon could not be found. Please try again.")
@@ -54,22 +54,26 @@ def main_script():
             return
 
         print(f"\n{trainer_01} has chosen:\n{pokemon_01}")
-        print(f"\n{trainer_02} has chosen:\n{pokemon_02}\n")
+        print(f"\n{trainer_02} has chosen:\n{pokemon_02}\n") 
 
         battle = Battle(pokemon_01, pokemon_02)
-        battle.get_winner()
-        print(
-            "Congratulations to the winner and their pokemon!\n"
-            f"Thank you {trainer_01} and {trainer_02} for playing!"
+        winner = battle.get_winner()
+        if winner == pokemon_01:
+            print(
+                f"Congratulations to {trainer_01} and {pokemon_01.name}.\n"
         )
+        else: 
+            print(
+                f"Congratulations to {trainer_02} and {pokemon_02.name}.\n"
+            )
         response = input_manager(
-            "Please specify:\n"
-            "[p]lay again, [l]ist available pokemon, [e]xit the game."
+            "Please specify: "
+            "[p]lay again, [l]ist available pokemon, [e]xit the game.\n"
         )
         while response.lower() not in "lpe":
             response = input_manager(
-                "Invalid input. Please specify:\n"
-                "[p]lay again, [l]ist available pokemon, [e]xit the game."
+                "Invalid input. Please specify: "
+                "[p]lay again, [l]ist available pokemon, [e]xit the game.\n"
             )
 
 
