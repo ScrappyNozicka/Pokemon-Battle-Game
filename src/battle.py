@@ -23,12 +23,12 @@ class Battle:
         if self.pokemon_1_turn:
             self.pokemon_2.take_damage(self.__get_damage())
             print(
-                f"{self.pokemon_2.name} has taken {self.__get_damage()} damage.\n"
+                f"{self.pokemon_2.name} has taken {self.__get_damage()} damage"
             )
         else:
             self.pokemon_1.take_damage(self.__get_damage())
             print(
-                f"{self.pokemon_1.name} has taken {self.__get_damage()} damage.\n"
+                f"{self.pokemon_1.name} has taken {self.__get_damage()} damage"
             )
         self.pokemon_1_turn = not self.pokemon_1_turn
 
