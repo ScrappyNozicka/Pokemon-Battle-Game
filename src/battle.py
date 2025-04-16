@@ -1,5 +1,5 @@
 import random
-from src.pokemon import Pokemon
+from pokemon import Pokemon
 
 
 class NoPokemonError(Exception):
@@ -46,7 +46,7 @@ class Battle:
         elif action == "attack":
             pokemon = self.pokemon_1 if self.pokemon_1_turn else self.pokemon_2
             if not move_name:
-                move_name = pokemon.move.name
+                move_name = pokemon.moves[0].name
             move = self.__select_move(move_name)
             self.__pokemon_attack(move)
         else:

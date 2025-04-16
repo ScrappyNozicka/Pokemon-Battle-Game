@@ -1,4 +1,4 @@
-from src.pokeball import Pokeball
+from pokeball import Pokeball
 
 
 class NoEmptyPokeballError(Exception):
