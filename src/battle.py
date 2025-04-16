@@ -1,5 +1,4 @@
 import random
-from pokemon import Pokemon
 
 
 class NoPokemonError(Exception):
