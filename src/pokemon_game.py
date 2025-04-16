@@ -5,6 +5,7 @@ from utils_funcs import (
     get_pokemon_data,
 )
 from battle import Battle
+from trainer import Trainer
 
 
 def pokemon_game():
@@ -41,27 +42,52 @@ def main_script():
         main_script()
 
     if response.lower() == "p":
-        trainer_01 = input_manager("What's the challenger's trainer name?\n")
-        pokemon_01_id = input_manager("What's the challenger's pokemon id?\n")
-        trainer_02 = input_manager("What's the defender's trainer name?\n")
-        pokemon_02_id = input_manager("What's the defender's pokemon id?\n")
-        pokemon_01 = get_pokemon_data(pokemon_01_id)
-        pokemon_02 = get_pokemon_data(pokemon_02_id)
+        trainer_01_name = input_manager(
+            "What's the challenger's trainer name?\n"
+        )
+        trainer_01 = Trainer(trainer_01_name)
+        print(trainer_01)
+        while trainer_01.belt_space():
+            pokemon_id = input_manager("What's the challenger's pokemon id?\n")
+            pokemon = get_pokemon_data(pokemon_id)
+            if not pokemon:
+                print("Pokemon not found, please try again.")
+            else:
+                trainer_01.throw_pokeball(pokemon.name)
 
-        if not pokemon_01 or not pokemon_02:
-            print("One or both Pokémon could not be found. Please try again.")
-            main_script()
-            return
+        trainer_02_name = input_manager(
+            "What's the defender's trainer name?\n"
+        )
+        trainer_02 = Trainer(trainer_02_name)
+        print(trainer_02)
+        while trainer_02.belt_space():
+            pokemon_id = input_manager("What's the defender's pokemon id?\n")
+            pokemon = get_pokemon_data(pokemon_id)
+            if not pokemon:
+                print("Pokemon not found, please try again.")
+            else:
+                trainer_02.throw_pokeball(pokemon.name)
 
-        print(f"\n{trainer_01} has chosen:\n{pokemon_01}")
-        print(f"\n{trainer_02} has chosen:\n{pokemon_02}\n")
+        pokemon_01 = input_manager(
+            f"{trainer_02.name} which pokemon do you send out first?\n"
+        )
+        pokemon_02 = input_manager(
+            f"{trainer_02.name} which pokemon do you send out first?\n"
+        )
+
+        print(f"\n{trainer_01.name} has chosen:\n{pokemon_01}")
+        print(f"\n{trainer_02.name} has chosen:\n{pokemon_02}\n")
 
         battle = Battle(pokemon_01, pokemon_02)
         winner = battle.get_winner()
         if winner == pokemon_01:
-            print(f"Congratulations to {trainer_01} and {pokemon_01.name}.\n")
+            print(
+                f"Congratulations to {trainer_01.name} and {pokemon_01.name}."
+            )
         else:
-            print(f"Congratulations to {trainer_02} and {pokemon_02.name}.\n")
+            print(
+                f"Congratulations to {trainer_02.name} and {pokemon_02.name}."
+            )
         response = input_manager(
             "Please specify: "
             "[p]lay again, [l]ist available pokemon, [e]xit the game.\n"

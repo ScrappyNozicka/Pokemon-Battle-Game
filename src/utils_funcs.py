@@ -69,6 +69,9 @@ def create_pokemon_instance(pokemon_dict):
         raise ValueError(f"Unknown Pokémon type: {type_}")
 
 
+# def catch_random_pokemon()
+
+
 def get_pokemon_data(id_num):
     data = pokemon_data_reader()
     for row in data:

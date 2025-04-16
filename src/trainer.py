@@ -8,7 +8,8 @@ class NoEmptyPokeballError(Exception):
 
 class Trainer:
 
-    def __init__(self):
+    def __init__(self, trainer_name):
+        self.name = trainer_name
         self.pokeball_01 = Pokeball()
         self.pokeball_02 = Pokeball()
         self.pokeball_03 = Pokeball()
@@ -34,6 +35,12 @@ class Trainer:
                     return
         else:
             raise NoEmptyPokeballError()
+
+    def belt_space(self):
+        if self.space_on_belt > 0:
+            return True
+        else:
+            return False
 
     def __str__(self):
         return (

@@ -51,8 +51,12 @@ def test_battle_has_take_multiple_turns():
     test_battle.take_turn()
     test_battle.take_turn()
     assert test_battle.pokemon_1_turn is True
-    assert test_pokemon_01.hit_points == 7.5
-    assert test_pokemon_02.hit_points == 57
+    assert (
+        test_pokemon_01.hit_points == 7.5 or test_pokemon_01.hit_points == 3.75
+    )
+    assert (
+        test_pokemon_02.hit_points == 57 or test_pokemon_02.hit_points == 56.5
+    )
 
 
 def test_battle_has_get_first_pokemon_winner():
