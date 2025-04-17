@@ -1,37 +1,21 @@
+from move import Move
+
+
 class Pokemon:
-    def __init__(
-        self,
-        name,
-        hit_points,
-        move_01,
-        attack_damage_01,
-        powerpoints_01,
-        move_02,
-        attack_damage_02,
-        powerpoints_02,
-        move_03,
-        attack_damage_03,
-        powerpoints_03,
-    ):
+    def __init__(self, name, hit_points, move_01, move_02, move_03):
         self.name = name
         self.hit_points = hit_points
-        self.move_01 = move_01
-        self.attack_damage_01 = attack_damage_01
-        self.powerpoints_01 = powerpoints_01
-        self.move_02 = move_02
-        self.attack_damage_02 = attack_damage_02
-        self.powerpoints_02 = powerpoints_02
-        self.move_03 = move_03
-        self.attack_damage_03 = attack_damage_03
-        self.powerpoints_03 = powerpoints_03
+        self.moves = [move_01, move_02, move_03]
 
     def use_move(self, move_number):
-        if move_number == 1:
-            return f"{self.name} used {self.move_01}"
-        elif move_number == 2:
-            return f"{self.name} used {self.move_02}"
-        elif move_number == 3:
-            return f"{self.name} used {self.move_03}"
+        if 1 <= move_number <= len(self.moves):
+            move = self.moves[move_number - 1]
+            if move.use():
+                return f"{self.name} used {move.name} (AP: {move.damage})"
+            else:
+                return f"{self.name} can't use {move.name}! Not enough PowerPoints."
+        else:
+            return f"{self.name} doesn't have that move."
 
     def take_damage(self, opponent_damage):
         self.hit_points -= opponent_damage
@@ -53,164 +37,60 @@ class Pokemon:
 
 
 class FirePokemon(Pokemon):
-    def __init__(
-        self,
-        name,
-        hit_points,
-        move_01,
-        attack_damage_01,
-        powerpoints_01,
-        move_02,
-        attack_damage_02,
-        powerpoints_02,
-        move_03,
-        attack_damage_03,
-        powerpoints_03,
-    ):
-        super().__init__(
-            name,
-            hit_points,
-            move_01,
-            attack_damage_01,
-            powerpoints_01,
-            move_02,
-            attack_damage_02,
-            powerpoints_02,
-            move_03,
-            attack_damage_03,
-            powerpoints_03,
-        )
+    def __init__(self, *args):
+        super().__init__(*args)
         self.type = "Fire"
         self.strong_against = "Grass"
         self.weak_against = "Water"
 
     def __str__(self):
-        return (
-            f"{self.name} {self.type} type, HP: {self.hit_points},\n"
-            f"Move: {self.move_01}, AP: {self.attack_damage_01}, PP: {self.powerpoints_01}\n"
-            f"Move: {self.move_02}, AP: {self.attack_damage_02}, PP: {self.powerpoints_02}\n"
-            f"Move: {self.move_03}, AP: {self.attack_damage_03}, PP: {self.powerpoints_03}"
+        move_details = "\n".join(
+            f"Move: {move.name}, AP: {move.damage}, PP: {move.powerpoints}"
+            for move in self.moves
         )
+        return f"{self.name} {self.type} type, HP: {self.hit_points}\n{move_details}"
 
 
 class WaterPokemon(Pokemon):
-    def __init__(
-        self,
-        name,
-        hit_points,
-        move_01,
-        attack_damage_01,
-        powerpoints_01,
-        move_02,
-        attack_damage_02,
-        powerpoints_02,
-        move_03,
-        attack_damage_03,
-        powerpoints_03,
-    ):
-        super().__init__(
-            name,
-            hit_points,
-            move_01,
-            attack_damage_01,
-            powerpoints_01,
-            move_02,
-            attack_damage_02,
-            powerpoints_02,
-            move_03,
-            attack_damage_03,
-            powerpoints_03,
-        )
+    def __init__(self, *args):
+        super().__init__(*args)
         self.type = "Water"
         self.strong_against = "Fire"
         self.weak_against = "Grass"
 
     def __str__(self):
-        return (
-            f"{self.name} {self.type} type, HP: {self.hit_points},\n"
-            f"Move: {self.move_01}, AP: {self.attack_damage_01}, PP: {self.powerpoints_01}\n"
-            f"Move: {self.move_02}, AP: {self.attack_damage_02}, PP: {self.powerpoints_02}\n"
-            f"Move: {self.move_03}, AP: {self.attack_damage_03}, PP: {self.powerpoints_03}"
+        move_details = "\n".join(
+            f"Move: {move.name}, AP: {move.damage}, PP: {move.powerpoints}"
+            for move in self.moves
         )
+        return f"{self.name} {self.type} type, HP: {self.hit_points}\n{move_details}"
 
 
 class GrassPokemon(Pokemon):
-    def __init__(
-        self,
-        name,
-        hit_points,
-        move_01,
-        attack_damage_01,
-        powerpoints_01,
-        move_02,
-        attack_damage_02,
-        powerpoints_02,
-        move_03,
-        attack_damage_03,
-        powerpoints_03,
-    ):
-        super().__init__(
-            name,
-            hit_points,
-            move_01,
-            attack_damage_01,
-            powerpoints_01,
-            move_02,
-            attack_damage_02,
-            powerpoints_02,
-            move_03,
-            attack_damage_03,
-            powerpoints_03,
-        )
+    def __init__(self, *args):
+        super().__init__(*args)
         self.type = "Grass"
         self.strong_against = "Water"
         self.weak_against = "Fire"
 
     def __str__(self):
-        return (
-            f"{self.name} {self.type} type, HP: {self.hit_points},\n"
-            f"Move: {self.move_01}, AP: {self.attack_damage_01}, PP: {self.powerpoints_01}\n"
-            f"Move: {self.move_02}, AP: {self.attack_damage_02}, PP: {self.powerpoints_02}\n"
-            f"Move: {self.move_03}, AP: {self.attack_damage_03}, PP: {self.powerpoints_03}"
+        move_details = "\n".join(
+            f"Move: {move.name}, AP: {move.damage}, PP: {move.powerpoints}"
+            for move in self.moves
         )
+        return f"{self.name} {self.type} type, HP: {self.hit_points}\n{move_details}"
 
 
 class NormalPokemon(Pokemon):
-    def __init__(
-        self,
-        name,
-        hit_points,
-        move_01,
-        attack_damage_01,
-        powerpoints_01,
-        move_02,
-        attack_damage_02,
-        powerpoints_02,
-        move_03,
-        attack_damage_03,
-        powerpoints_03,
-    ):
-        super().__init__(
-            name,
-            hit_points,
-            move_01,
-            attack_damage_01,
-            powerpoints_01,
-            move_02,
-            attack_damage_02,
-            powerpoints_02,
-            move_03,
-            attack_damage_03,
-            powerpoints_03,
-        )
+    def __init__(self, *args):
+        super().__init__(*args)
         self.type = "Normal"
         self.strong_against = None
         self.weak_against = None
 
     def __str__(self):
-        return (
-            f"{self.name} {self.type} type, HP: {self.hit_points},\n"
-            f"Move: {self.move_01}, AP: {self.attack_damage_01}, PP: {self.powerpoints_01}\n"
-            f"Move: {self.move_02}, AP: {self.attack_damage_02}, PP: {self.powerpoints_02}\n"
-            f"Move: {self.move_03}, AP: {self.attack_damage_03}, PP: {self.powerpoints_03}"
+        move_details = "\n".join(
+            f"Move: {move.name}, AP: {move.damage}, PP: {move.powerpoints}"
+            for move in self.moves
         )
+        return f"{self.name} {self.type} type, HP: {self.hit_points}\n{move_details}"

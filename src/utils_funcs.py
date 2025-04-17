@@ -2,6 +2,8 @@ from rich.table import Table
 from rich.console import Console
 from bs4 import BeautifulSoup
 from pokemon import FirePokemon, WaterPokemon, GrassPokemon, NormalPokemon
+import random
+from move import Move
 
 
 def input_manager(prompt):
@@ -54,22 +56,33 @@ def create_pokemon_instance(pokemon_dict):
     name = pokemon_dict["Name"]
     type_ = pokemon_dict["Type"]
     hit_points = int(pokemon_dict["Hitpoints"])
-    attack_damage = int(pokemon_dict["Damage"])
-    move = pokemon_dict["Move"]
+
+    move_01 = Move(pokemon_dict["Move 01"], int(pokemon_dict["Damage 01"]), int(pokemon_dict["Powerpoints 01"]))
+    move_02 = Move(pokemon_dict["Move 02"], int(pokemon_dict["Damage 02"]), int(pokemon_dict["Powerpoints 02"]))
+    move_03 = Move(pokemon_dict["Move 03"], int(pokemon_dict["Damage 03"]), int(pokemon_dict["Powerpoints 03"]))
+
+    args = (
+        name, hit_points, move_01, move_02, move_03
+    )
 
     if type_ == "Fire":
-        return FirePokemon(name, hit_points, attack_damage, move)
+        return FirePokemon(*args)
     elif type_ == "Water":
-        return WaterPokemon(name, hit_points, attack_damage, move)
+        return WaterPokemon(*args)
     elif type_ == "Grass":
-        return GrassPokemon(name, hit_points, attack_damage, move)
+        return GrassPokemon(*args)
     elif type_ == "Normal":
-        return NormalPokemon(name, hit_points, attack_damage, move)
+        return NormalPokemon(*args)
     else:
         raise ValueError(f"Unknown Pokémon type: {type_}")
 
 
-# def catch_random_pokemon()
+def catch_random_pokemon():
+    data = pokemon_data_reader()
+    chosen = random.choice(data)
+    pokemon = create_pokemon_instance(chosen)
+    print(f"You caught a wild {pokemon.name}!")
+    return pokemon
 
 
 def get_pokemon_data(id_num):

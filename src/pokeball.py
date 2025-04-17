@@ -15,6 +15,10 @@ class Pokeball:
         else:
             return False
 
+    def contains_pokemon(self):
+        """Check if the Pokéball contains a Pokémon."""
+        return self.pokemon is not None
+
     def __str__(self):
         if not self.pokemon:
             return "This pokeball is empty and ready to be used."

@@ -33,8 +33,7 @@ class Battle:
         for move in pokemon.moves:
             if move.name.lower() == move_name.lower():
                 return move
-        else:
-            raise NoMoveError()
+        raise NoMoveError()
 
     def __select_action(self, action, move_name=None, new_pokemon=None):
         if action == "switch":
@@ -43,9 +42,8 @@ class Battle:
                 f"{'Player 1' if self.pokemon_1_turn else 'Player 2'} switched to {new_pokemon.name}"
             )
         elif action == "attack":
-            pokemon = self.pokemon_1 if self.pokemon_1_turn else self.pokemon_2
             if not move_name:
-                move_name = pokemon.moves[0].name
+                raise NoMoveError("No move name provided for attack action.")
             move = self.__select_move(move_name)
             self.__pokemon_attack(move)
         else:
@@ -59,19 +57,24 @@ class Battle:
         if critical_hit_success == 20:
             critical_hit = 1.5
             print("Critical hit!")
-        move_damage = move.attack_damage
+        move_damage = move.damage
         multiplier = attacker.get_multiplier(defender)
         damage = move_damage * multiplier * critical_hit
         return damage
 
     def __pokemon_attack(self, move):
+        attacker = self.pokemon_1 if self.pokemon_1_turn else self.pokemon_2
+        move_result = attacker.use_move(attacker.moves.index(move) + 1)
+
+        print(move_result)
+
+        if "can't use" in move_result:
+            return
+
         damage = self.__get_damage(move)
-        if self.pokemon_1_turn:
-            self.pokemon_2.take_damage(damage)
-            print(f"{self.pokemon_2.name} has taken {damage} damage")
-        else:
-            self.pokemon_1.take_damage(damage)
-            print(f"{self.pokemon_1.name} has taken {damage} damage")
+        defender = self.pokemon_2 if self.pokemon_1_turn else self.pokemon_1
+        defender.take_damage(damage)
+        print(f"{defender.name} has taken {damage} damage")
 
     def take_turn(self, action="attack", move_name=None, new_pokemon=None):
         next_pokemon = (

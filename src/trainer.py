@@ -1,4 +1,4 @@
-from src.pokeball import Pokeball
+from pokeball import Pokeball
 
 
 class NoEmptyPokeballError(Exception):
@@ -35,6 +35,14 @@ class Trainer:
                     return
         else:
             raise NoEmptyPokeballError()
+
+    def get_pokemon_by_name(self, pokemon_name):
+        for pokeball in self.trainer_belt:
+            if pokeball.is_empty():
+                continue
+            if pokeball.pokemon.name.lower() == pokemon_name.lower():
+                return pokeball.pokemon
+        return None
 
     def belt_space(self):
         if self.space_on_belt > 0:
