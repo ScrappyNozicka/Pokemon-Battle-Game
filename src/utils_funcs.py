@@ -19,7 +19,7 @@ def input_manager(prompt):
         if not user_input:
             print("Input cannot be empty, please try again.")
             continue
-        return user_input
+        return user_input.strip()
 
 
 def pokemon_data_reader():
@@ -53,6 +53,7 @@ def pokemon_table_display(data):
 
 
 def create_pokemon_instance(pokemon_dict):
+    pokemon_id = pokemon_dict["Id"]
     name = pokemon_dict["Name"]
     type_ = pokemon_dict["Type"]
     hit_points = int(pokemon_dict["Hitpoints"])
@@ -62,7 +63,7 @@ def create_pokemon_instance(pokemon_dict):
     move_03 = Move(pokemon_dict["Move 03"], int(pokemon_dict["Damage 03"]), int(pokemon_dict["Powerpoints 03"]))
 
     args = (
-        name, hit_points, move_01, move_02, move_03
+        pokemon_id, name, hit_points, move_01, move_02, move_03
     )
 
     if type_ == "Fire":

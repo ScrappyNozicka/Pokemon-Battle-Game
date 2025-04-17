@@ -53,7 +53,7 @@ def main_script():
             if not pokemon:
                 print("Pokemon not found, please try again.")
             else:
-                trainer_01.throw_pokeball(pokemon.name)
+                trainer_01.throw_pokeball(pokemon)
 
         trainer_02_name = input_manager(
             "What's the defender's trainer name?\n"
@@ -66,7 +66,7 @@ def main_script():
             if not pokemon:
                 print("Pokemon not found, please try again.")
             else:
-                trainer_02.throw_pokeball(pokemon.name)
+                trainer_02.throw_pokeball(pokemon)
 
         pokemon_01_name = input_manager(
             f"{trainer_01.name} which pokemon do you send out first?\n"
@@ -75,8 +75,8 @@ def main_script():
             f"{trainer_02.name} which pokemon do you send out first?\n"
         )
 
-        pokemon_01 = trainer_02.get_pokemon_by_name(pokemon_01_name)
-        pokemon_02 = trainer_01.get_pokemon_by_name(pokemon_02_name)
+        pokemon_01 = trainer_01.get_pokemon_by_name(pokemon_01_name)
+        pokemon_02 = trainer_02.get_pokemon_by_name(pokemon_02_name)
 
         if not pokemon_01 or not pokemon_02:
             print("One or both Pokémon were not found!")
@@ -87,7 +87,9 @@ def main_script():
         print(f"\n{trainer_02.name} has chosen:\n{pokemon_02}\n")
 
         battle = Battle(pokemon_01, pokemon_02)
-        winner = battle.get_winner()
+
+        winner = battle.take_turn()
+        
         if winner == pokemon_01:
             print(
                 f"Congratulations to {trainer_01.name} and {pokemon_01.name}."

@@ -2,7 +2,8 @@ from move import Move
 
 
 class Pokemon:
-    def __init__(self, name, hit_points, move_01, move_02, move_03):
+    def __init__(self, pokemon_id, name, hit_points, move_01, move_02, move_03):
+        self.pokemon_id = pokemon_id
         self.name = name
         self.hit_points = hit_points
         self.moves = [move_01, move_02, move_03]
@@ -48,7 +49,7 @@ class FirePokemon(Pokemon):
             f"Move: {move.name}, AP: {move.damage}, PP: {move.powerpoints}"
             for move in self.moves
         )
-        return f"{self.name} {self.type} type, HP: {self.hit_points}\n{move_details}"
+        return f"{self.pokemon_id}: {self.name}, {self.type} type, HP: {self.hit_points}\n{move_details}\n"
 
 
 class WaterPokemon(Pokemon):
@@ -63,7 +64,7 @@ class WaterPokemon(Pokemon):
             f"Move: {move.name}, AP: {move.damage}, PP: {move.powerpoints}"
             for move in self.moves
         )
-        return f"{self.name} {self.type} type, HP: {self.hit_points}\n{move_details}"
+        return f"{self.pokemon_id}: {self.name}, {self.type} type, HP: {self.hit_points}\n{move_details}\n"
 
 
 class GrassPokemon(Pokemon):
@@ -78,7 +79,7 @@ class GrassPokemon(Pokemon):
             f"Move: {move.name}, AP: {move.damage}, PP: {move.powerpoints}"
             for move in self.moves
         )
-        return f"{self.name} {self.type} type, HP: {self.hit_points}\n{move_details}"
+        return f"{self.pokemon_id}: {self.name}, {self.type} type, HP: {self.hit_points}\n{move_details}\n"
 
 
 class NormalPokemon(Pokemon):
@@ -93,4 +94,4 @@ class NormalPokemon(Pokemon):
             f"Move: {move.name}, AP: {move.damage}, PP: {move.powerpoints}"
             for move in self.moves
         )
-        return f"{self.name} {self.type} type, HP: {self.hit_points}\n{move_details}"
+        return f"{self.pokemon_id}: {self.name}, {self.type} type, HP: {self.hit_points}\n{move_details}\n"

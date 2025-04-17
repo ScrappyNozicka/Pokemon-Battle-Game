@@ -1,4 +1,5 @@
 import random
+from utils_funcs import input_manager
 
 
 class NoPokemonError(Exception):
@@ -36,12 +37,22 @@ class Battle:
         raise NoMoveError()
 
     def __select_action(self, action, move_name=None, new_pokemon=None):
-        if action == "switch":
+        action = input_manager(
+            "Please select action: "
+            "[s]witch pokemon or [a]ttack and select move.\n"
+            )
+        if action == "s":
+            new_pokemon = input_manager(
+                "Please select pokemon:"
+                )
             self.__change_pokemon(new_pokemon)
             print(
                 f"{'Player 1' if self.pokemon_1_turn else 'Player 2'} switched to {new_pokemon.name}"
             )
-        elif action == "attack":
+        elif action == "a":
+            move_name = input_manager(
+                "Please select move:"
+                )
             if not move_name:
                 raise NoMoveError("No move name provided for attack action.")
             move = self.__select_move(move_name)
@@ -77,19 +88,20 @@ class Battle:
         print(f"{defender.name} has taken {damage} damage")
 
     def take_turn(self, action="attack", move_name=None, new_pokemon=None):
-        next_pokemon = (
-            self.pokemon_1 if self.pokemon_1_turn else self.pokemon_2
-        )
-        print(f"\nIt's {next_pokemon.name}'s turn!")
-        self.__select_action(action, move_name, new_pokemon)
-        self.pokemon_1_turn = not self.pokemon_1_turn
+        while self.__get_winner:
+            next_pokemon = (
+                self.pokemon_1 if self.pokemon_1_turn else self.pokemon_2
+            )
+            print(f"\nIt's {next_pokemon.name}'s turn!")
+            self.__select_action(action, move_name, new_pokemon)
+            self.pokemon_1_turn = not self.pokemon_1_turn
 
-    def get_winner(self):
+    def __get_winner(self):
         while (
             not self.pokemon_1.has_fainted()
             and not self.pokemon_2.has_fainted()
         ):
-            self.take_turn()
+            continue
         if self.pokemon_1.has_fainted():
             fainted_pokemon = self.pokemon_1
             print(f"{fainted_pokemon.name} has fainted!")
