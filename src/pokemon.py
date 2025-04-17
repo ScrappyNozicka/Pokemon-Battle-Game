@@ -2,7 +2,9 @@ from move import Move
 
 
 class Pokemon:
-    def __init__(self, pokemon_id, name, hit_points, move_01, move_02, move_03):
+    def __init__(
+        self, pokemon_id, name, hit_points, move_01, move_02, move_03
+    ):
         self.pokemon_id = pokemon_id
         self.name = name
         self.hit_points = hit_points

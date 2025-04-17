@@ -58,13 +58,23 @@ def create_pokemon_instance(pokemon_dict):
     type_ = pokemon_dict["Type"]
     hit_points = int(pokemon_dict["Hitpoints"])
 
-    move_01 = Move(pokemon_dict["Move 01"], int(pokemon_dict["Damage 01"]), int(pokemon_dict["Powerpoints 01"]))
-    move_02 = Move(pokemon_dict["Move 02"], int(pokemon_dict["Damage 02"]), int(pokemon_dict["Powerpoints 02"]))
-    move_03 = Move(pokemon_dict["Move 03"], int(pokemon_dict["Damage 03"]), int(pokemon_dict["Powerpoints 03"]))
-
-    args = (
-        pokemon_id, name, hit_points, move_01, move_02, move_03
+    move_01 = Move(
+        pokemon_dict["Move 01"],
+        int(pokemon_dict["Damage 01"]),
+        int(pokemon_dict["Powerpoints 01"]),
     )
+    move_02 = Move(
+        pokemon_dict["Move 02"],
+        int(pokemon_dict["Damage 02"]),
+        int(pokemon_dict["Powerpoints 02"]),
+    )
+    move_03 = Move(
+        pokemon_dict["Move 03"],
+        int(pokemon_dict["Damage 03"]),
+        int(pokemon_dict["Powerpoints 03"]),
+    )
+
+    args = (pokemon_id, name, hit_points, move_01, move_02, move_03)
 
     if type_ == "Fire":
         return FirePokemon(*args)
