@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 from pokemon import FirePokemon, WaterPokemon, GrassPokemon, NormalPokemon
 import random
 from move import Move
+from trainer import Trainer
 
 
 def input_manager(prompt):
@@ -102,3 +103,68 @@ def get_pokemon_data(id_num):
         if row.get("Id") == str(id_num):
             return create_pokemon_instance(row)
     return None
+
+def trainer_setup(role):
+    trainer_name = input_manager(
+        f"What's the {role}'s trainer name?\n"
+    )
+    trainer = Trainer(trainer_name)
+    print(trainer)
+    
+    if trainer.space_on_belt == 6:
+        first_pokemon_selection = input_manager(f"{role.capitalize()}, do you want to [s]elect your first pokemon or choose one at [r]andom?\n")
+        while first_pokemon_selection.lower() not in "sr":
+            first_pokemon_selection = input_manager(
+                "Invalid input. Please specify: "
+                "[s]elect your pokemon or choose [r]andom pokemon.\n"
+            )
+        if first_pokemon_selection.lower() == "s":
+            while True:
+                pokemon_id = input_manager("What's the pokemon id? (or type 'q' to cancel)\n\n")
+                if pokemon_id.lower() == 'q':
+                    print("Cancelled Pokémon selection.")
+                    break
+                pokemon = get_pokemon_data(pokemon_id)
+                if pokemon:
+                    trainer.throw_pokeball(pokemon)
+                    break
+                else:
+                    print("Pokemon not found, please try again.")
+        elif first_pokemon_selection.lower() == "r":
+            random_pokemon = catch_random_pokemon()
+            trainer.throw_pokeball(random_pokemon)
+
+
+    while trainer.belt_space():
+        further_selection = input_manager(f"{role.capitalize()}, do you want to catch further pokemon? [y/n]\n")
+        while further_selection.lower() not in "yn":
+            further_selection = input_manager(
+                "Invalid input. Please specify: "
+                "[y] to catch further pokemon or [n] to start the battle.\n"
+            )
+        if further_selection.lower() == "y": 
+            pokemon_selection = input_manager(f"{role.capitalize()}, do you want to [s]elect your pokemon or choose one at [r]andom?\n")
+            while pokemon_selection.lower() not in "sr":
+                pokemon_selection = input_manager(
+                "Invalid input. Please specify: "
+                "[s]elect your pokemon or choose [r]andom pokemon.\n"
+            )
+            if pokemon_selection.lower() == "s":
+                while True:
+                    pokemon_id = input_manager("What's the pokemon id? (or type 'q' to cancel)\n")
+                    if pokemon_id.lower() == 'q':
+                        print("Cancelled Pokémon selection.")
+                        break
+                    pokemon = get_pokemon_data(pokemon_id)
+                    if pokemon:
+                        trainer.throw_pokeball(pokemon)
+                        break
+                    else:
+                        print("Pokemon not found, please try again.")
+            if pokemon_selection.lower() == "r":
+                random_pokemon = catch_random_pokemon()
+                trainer.throw_pokeball(random_pokemon)
+        if further_selection.lower() == "n":
+            print("thank you for your choice.\n")
+            break
+    return trainer
