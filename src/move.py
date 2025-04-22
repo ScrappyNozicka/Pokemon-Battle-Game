@@ -2,6 +2,7 @@ class Move:
     def __init__(self, name, damage, powerpoints):
         self.name = name
         self.damage = damage
+        self.max_powerpoints = powerpoints
         self.powerpoints = powerpoints
 
     def use(self):

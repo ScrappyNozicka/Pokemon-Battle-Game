@@ -1,11 +1,12 @@
-from utils_funcs import (
+from src.utils_funcs import (
     input_manager,
     pokemon_data_reader,
     pokemon_table_display,
-    trainer_setup
+    trainer_setup,
+    select_starting_pokemon,
 )
-from battle import Battle
-from trainer import Trainer
+from src.battle import Battle
+from src.trainer import Trainer
 
 
 def pokemon_game():
@@ -42,35 +43,16 @@ def main_script():
         main_script()
 
     if choice.lower() == "p":
-        trainer_01= trainer_setup("challenger")
-        trainer_02= trainer_setup("defender")       
+        trainer_01 = trainer_setup("challenger")
+        trainer_02 = trainer_setup("defender")
 
-        pokemon_01_name = input_manager(
-            f"{trainer_01.name} which pokemon do you send out first?\n"
-        )
-        pokemon_02_name = input_manager(
-            f"{trainer_02.name} which pokemon do you send out first?\n"
-        )
-
-        pokemon_01 = trainer_01.get_pokemon_by_name(pokemon_01_name)
-        while not pokemon_01:
-            pokemon_01_name = input_manager(
-                f"{pokemon_01} not found! Please try again."
-                f"{trainer_01.name} which pokemon do you send out first?\n"
-        )
-
-        pokemon_02 = trainer_02.get_pokemon_by_name(pokemon_02_name)
-        while not pokemon_02:
-            pokemon_02_name = input_manager(
-                f"{pokemon_02} not found! Please try again."
-                f"{trainer_02.name} which pokemon do you send out first?\n"
-            )
-
+        pokemon_01 = select_starting_pokemon(trainer_01)
+        pokemon_02 = select_starting_pokemon(trainer_02)
 
         print(f"\n{trainer_01.name} has chosen:\n{pokemon_01}")
         print(f"\n{trainer_02.name} has chosen:\n{pokemon_02}\n")
 
-        battle = Battle(pokemon_01, pokemon_02)
+        battle = Battle(trainer_01, trainer_02, pokemon_01, pokemon_02)
 
         winner = battle.take_turn()
 
@@ -82,15 +64,7 @@ def main_script():
             print(
                 f"Congratulations to {trainer_02.name} and {pokemon_02.name}."
             )
-        response = input_manager(
-            "Please specify: "
-            "[p]lay again, [l]ist available pokemon, [e]xit the game.\n"
-        )
-        while response.lower() not in "lpe":
-            response = input_manager(
-                "Invalid input. Please specify: "
-                "[p]lay again, [l]ist available pokemon, [e]xit the game.\n"
-            )
+        main_script()
 
 
 if __name__ == "__main__":

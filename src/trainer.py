@@ -1,4 +1,4 @@
-from pokeball import Pokeball
+from src.pokeball import Pokeball
 
 
 class NoEmptyPokeballError(Exception):
@@ -36,11 +36,11 @@ class Trainer:
         else:
             raise NoEmptyPokeballError()
 
-    def get_pokemon_by_name(self, pokemon_name):
+    def get_pokemon_by_id(self, pokemon_id):
         for pokeball in self.trainer_belt:
             if pokeball.is_empty():
                 continue
-            if pokeball.pokemon.name.lower() == pokemon_name.lower():
+            if str(pokeball.pokemon.pokemon_id) == str(pokemon_id):
                 return pokeball.pokemon
         return None
 
