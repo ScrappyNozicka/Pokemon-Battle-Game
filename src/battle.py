@@ -104,12 +104,11 @@ class Battle:
                     print(
                         f"{'Player 1' if self.pokemon_1_turn else 'Player 2'} switched to {new_pokemon.name}"
                     )
-                    break  # 👈 break after successful switch
-                # if no valid Pokémon, ask again
+                    break
 
             elif action == "a":
                 self.__select_move()
-                break  # 👈 break after successful attack
+                break
 
             else:
                 print("Invalid action. Please try again.")
@@ -157,10 +156,10 @@ class Battle:
 
             if not available:
                 print(f"{defender_trainer.name} has no Pokémon left!")
-                return  # Let __get_winner() handle game over
+                return
             else:
                 replacement = self.__force_switch(defender_trainer)
-                if replacement:  # If a Pokémon was successfully switched
+                if replacement:
                     print(
                         f"{defender_trainer.name} switched to {replacement.name}!"
                     )
@@ -175,7 +174,6 @@ class Battle:
             print(f"\nIt's {current_pokemon.name}'s turn!")
             self.__select_action()
 
-            # Check if opponent fainted and handle the switch process properly
             defender = (
                 self.pokemon_2 if self.pokemon_1_turn else self.pokemon_1
             )
@@ -187,7 +185,7 @@ class Battle:
                 print(f"{defender.name} has fainted!")
                 replacement = self.__force_switch(defending_trainer)
                 if not replacement:
-                    break  # All Pokémon fainted
+                    break
 
             self.pokemon_1_turn = not self.pokemon_1_turn
 
