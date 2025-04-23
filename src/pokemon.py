@@ -1,6 +1,3 @@
-from src.move import Move
-
-
 class Pokemon:
     def __init__(
         self, pokemon_id, name, hit_points, move_01, move_02, move_03
@@ -16,7 +13,10 @@ class Pokemon:
             if move.use():
                 return f"{self.name} used {move.name} (AP: {move.damage})"
             else:
-                return f"{self.name} can't use {move.name}! Not enough PowerPoints."
+                return (
+                    f"{self.name} can't use {move.name}! "
+                    "Not enough PowerPoints."
+                )
         else:
             return f"{self.name} doesn't have that move."
 
@@ -51,7 +51,11 @@ class FirePokemon(Pokemon):
             f"Move: {move.name}, AP: {move.damage}, PP: {move.powerpoints}"
             for move in self.moves
         )
-        return f"{self.pokemon_id}: {self.name}, {self.type} type, HP: {self.hit_points}\n{move_details}\n"
+        return (
+            f"{self.pokemon_id}: {self.name}, "
+            "{self.type} type, HP: {self.hit_points}\n"
+            f"{move_details}\n"
+        )
 
 
 class WaterPokemon(Pokemon):
@@ -66,7 +70,11 @@ class WaterPokemon(Pokemon):
             f"Move: {move.name}, AP: {move.damage}, PP: {move.powerpoints}"
             for move in self.moves
         )
-        return f"{self.pokemon_id}: {self.name}, {self.type} type, HP: {self.hit_points}\n{move_details}\n"
+        return (
+            f"{self.pokemon_id}: {self.name}, "
+            "{self.type} type, HP: {self.hit_points}\n"
+            f"{move_details}\n"
+        )
 
 
 class GrassPokemon(Pokemon):
@@ -81,7 +89,11 @@ class GrassPokemon(Pokemon):
             f"Move: {move.name}, AP: {move.damage}, PP: {move.powerpoints}"
             for move in self.moves
         )
-        return f"{self.pokemon_id}: {self.name}, {self.type} type, HP: {self.hit_points}\n{move_details}\n"
+        return (
+            f"{self.pokemon_id}: {self.name}, "
+            "{self.type} type, HP: {self.hit_points}\n"
+            f"{move_details}\n"
+        )
 
 
 class NormalPokemon(Pokemon):
@@ -96,7 +108,11 @@ class NormalPokemon(Pokemon):
             f"Move: {move.name}, AP: {move.damage}, PP: {move.powerpoints}"
             for move in self.moves
         )
-        return f"{self.pokemon_id}: {self.name}, {self.type} type, HP: {self.hit_points}\n{move_details}\n"
+        return (
+            f"{self.pokemon_id}: {self.name}, "
+            "{self.type} type, HP: {self.hit_points}\n"
+            f"{move_details}\n"
+        )
 
 
 class ElectricPokemon(Pokemon):
@@ -111,7 +127,11 @@ class ElectricPokemon(Pokemon):
             f"Move: {move.name}, AP: {move.damage}, PP: {move.powerpoints}"
             for move in self.moves
         )
-        return f"{self.pokemon_id}: {self.name}, {self.type} type, HP: {self.hit_points}\n{move_details}\n"
+        return (
+            f"{self.pokemon_id}: {self.name}, "
+            "{self.type} type, HP: {self.hit_points}\n"
+            f"{move_details}\n"
+        )
 
 
 class FightingPokemon(Pokemon):
@@ -126,7 +146,11 @@ class FightingPokemon(Pokemon):
             f"Move: {move.name}, AP: {move.damage}, PP: {move.powerpoints}"
             for move in self.moves
         )
-        return f"{self.pokemon_id}: {self.name}, {self.type} type, HP: {self.hit_points}\n{move_details}\n"
+        return (
+            f"{self.pokemon_id}: {self.name}, "
+            "{self.type} type, HP: {self.hit_points}\n"
+            f"{move_details}\n"
+        )
 
 
 class PoisonPokemon(Pokemon):
@@ -141,7 +165,11 @@ class PoisonPokemon(Pokemon):
             f"Move: {move.name}, AP: {move.damage}, PP: {move.powerpoints}"
             for move in self.moves
         )
-        return f"{self.pokemon_id}: {self.name}, {self.type} type, HP: {self.hit_points}\n{move_details}\n"
+        return (
+            f"{self.pokemon_id}: {self.name}, "
+            "{self.type} type, HP: {self.hit_points}\n"
+            f"{move_details}\n"
+        )
 
 
 class PsychicPokemon(Pokemon):
@@ -156,7 +184,11 @@ class PsychicPokemon(Pokemon):
             f"Move: {move.name}, AP: {move.damage}, PP: {move.powerpoints}"
             for move in self.moves
         )
-        return f"{self.pokemon_id}: {self.name}, {self.type} type, HP: {self.hit_points}\n{move_details}\n"
+        return (
+            f"{self.pokemon_id}: {self.name}, "
+            "{self.type} type, HP: {self.hit_points}\n"
+            f"{move_details}\n"
+        )
 
 
 class BugPokemon(Pokemon):
@@ -171,7 +203,11 @@ class BugPokemon(Pokemon):
             f"Move: {move.name}, AP: {move.damage}, PP: {move.powerpoints}"
             for move in self.moves
         )
-        return f"{self.pokemon_id}: {self.name}, {self.type} type, HP: {self.hit_points}\n{move_details}\n"
+        return (
+            f"{self.pokemon_id}: {self.name}, "
+            "{self.type} type, HP: {self.hit_points}\n"
+            f"{move_details}\n"
+        )
 
 
 class GhostPokemon(Pokemon):
@@ -186,7 +222,11 @@ class GhostPokemon(Pokemon):
             f"Move: {move.name}, AP: {move.damage}, PP: {move.powerpoints}"
             for move in self.moves
         )
-        return f"{self.pokemon_id}: {self.name}, {self.type} type, HP: {self.hit_points}\n{move_details}\n"
+        return (
+            f"{self.pokemon_id}: {self.name}, "
+            "{self.type} type, HP: {self.hit_points}\n"
+            f"{move_details}\n"
+        )
 
 
 class DragonPokemon(Pokemon):
@@ -201,7 +241,11 @@ class DragonPokemon(Pokemon):
             f"Move: {move.name}, AP: {move.damage}, PP: {move.powerpoints}"
             for move in self.moves
         )
-        return f"{self.pokemon_id}: {self.name}, {self.type} type, HP: {self.hit_points}\n{move_details}\n"
+        return (
+            f"{self.pokemon_id}: {self.name}, "
+            "{self.type} type, HP: {self.hit_points}\n"
+            f"{move_details}\n"
+        )
 
 
 class FairyPokemon(Pokemon):
@@ -216,7 +260,11 @@ class FairyPokemon(Pokemon):
             f"Move: {move.name}, AP: {move.damage}, PP: {move.powerpoints}"
             for move in self.moves
         )
-        return f"{self.pokemon_id}: {self.name}, {self.type} type, HP: {self.hit_points}\n{move_details}\n"
+        return (
+            f"{self.pokemon_id}: {self.name}, "
+            "{self.type} type, HP: {self.hit_points}\n"
+            f"{move_details}\n"
+        )
 
 
 class GroundPokemon(Pokemon):
@@ -231,4 +279,8 @@ class GroundPokemon(Pokemon):
             f"Move: {move.name}, AP: {move.damage}, PP: {move.powerpoints}"
             for move in self.moves
         )
-        return f"{self.pokemon_id}: {self.name}, {self.type} type, HP: {self.hit_points}\n{move_details}\n"
+        return (
+            f"{self.pokemon_id}: {self.name}, "
+            "{self.type} type, HP: {self.hit_points}\n"
+            f"{move_details}\n"
+        )

@@ -72,7 +72,8 @@ class Battle:
         print("Available moves:")
         for idx, move in enumerate(pokemon.moves, 1):
             print(
-                f"{idx}. {move.name} (AP: {move.damage}, PP: {move.powerpoints}/{move.max_powerpoints})"
+                f"{idx}. {move.name} (AP: {move.damage}, "
+                f"PP: {move.powerpoints}/{move.max_powerpoints})"
             )
 
         while True:
@@ -94,7 +95,8 @@ class Battle:
     def __select_action(self):
         while True:
             action = input_manager(
-                "Please select action: [s]witch pokemon or [a]ttack and select move.\n"
+                "Please select action: [s]witch pokemon "
+                "or [a]ttack and select move.\n"
             ).lower()
 
             if action == "s":
@@ -102,7 +104,8 @@ class Battle:
                 new_pokemon = self.__change_pokemon(new_pokemon_id)
                 if new_pokemon:
                     print(
-                        f"{'Player 1' if self.pokemon_1_turn else 'Player 2'} switched to {new_pokemon.name}"
+                        f"{'Player 1' if self.pokemon_1_turn else 'Player 2'} "
+                        f"switched to {new_pokemon.name}"
                     )
                     break
 
@@ -142,7 +145,8 @@ class Battle:
         damage = self.__get_damage(move)
         defender.take_damage(damage)
         print(
-            f"{defender.name} has taken {damage:.1f} damage and has {defender.hit_points:.1f} HP left."
+            f"{defender.name} has taken {damage:.1f} damage "
+            f"and has {defender.hit_points:.1f} HP left."
         )
 
         if defender.has_fainted():
@@ -161,7 +165,8 @@ class Battle:
                 replacement = self.__force_switch(defender_trainer)
                 if replacement:
                     print(
-                        f"{defender_trainer.name} switched to {replacement.name}!"
+                        f"{defender_trainer.name} switched "
+                        f"to {replacement.name}!"
                     )
                     return
 

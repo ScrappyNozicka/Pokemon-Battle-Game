@@ -142,21 +142,28 @@ def trainer_setup(role):
     trainer = Trainer(trainer_name)
     print(trainer)
 
-    if trainer.space_on_belt == 6:
+    while trainer.space_on_belt == 6:
         first_pokemon_selection = input_manager(
-            f"{role.capitalize()}, do you want to [s]elect your first pokemon or choose one at [r]andom?\n"
+            f"{role.capitalize()}, do you want to [s]elect your first pokemon,"
+            " choose [r]andom pokemon or [c]ancel?\n"
         )
+        if first_pokemon_selection.lower() == "c":
+            print("Cancelled Pokémon selection.")
+            break
         while first_pokemon_selection.lower() not in "sr":
             first_pokemon_selection = input_manager(
                 "Invalid input. Please specify: "
-                "[s]elect your pokemon or choose [r]andom pokemon.\n"
+                "[s]elect pokemon, choose [r]andom pokemon or [c]ancel.\n"
             )
+            if first_pokemon_selection.lower() == "c":
+                print("Cancelled Pokémon selection.")
+                break
         if first_pokemon_selection.lower() == "s":
             while True:
                 pokemon_id = input_manager(
-                    "What's the pokemon id? (or type 'q' to cancel)\n\n"
+                    "What's the pokemon id? (or [c]ancel)\n\n"
                 )
-                if pokemon_id.lower() == "q":
+                if pokemon_id.lower() == "c":
                     print("Cancelled Pokémon selection.")
                     break
                 pokemon = get_pokemon_data(pokemon_id)
@@ -172,28 +179,35 @@ def trainer_setup(role):
     while trainer.belt_space():
         print(trainer)
         further_selection = input_manager(
-            f"{role.capitalize()}, do you want to catch further pokemon? [y/n]\n"
+            f"{role.capitalize()}, do you want to catch more pokemon? [y/n]\n"
         )
         while further_selection.lower() not in "yn":
             further_selection = input_manager(
                 "Invalid input. Please specify: "
-                "[y] to catch further pokemon or [n] to start the battle.\n"
+                "[y] to catch more pokemon or [n] to start the battle.\n"
             )
         if further_selection.lower() == "y":
             pokemon_selection = input_manager(
-                f"{role.capitalize()}, do you want to [s]elect your pokemon or choose one at [r]andom?\n"
+                f"{role.capitalize()}, do you want to [s]elect pokemon, "
+                "choose [r]andom pokemon or [c]ancel?\n"
             )
+            if further_selection.lower() == "c":
+                print("Cancelled Pokémon selection.")
+                break
             while pokemon_selection.lower() not in "sr":
                 pokemon_selection = input_manager(
                     "Invalid input. Please specify: "
-                    "[s]elect your pokemon or choose [r]andom pokemon.\n"
+                    "[s]elect pokemon, choose [r]andom pokemon or [c]ancel.\n"
                 )
+                if pokemon_selection.lower() == "c":
+                    print("Cancelled Pokémon selection.")
+                    break
             if pokemon_selection.lower() == "s":
                 while True:
                     pokemon_id = input_manager(
-                        "What's the pokemon id? (or type 'q' to cancel)\n"
+                        "What's the pokemon id? (or [c]ancel)\n"
                     )
-                    if pokemon_id.lower() == "q":
+                    if pokemon_id.lower() == "c":
                         print("Cancelled Pokémon selection.")
                         break
                     pokemon = get_pokemon_data(pokemon_id)
@@ -206,19 +220,23 @@ def trainer_setup(role):
                 random_pokemon = catch_random_pokemon()
                 trainer.throw_pokeball(random_pokemon)
         if further_selection.lower() == "n":
-            print("thank you for your choice.\n")
+            print("Thank you for your choice.\n\n")
             break
     return trainer
 
 
 def select_starting_pokemon(trainer):
     while True:
+        if trainer.space_on_belt == 6:
+            print(f"\n{trainer.name} has chosen no Pokemon, ending the game.")
+            break
         print(f"\n{trainer.name}'s available Pokémon:")
         for pokeball in trainer.trainer_belt:
             if not pokeball.is_empty():
                 p = pokeball.pokemon
                 print(
-                    f"{p.pokemon_id}: {p.name}, Type: {p.type}, HP: {p.hit_points}"
+                    f"{p.pokemon_id}: {p.name}, "
+                    f"Type: {p.type}, HP: {p.hit_points}\n"
                 )
 
         selected_id = input_manager(
