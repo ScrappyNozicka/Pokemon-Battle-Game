@@ -1,108 +1,334 @@
-# from src.trainer import Trainer, NoEmptyPokeballError
-# from src.pokemon import Pokemon
-# from src.pokeball import Pokeball
-# import pytest
+from src.trainer import Trainer, NoEmptyPokeballError
+from src.pokemon import (
+    NormalPokemon,
+    ElectricPokemon,
+    PoisonPokemon,
+    GrassPokemon,
+    FightingPokemon,
+    WaterPokemon,
+    FirePokemon,
+)
+from src.pokeball import Pokeball
+from src.move import Move
+import pytest
 
 
-# def test_trainer_has_empty_belt():
-#     test_trainer = Trainer("Scrooge")
-#     for pokeball in test_trainer.trainer_belt:
-#         assert type(pokeball) is Pokeball
-#     assert len(test_trainer.trainer_belt) == 6
-#     for pokeball in test_trainer.trainer_belt:
-#         assert pokeball.pokemon is None
+def test_trainer_has_empty_belt():
+    test_trainer = Trainer("Scrooge")
+
+    for pokeball in test_trainer.trainer_belt:
+        assert type(pokeball) is Pokeball
+
+    assert len(test_trainer.trainer_belt) == 6
+
+    for pokeball in test_trainer.trainer_belt:
+        assert pokeball.pokemon is None
 
 
-# def test_throw_pokeball_catches_pokemon_if_pokeballs_available():
-#     test_trainer = Trainer("Scrooge")
-#     test_pokemon = Pokemon("Bob", 3, 4, "move")
-#     test_trainer.throw_pokeball(test_pokemon)
-#     first_pokeball = test_trainer.trainer_belt[0]
-#     assert first_pokeball.pokemon == test_pokemon
+def test_throw_pokeball_catches_pokemon_if_pokeballs_available():
+    test_trainer = Trainer("Scrooge")
+
+    move1 = Move("Complain", 5, 10)
+    move2 = Move("Call Manager", 15, 5)
+    move3 = Move("Scratch", 10, 10)
+    test_pokemon = NormalPokemon("05", "Typicus", 10, move1, move2, move3)
+
+    test_trainer.throw_pokeball(test_pokemon)
+
+    first_pokeball = test_trainer.trainer_belt[0]
+
+    assert first_pokeball.pokemon == test_pokemon
 
 
-# def test_throw_pokeball_catches_multiple_pokemon_subsequently():
-#     test_trainer = Trainer("Scrooge")
-#     test_pokemon1 = Pokemon("Bob", 3, 4, "move")
-#     test_pokemon2 = Pokemon("Humphrey", 7, 4, "bash")
-#     test_trainer.throw_pokeball(test_pokemon1)
-#     test_trainer.throw_pokeball(test_pokemon2)
-#     first_pokeball = test_trainer.trainer_belt[0]
-#     second_pokeball = test_trainer.trainer_belt[1]
-#     assert first_pokeball.pokemon == test_pokemon1
-#     assert second_pokeball.pokemon == test_pokemon2
+def test_throw_pokeball_catches_multiple_pokemon_subsequently():
+    test_trainer = Trainer("Scrooge")
+
+    move1 = Move("Complain", 5, 10)
+    move2 = Move("Call Manager", 15, 5)
+    move3 = Move("Scratch", 10, 10)
+    test_pokemon1 = NormalPokemon("05", "Typicus", 10, move1, move2, move3)
+
+    move4 = Move("Thunder", 2, 10)
+    move5 = Move("Lighting", 10, 10)
+    move6 = Move("Lightbulb", 12, 15)
+    test_pokemon2 = ElectricPokemon("06", "Sparky", 50, move4, move5, move6)
+
+    test_trainer.throw_pokeball(test_pokemon1)
+    test_trainer.throw_pokeball(test_pokemon2)
+
+    first_pokeball = test_trainer.trainer_belt[0]
+    second_pokeball = test_trainer.trainer_belt[1]
+
+    assert first_pokeball.pokemon == test_pokemon1
+    assert second_pokeball.pokemon == test_pokemon2
 
 
-# def test_throw_pokeball_catch_pokemon_while_some_pokemon_caught_already():
-#     test_pokemon1 = ("Bob", 3, 4, "move")
-#     test_trainer = Trainer("Scrooge")
-#     test_pokemon2 = Pokemon("Humphrey", 7, 4, "bash")
-#     test_trainer.throw_pokeball(test_pokemon1)
-#     test_trainer.throw_pokeball(test_pokemon2)
-#     first_pokeball = test_trainer.trainer_belt[0]
-#     assert first_pokeball.pokemon == test_pokemon1
-#     second_pokeball = test_trainer.trainer_belt[1]
-#     assert second_pokeball.pokemon == test_pokemon2
+def test_throw_pokeball_catch_pokemon_while_some_pokemon_caught_already():
+    test_trainer = Trainer("Scrooge")
+
+    move1 = Move("Complain", 5, 10)
+    move2 = Move("Call Manager", 15, 5)
+    move3 = Move("Scratch", 10, 10)
+    test_pokemon1 = NormalPokemon("05", "Typicus", 10, move1, move2, move3)
+
+    test_trainer.throw_pokeball(test_pokemon1)
+
+    first_pokeball = test_trainer.trainer_belt[0]
+    assert first_pokeball.pokemon == test_pokemon1
+
+    move4 = Move("Thunder", 2, 10)
+    move5 = Move("Lighting", 10, 10)
+    move6 = Move("Lightbulb", 12, 15)
+    test_pokemon2 = ElectricPokemon("06", "Sparky", 50, move4, move5, move6)
+
+    test_trainer.throw_pokeball(test_pokemon2)
+
+    second_pokeball = test_trainer.trainer_belt[1]
+    assert second_pokeball.pokemon == test_pokemon2
 
 
-# def test_throw_pokeball_does_not_catch_pokemon_if_no_available_pokeballs():
-#     test_pokemon1 = ("Bob", 3, 4, "move")
-#     test_pokemon2 = ("Humphrey", 7, 4, "bash")
-#     test_pokemon3 = ("Adalbert", 3, 3, "pokemon knowledge")
-#     test_pokemon4 = ("Redvers", 6, 8, "stuff")
-#     test_pokemon5 = ("Algernon", 2, 9, "bite")
-#     test_pokemon6 = ("Pancrazio", 5, 6, "gesturing")
-#     test_pokemon7 = ("Nebudchanezzar", 7, 4, "dreaming")
-#     test_trainer = Trainer("Scrooge")
-#     test_trainer.throw_pokeball(test_pokemon1)
-#     test_trainer.throw_pokeball(test_pokemon2)
-#     test_trainer.throw_pokeball(test_pokemon3)
-#     test_trainer.throw_pokeball(test_pokemon4)
-#     test_trainer.throw_pokeball(test_pokemon5)
-#     test_trainer.throw_pokeball(test_pokemon6)
-#     with pytest.raises(
-#         NoEmptyPokeballError, match="Sorry no empty pokeballs available"
-#     ):
-#         test_trainer.throw_pokeball(test_pokemon7)
+def test_throw_pokeball_does_not_catch_pokemon_if_no_available_pokeballs():
+    test_trainer = Trainer("Scrooge")
+
+    move1 = Move("Flamethrow", 10, 10)
+    move2 = Move("Ember", 15, 3)
+    move3 = Move("Lavalamp", 20, 2)
+    test_pokemon1 = FirePokemon("02", "Infernus", 30, move1, move2, move3)
+
+    move1 = Move("Hurricane", 10, 5)
+    move2 = Move("Surf", 15, 10)
+    move3 = Move("Cowabunga", 20, 5)
+    test_pokemon2 = WaterPokemon("04", "Voda", 60, move1, move2, move3)
+
+    move1 = Move("Grow", 10, 10)
+    move2 = Move("Bloom", 13, 8)
+    move3 = Move("Thorn Whip", 16, 6)
+    test_pokemon3 = GrassPokemon("03", "Herbus", 45, move1, move2, move3)
+
+    move1 = Move("Complain", 5, 10)
+    move2 = Move("Call Manager", 15, 5)
+    move3 = Move("Scratch", 10, 10)
+    test_pokemon4 = NormalPokemon("05", "Typicus", 10, move1, move2, move3)
+
+    move1 = Move("Thunder", 2, 10)
+    move2 = Move("Lighting", 10, 10)
+    move3 = Move("Lightbulb", 12, 15)
+    test_pokemon5 = ElectricPokemon("06", "Sparky", 50, move1, move2, move3)
+
+    move1 = Move("Light Punch", 10, 15)
+    move2 = Move("Light Kick", 15, 10)
+    move3 = Move("Fatal Punch", 20, 5)
+    test_pokemon6 = FightingPokemon(
+        "07", "One-Puncher", 75, move1, move2, move3
+    )
+
+    move1 = Move("Irregular", 15, 12)
+    move2 = Move("Sting", 12, 20)
+    move3 = Move("Sleep", 8, 35)
+    test_pokemon7 = PoisonPokemon("08", "Foxglove", 45, move1, move2, move3)
+
+    test_trainer.throw_pokeball(test_pokemon1)
+    test_trainer.throw_pokeball(test_pokemon2)
+    test_trainer.throw_pokeball(test_pokemon3)
+    test_trainer.throw_pokeball(test_pokemon4)
+    test_trainer.throw_pokeball(test_pokemon5)
+    test_trainer.throw_pokeball(test_pokemon6)
+
+    with pytest.raises(
+        NoEmptyPokeballError, match="Sorry no empty pokeballs available"
+    ):
+        test_trainer.throw_pokeball(test_pokemon7)
 
 
-# def test_trainer_str_method_return_expected_output_when_all_empty_pkbls():
-#     test_trainer = Trainer("Scrooge")
-#     expected_output = (
-#         "You have 0 pokemon's with you,\n" "you can catch 6 more."
-#     )
-#     assert str(test_trainer) == expected_output
+def test_trainer_belt_space_returns_true_when_all_space():
+    test_trainer = Trainer("Scrooge")
+
+    assert test_trainer.belt_space() is True
 
 
-# def test_trainer_str_method_return_expected_output_when_all_some_pokeballs():
-#     test_pokemon1 = ("Bob", 3, 4, "move")
-#     test_pokemon2 = ("Humphrey", 7, 4, "bash")
-#     test_pokemon3 = ("Adalbert", 3, 3, "pokemon knowledge")
-#     test_trainer = Trainer("Scrooge")
-#     test_trainer.throw_pokeball(test_pokemon1)
-#     test_trainer.throw_pokeball(test_pokemon2)
-#     test_trainer.throw_pokeball(test_pokemon3)
-#     expected_output = (
-#         "You have 3 pokemon's with you,\n" "you can catch 3 more."
-#     )
-#     assert str(test_trainer) == expected_output
+def test_trainer_belt_space_returns_true_when_some_space():
+    test_trainer = Trainer("Scrooge")
+
+    move1 = Move("Complain", 5, 10)
+    move2 = Move("Call Manager", 15, 5)
+    move3 = Move("Scratch", 10, 10)
+    test_pokemon1 = NormalPokemon("05", "Typicus", 10, move1, move2, move3)
+
+    move4 = Move("Thunder", 2, 10)
+    move5 = Move("Lighting", 10, 10)
+    move6 = Move("Lightbulb", 12, 15)
+    test_pokemon2 = ElectricPokemon("06", "Sparky", 50, move4, move5, move6)
+
+    test_trainer.throw_pokeball(test_pokemon1)
+    test_trainer.throw_pokeball(test_pokemon2)
+
+    assert test_trainer.belt_space() is True
 
 
-# def test_trainer_str_method_return_expected_output_when_all_none_pokeballs():
-#     test_pokemon1 = ("Bob", 3, 4, "move")
-#     test_pokemon2 = ("Humphrey", 7, 4, "bash")
-#     test_pokemon3 = ("Adalbert", 3, 3, "pokemon knowledge")
-#     test_pokemon4 = ("Redvers", 6, 8, "stuff")
-#     test_pokemon5 = ("Algernon", 2, 9, "bite")
-#     test_pokemon6 = ("Pancrazio", 5, 6, "gesturing")
-#     test_trainer = Trainer("Scrooge")
-#     test_trainer.throw_pokeball(test_pokemon1)
-#     test_trainer.throw_pokeball(test_pokemon2)
-#     test_trainer.throw_pokeball(test_pokemon3)
-#     test_trainer.throw_pokeball(test_pokemon4)
-#     test_trainer.throw_pokeball(test_pokemon5)
-#     test_trainer.throw_pokeball(test_pokemon6)
-#     expected_output = (
-#         "You have 6 pokemon's with you,\n" "you can catch 0 more."
-#     )
-#     assert str(test_trainer) == expected_output
+def test_trainer_belt_space_returns_false_when_no_space():
+    test_trainer = Trainer("Scrooge")
+
+    move1 = Move("Flamethrow", 10, 10)
+    move2 = Move("Ember", 15, 3)
+    move3 = Move("Lavalamp", 20, 2)
+    test_pokemon1 = FirePokemon("02", "Infernus", 30, move1, move2, move3)
+
+    move1 = Move("Hurricane", 10, 5)
+    move2 = Move("Surf", 15, 10)
+    move3 = Move("Cowabunga", 20, 5)
+    test_pokemon2 = WaterPokemon("04", "Voda", 60, move1, move2, move3)
+
+    move1 = Move("Grow", 10, 10)
+    move2 = Move("Bloom", 13, 8)
+    move3 = Move("Thorn Whip", 16, 6)
+    test_pokemon3 = GrassPokemon("03", "Herbus", 45, move1, move2, move3)
+
+    move1 = Move("Complain", 5, 10)
+    move2 = Move("Call Manager", 15, 5)
+    move3 = Move("Scratch", 10, 10)
+    test_pokemon4 = NormalPokemon("05", "Typicus", 10, move1, move2, move3)
+
+    move1 = Move("Thunder", 2, 10)
+    move2 = Move("Lighting", 10, 10)
+    move3 = Move("Lightbulb", 12, 15)
+    test_pokemon5 = ElectricPokemon("06", "Sparky", 50, move1, move2, move3)
+
+    move1 = Move("Light Punch", 10, 15)
+    move2 = Move("Light Kick", 15, 10)
+    move3 = Move("Fatal Punch", 20, 5)
+    test_pokemon6 = FightingPokemon(
+        "07", "One-Puncher", 75, move1, move2, move3
+    )
+
+    test_trainer.throw_pokeball(test_pokemon1)
+    test_trainer.throw_pokeball(test_pokemon2)
+    test_trainer.throw_pokeball(test_pokemon3)
+    test_trainer.throw_pokeball(test_pokemon4)
+    test_trainer.throw_pokeball(test_pokemon5)
+    test_trainer.throw_pokeball(test_pokemon6)
+
+    assert test_trainer.belt_space() is False
+
+
+def test_trainer_get_pokemon_by_id_if_pokemon_available():
+    test_trainer = Trainer("Scrooge")
+
+    move1 = Move("Flamethrow", 10, 10)
+    move2 = Move("Ember", 15, 3)
+    move3 = Move("Lavalamp", 20, 2)
+    test_pokemon1 = FirePokemon("02", "Infernus", 30, move1, move2, move3)
+
+    move1 = Move("Hurricane", 10, 5)
+    move2 = Move("Surf", 15, 10)
+    move3 = Move("Cowabunga", 20, 5)
+    test_pokemon2 = WaterPokemon("04", "Voda", 60, move1, move2, move3)
+
+    move1 = Move("Grow", 10, 10)
+    move2 = Move("Bloom", 13, 8)
+    move3 = Move("Thorn Whip", 16, 6)
+    test_pokemon3 = GrassPokemon("03", "Herbus", 45, move1, move2, move3)
+
+    test_trainer.throw_pokeball(test_pokemon1)
+    test_trainer.throw_pokeball(test_pokemon2)
+    test_trainer.throw_pokeball(test_pokemon3)
+
+    assert test_trainer.get_pokemon_by_id("02").name == "Infernus"
+    assert test_trainer.get_pokemon_by_id("04").name == "Voda"
+    assert test_trainer.get_pokemon_by_id("03").name == "Herbus"
+
+    expected_output = (
+        "04: Voda, Water type, HP: 60\n"
+        "Move: Hurricane, AP: 10, PP: 5\n"
+        "Move: Surf, AP: 15, PP: 10\n"
+        "Move: Cowabunga, AP: 20, PP: 5\n"
+    )
+    assert str(test_trainer.get_pokemon_by_id("04")) == expected_output
+
+
+def test_trainer_get_pokemon_by_id_if_no_pokemon_available():
+    test_trainer = Trainer("Scrooge")
+
+    assert test_trainer.get_pokemon_by_id("04") is None
+
+
+def test_trainer_str_method_return_expected_output_when_all_empty_pkbls():
+    test_trainer = Trainer("Scrooge")
+    expected_output = (
+        "You have 0 pokemon's with you,\n" "you can catch 6 more."
+    )
+    assert str(test_trainer) == expected_output
+
+
+def test_trainer_str_method_return_expected_output_when_all_some_pokeballs():
+    test_trainer = Trainer("Scrooge")
+
+    move1 = Move("Flamethrow", 10, 10)
+    move2 = Move("Ember", 15, 3)
+    move3 = Move("Lavalamp", 20, 2)
+    test_pokemon1 = FirePokemon("02", "Infernus", 30, move1, move2, move3)
+
+    move1 = Move("Hurricane", 10, 5)
+    move2 = Move("Surf", 15, 10)
+    move3 = Move("Cowabunga", 20, 5)
+    test_pokemon2 = WaterPokemon("04", "Voda", 60, move1, move2, move3)
+
+    move1 = Move("Grow", 10, 10)
+    move2 = Move("Bloom", 13, 8)
+    move3 = Move("Thorn Whip", 16, 6)
+    test_pokemon3 = GrassPokemon("03", "Herbus", 45, move1, move2, move3)
+
+    test_trainer.throw_pokeball(test_pokemon1)
+    test_trainer.throw_pokeball(test_pokemon2)
+    test_trainer.throw_pokeball(test_pokemon3)
+    expected_output = (
+        "You have 3 pokemon's with you,\n" "you can catch 3 more."
+    )
+    assert str(test_trainer) == expected_output
+
+
+def test_trainer_str_method_return_expected_output_when_all_none_pokeballs():
+    test_trainer = Trainer("Scrooge")
+
+    move1 = Move("Flamethrow", 10, 10)
+    move2 = Move("Ember", 15, 3)
+    move3 = Move("Lavalamp", 20, 2)
+    test_pokemon1 = FirePokemon("02", "Infernus", 30, move1, move2, move3)
+
+    move1 = Move("Hurricane", 10, 5)
+    move2 = Move("Surf", 15, 10)
+    move3 = Move("Cowabunga", 20, 5)
+    test_pokemon2 = WaterPokemon("04", "Voda", 60, move1, move2, move3)
+
+    move1 = Move("Grow", 10, 10)
+    move2 = Move("Bloom", 13, 8)
+    move3 = Move("Thorn Whip", 16, 6)
+    test_pokemon3 = GrassPokemon("03", "Herbus", 45, move1, move2, move3)
+
+    move1 = Move("Complain", 5, 10)
+    move2 = Move("Call Manager", 15, 5)
+    move3 = Move("Scratch", 10, 10)
+    test_pokemon4 = NormalPokemon("05", "Typicus", 10, move1, move2, move3)
+
+    move1 = Move("Thunder", 2, 10)
+    move2 = Move("Lighting", 10, 10)
+    move3 = Move("Lightbulb", 12, 15)
+    test_pokemon5 = ElectricPokemon("06", "Sparky", 50, move1, move2, move3)
+
+    move1 = Move("Light Punch", 10, 15)
+    move2 = Move("Light Kick", 15, 10)
+    move3 = Move("Fatal Punch", 20, 5)
+    test_pokemon6 = FightingPokemon(
+        "07", "One-Puncher", 75, move1, move2, move3
+    )
+
+    test_trainer.throw_pokeball(test_pokemon1)
+    test_trainer.throw_pokeball(test_pokemon2)
+    test_trainer.throw_pokeball(test_pokemon3)
+    test_trainer.throw_pokeball(test_pokemon4)
+    test_trainer.throw_pokeball(test_pokemon5)
+    test_trainer.throw_pokeball(test_pokemon6)
+
+    expected_output = (
+        "You have 6 pokemon's with you,\n" "you can catch 0 more."
+    )
+    assert str(test_trainer) == expected_output
