@@ -53,7 +53,7 @@ class FirePokemon(Pokemon):
         )
         return (
             f"{self.pokemon_id}: {self.name}, "
-            "{self.type} type, HP: {self.hit_points}\n"
+            f"{self.type} type, HP: {self.hit_points}\n"
             f"{move_details}\n"
         )
 

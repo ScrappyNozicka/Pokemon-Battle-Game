@@ -5,7 +5,7 @@ class Pokeball:
     def catch(self, encountered_pokemon):
         if self.pokemon is None:
             self.pokemon = encountered_pokemon
-            print(f"{encountered_pokemon} succesfully captured!")
+            print(f"{encountered_pokemon}" "Succesfully captured!")
         else:
             print("This pokeball is full.")
 
@@ -23,4 +23,4 @@ class Pokeball:
         if not self.pokemon:
             return "This pokeball is empty and ready to be used."
         else:
-            return f"This pokeball has {self.pokemon} in it."
+            return f"This pokeball has {self.pokemon.name} in it."
