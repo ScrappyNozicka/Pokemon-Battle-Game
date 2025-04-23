@@ -72,7 +72,7 @@ class WaterPokemon(Pokemon):
         )
         return (
             f"{self.pokemon_id}: {self.name}, "
-            "{self.type} type, HP: {self.hit_points}\n"
+            f"{self.type} type, HP: {self.hit_points}\n"
             f"{move_details}\n"
         )
 
@@ -91,7 +91,7 @@ class GrassPokemon(Pokemon):
         )
         return (
             f"{self.pokemon_id}: {self.name}, "
-            "{self.type} type, HP: {self.hit_points}\n"
+            f"{self.type} type, HP: {self.hit_points}\n"
             f"{move_details}\n"
         )
 
@@ -110,7 +110,7 @@ class NormalPokemon(Pokemon):
         )
         return (
             f"{self.pokemon_id}: {self.name}, "
-            "{self.type} type, HP: {self.hit_points}\n"
+            f"{self.type} type, HP: {self.hit_points}\n"
             f"{move_details}\n"
         )
 
@@ -129,7 +129,7 @@ class ElectricPokemon(Pokemon):
         )
         return (
             f"{self.pokemon_id}: {self.name}, "
-            "{self.type} type, HP: {self.hit_points}\n"
+            f"{self.type} type, HP: {self.hit_points}\n"
             f"{move_details}\n"
         )
 
@@ -148,7 +148,7 @@ class FightingPokemon(Pokemon):
         )
         return (
             f"{self.pokemon_id}: {self.name}, "
-            "{self.type} type, HP: {self.hit_points}\n"
+            f"{self.type} type, HP: {self.hit_points}\n"
             f"{move_details}\n"
         )
 
@@ -167,7 +167,7 @@ class PoisonPokemon(Pokemon):
         )
         return (
             f"{self.pokemon_id}: {self.name}, "
-            "{self.type} type, HP: {self.hit_points}\n"
+            f"{self.type} type, HP: {self.hit_points}\n"
             f"{move_details}\n"
         )
 
@@ -186,7 +186,7 @@ class PsychicPokemon(Pokemon):
         )
         return (
             f"{self.pokemon_id}: {self.name}, "
-            "{self.type} type, HP: {self.hit_points}\n"
+            f"{self.type} type, HP: {self.hit_points}\n"
             f"{move_details}\n"
         )
 
@@ -205,7 +205,7 @@ class BugPokemon(Pokemon):
         )
         return (
             f"{self.pokemon_id}: {self.name}, "
-            "{self.type} type, HP: {self.hit_points}\n"
+            f"{self.type} type, HP: {self.hit_points}\n"
             f"{move_details}\n"
         )
 
@@ -224,7 +224,7 @@ class GhostPokemon(Pokemon):
         )
         return (
             f"{self.pokemon_id}: {self.name}, "
-            "{self.type} type, HP: {self.hit_points}\n"
+            f"{self.type} type, HP: {self.hit_points}\n"
             f"{move_details}\n"
         )
 
@@ -243,7 +243,7 @@ class DragonPokemon(Pokemon):
         )
         return (
             f"{self.pokemon_id}: {self.name}, "
-            "{self.type} type, HP: {self.hit_points}\n"
+            f"{self.type} type, HP: {self.hit_points}\n"
             f"{move_details}\n"
         )
 
@@ -262,7 +262,7 @@ class FairyPokemon(Pokemon):
         )
         return (
             f"{self.pokemon_id}: {self.name}, "
-            "{self.type} type, HP: {self.hit_points}\n"
+            f"{self.type} type, HP: {self.hit_points}\n"
             f"{move_details}\n"
         )
 
@@ -281,6 +281,6 @@ class GroundPokemon(Pokemon):
         )
         return (
             f"{self.pokemon_id}: {self.name}, "
-            "{self.type} type, HP: {self.hit_points}\n"
+            f"{self.type} type, HP: {self.hit_points}\n"
             f"{move_details}\n"
         )
