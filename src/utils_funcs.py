@@ -1,7 +1,7 @@
 from rich.table import Table
 from rich.console import Console
 from bs4 import BeautifulSoup
-from src.pokemon import (
+from pokemon import (
     FirePokemon,
     WaterPokemon,
     GrassPokemon,
@@ -17,8 +17,8 @@ from src.pokemon import (
     GroundPokemon,
 )
 import random
-from src.move import Move
-from src.trainer import Trainer
+from move import Move
+from trainer import Trainer
 
 
 def input_manager(prompt):
@@ -137,7 +137,7 @@ def get_pokemon_data(id_num, location):
     return None
 
 
-def trainer_setup(role):
+def trainer_setup(role, location):
     trainer_name = input_manager(f"What's the {role}'s trainer name?\n")
     trainer = Trainer(trainer_name)
     print(trainer)
@@ -166,14 +166,14 @@ def trainer_setup(role):
                 if pokemon_id.lower() == "c":
                     print("Cancelled Pokémon selection.")
                     break
-                pokemon = get_pokemon_data(pokemon_id)
+                pokemon = get_pokemon_data(pokemon_id, location)
                 if pokemon:
                     trainer.throw_pokeball(pokemon)
                     break
                 else:
                     print("Pokemon not found, please try again.")
         elif first_pokemon_selection.lower() == "r":
-            random_pokemon = catch_random_pokemon()
+            random_pokemon = catch_random_pokemon(location)
             trainer.throw_pokeball(random_pokemon)
 
     while trainer.belt_space():
@@ -210,14 +210,14 @@ def trainer_setup(role):
                     if pokemon_id.lower() == "c":
                         print("Cancelled Pokémon selection.")
                         break
-                    pokemon = get_pokemon_data(pokemon_id)
+                    pokemon = get_pokemon_data(pokemon_id, location)
                     if pokemon:
                         trainer.throw_pokeball(pokemon)
                         break
                     else:
                         print("Pokemon not found, please try again.")
             if pokemon_selection.lower() == "r":
-                random_pokemon = catch_random_pokemon()
+                random_pokemon = catch_random_pokemon(location)
                 trainer.throw_pokeball(random_pokemon)
         if further_selection.lower() == "n":
             print("Thank you for your choice.\n\n")

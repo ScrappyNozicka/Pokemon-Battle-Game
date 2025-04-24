@@ -1,11 +1,11 @@
-from src.utils_funcs import (
+from utils_funcs import (
     input_manager,
     pokemon_data_reader,
     pokemon_table_display,
     trainer_setup,
     select_starting_pokemon,
 )
-from src.battle import Battle
+from battle import Battle
 
 
 def pokemon_game():
@@ -23,6 +23,7 @@ def pokemon_game():
 
 def main_script():
     while True:
+        location = "pokemon_data.md"
         choice = input_manager(
             "Please specify: "
             "[l]ist available pokemon, [p]lay a match or [e]xit the game.\n"
@@ -39,13 +40,12 @@ def main_script():
             break
 
         if choice.lower() == "l":
-            location = "pokemon_data.md"
             data = pokemon_data_reader(location)
             pokemon_table_display(data)
 
         if choice.lower() == "p":
-            trainer_01 = trainer_setup("challenger")
-            trainer_02 = trainer_setup("defender")
+            trainer_01 = trainer_setup("challenger", location)
+            trainer_02 = trainer_setup("defender", location)
 
             if trainer_01.space_on_belt == 6:
                 print(
