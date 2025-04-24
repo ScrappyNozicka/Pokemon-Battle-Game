@@ -39,7 +39,8 @@ def main_script():
             break
 
         if choice.lower() == "l":
-            data = pokemon_data_reader()
+            location = "pokemon_data.md"
+            data = pokemon_data_reader(location)
             pokemon_table_display(data)
 
         if choice.lower() == "p":

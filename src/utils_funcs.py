@@ -37,8 +37,8 @@ def input_manager(prompt):
         return user_input.strip()
 
 
-def pokemon_data_reader():
-    with open("pokemon_data.md", "r", encoding="utf-8") as file:
+def pokemon_data_reader(location):
+    with open(location, "r", encoding="utf-8") as file:
         soup = BeautifulSoup(file.read(), "html.parser")
 
     table_html = soup.find("table")
@@ -121,16 +121,16 @@ def create_pokemon_instance(pokemon_dict):
         raise ValueError(f"Unknown Pokémon type: {type_}")
 
 
-def catch_random_pokemon():
-    data = pokemon_data_reader()
+def catch_random_pokemon(location):
+    data = pokemon_data_reader(location)
     chosen = random.choice(data)
     pokemon = create_pokemon_instance(chosen)
     print(f"You caught a wild {pokemon.name}!")
     return pokemon
 
 
-def get_pokemon_data(id_num):
-    data = pokemon_data_reader()
+def get_pokemon_data(id_num, location):
+    data = pokemon_data_reader(location)
     for row in data:
         if row.get("Id") == str(id_num):
             return create_pokemon_instance(row)
