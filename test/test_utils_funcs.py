@@ -6,9 +6,8 @@ from src.utils_funcs import (
     catch_random_pokemon,
     get_pokemon_data,
     trainer_setup,
+    select_starting_pokemon,
 )
-
-# select_starting_pokemon
 from rich.table import Table
 from src.pokemon import (
     FirePokemon,
@@ -642,3 +641,232 @@ def test_trainer_setup_returns_expected_output_if_selecting_with_invalid_id(
 
     mock_print.assert_any_call("Pokemon not found, please try again.")
     mock_print.assert_any_call("Cancelled Pokemon selection.")
+
+
+@patch("builtins.input", side_effect=["Steve", "s", "10", "m", "n"])
+@patch("builtins.print")
+def test_trainer_setup_returns_expected_output_selecting_followed_by_inv_char(
+    mock_print, mock_input
+):
+
+    trainer_setup(role="Test Trainer", location="test/test_pokemon_data.md")
+
+    mock_input.assert_any_call("What's the Test Trainer's trainer name?\n")
+    mock_input.assert_any_call(
+        "Test trainer, do you want to [s]elect your first pokemon,"
+        " choose [r]andom pokemon or [c]ancel?\n"
+    )
+    mock_input.assert_any_call("What's the pokemon id? (or [c]ancel)\n")
+    mock_input.assert_any_call(
+        "Test trainer, do you want to catch more pokemon? [y/n]\n"
+    )
+    mock_input.assert_any_call(
+        "Invalid input. Please specify: "
+        "[y] to catch more pokemon or [n] to start the battle.\n"
+    )
+
+    mock_print.assert_any_call("Thank you for your choice.\n\n")
+
+
+@patch("builtins.input", side_effect=["Steve", "s", "10", "y", "r", "n"])
+@patch("builtins.print")
+def test_trainer_setup_returns_expected_output_selecting_followed_by_random(
+    mock_print, mock_input, monkeypatch
+):
+
+    test_data = pokemon_data_reader(location="test/test_pokemon_data.md")
+    monkeypatch.setattr(random, "choice", lambda x: test_data[0])
+
+    trainer_setup(role="Test Trainer", location="test/test_pokemon_data.md")
+
+    mock_input.assert_any_call("What's the Test Trainer's trainer name?\n")
+    mock_input.assert_any_call(
+        "Test trainer, do you want to [s]elect your first pokemon,"
+        " choose [r]andom pokemon or [c]ancel?\n"
+    )
+    mock_input.assert_any_call("What's the pokemon id? (or [c]ancel)\n")
+    mock_input.assert_any_call(
+        "Test trainer, do you want to catch more pokemon? [y/n]\n"
+    )
+
+    mock_print.assert_any_call("You caught a wild Typicus!")
+    mock_print.assert_any_call("Thank you for your choice.\n\n")
+
+
+@patch("builtins.input", side_effect=["Steve", "s", "10", "y", "c"])
+@patch("builtins.print")
+def test_trainer_setup_returns_expected_output_further_selecting_cancel(
+    mock_print, mock_input
+):
+    trainer_setup(role="Test Trainer", location="test/test_pokemon_data.md")
+
+    mock_input.assert_any_call("What's the Test Trainer's trainer name?\n")
+    mock_input.assert_any_call(
+        "Test trainer, do you want to [s]elect your first pokemon,"
+        " choose [r]andom pokemon or [c]ancel?\n"
+    )
+    mock_input.assert_any_call("What's the pokemon id? (or [c]ancel)\n")
+    mock_input.assert_any_call(
+        "Test trainer, do you want to catch more pokemon? [y/n]\n"
+    )
+
+    mock_print.assert_any_call("Cancelled Pokemon selection.")
+
+
+@patch("builtins.input", side_effect=["Steve", "s", "10", "y", "s", "01", "n"])
+@patch("builtins.print")
+def test_trainer_setup_returns_expected_output_selecting_further_pokemon(
+    mock_print, mock_input
+):
+    trainer_setup(role="Test Trainer", location="test/test_pokemon_data.md")
+
+    mock_input.assert_any_call("What's the Test Trainer's trainer name?\n")
+    mock_input.assert_any_call(
+        "Test trainer, do you want to [s]elect your first pokemon,"
+        " choose [r]andom pokemon or [c]ancel?\n"
+    )
+    mock_input.assert_any_call("What's the pokemon id? (or [c]ancel)\n")
+    mock_input.assert_any_call(
+        "Test trainer, do you want to catch more pokemon? [y/n]\n"
+    )
+    mock_input.assert_any_call("What's the pokemon id? (or [c]ancel)\n")
+
+    mock_print.assert_any_call("Thank you for your choice.\n\n")
+
+
+@patch("builtins.input", side_effect=["Steve", "s", "10", "y", "m", "c"])
+@patch("builtins.print")
+def test_trainer_setup_returns_expected_output_selecting_further_inv_char(
+    mock_print, mock_input
+):
+
+    trainer_setup(role="Test Trainer", location="test/test_pokemon_data.md")
+
+    mock_input.assert_any_call("What's the Test Trainer's trainer name?\n")
+    mock_input.assert_any_call(
+        "Test trainer, do you want to [s]elect your first pokemon,"
+        " choose [r]andom pokemon or [c]ancel?\n"
+    )
+    mock_input.assert_any_call("What's the pokemon id? (or [c]ancel)\n")
+
+    mock_input.assert_any_call(
+        "Test trainer, do you want to catch more pokemon? [y/n]\n"
+    )
+
+    mock_input.assert_any_call(
+        "Invalid input. Please specify: "
+        "[s]elect pokemon, choose [r]andom pokemon or [c]ancel.\n"
+    )
+
+    mock_print.assert_any_call("Cancelled Pokemon selection.")
+
+
+@patch(
+    "builtins.input", side_effect=["Steve", "s", "10", "y", "s", "1000", "c"]
+)
+@patch("builtins.print")
+def test_trainer_setup_returns_expected_output_selecting_further_inv_id(
+    mock_print, mock_input
+):
+
+    trainer_setup(role="Test Trainer", location="test/test_pokemon_data.md")
+
+    mock_input.assert_any_call("What's the Test Trainer's trainer name?\n")
+    mock_input.assert_any_call(
+        "Test trainer, do you want to [s]elect your first pokemon,"
+        " choose [r]andom pokemon or [c]ancel?\n"
+    )
+    mock_input.assert_any_call("What's the pokemon id? (or [c]ancel)\n")
+
+    mock_input.assert_any_call(
+        "Test trainer, do you want to catch more pokemon? [y/n]\n"
+    )
+
+    mock_input.assert_any_call(
+        "Test trainer, do you want to [s]elect pokemon, "
+        "choose [r]andom pokemon or [c]ancel?\n"
+    )
+    mock_input.assert_any_call("What's the pokemon id? (or [c]ancel)\n")
+
+    mock_print.assert_any_call("Pokemon not found, please try again.")
+    mock_print.assert_any_call("Cancelled Pokemon selection.")
+
+
+@patch("builtins.input", side_effect=["Steve", "s", "10", "y", "s", "c"])
+@patch("builtins.print")
+def test_trainer_setup_returns_expected_output_selecting_followed_by_cancel(
+    mock_print, mock_input
+):
+
+    trainer_setup(role="Test Trainer", location="test/test_pokemon_data.md")
+
+    mock_input.assert_any_call("What's the Test Trainer's trainer name?\n")
+    mock_input.assert_any_call(
+        "Test trainer, do you want to [s]elect your first pokemon,"
+        " choose [r]andom pokemon or [c]ancel?\n"
+    )
+    mock_input.assert_any_call("What's the pokemon id? (or [c]ancel)\n")
+
+    mock_input.assert_any_call(
+        "Test trainer, do you want to catch more pokemon? [y/n]\n"
+    )
+
+    mock_input.assert_any_call(
+        "Test trainer, do you want to [s]elect pokemon, "
+        "choose [r]andom pokemon or [c]ancel?\n"
+    )
+
+    mock_print.assert_any_call("Cancelled Pokemon selection.")
+
+
+@patch("builtins.input", side_effect=["Steve", "c"])
+@patch("builtins.print")
+def test_select_starting_pokemon_with_no_pokemon(mock_print, mock_input):
+    test_trainer = trainer_setup(
+        role="Test Trainer", location="test/test_pokemon_data.md"
+    )
+
+    assert select_starting_pokemon(test_trainer) is None
+    mock_print.assert_any_call(
+        "\nSteve has chosen no Pokemon, ending the game."
+    )
+
+
+@patch("builtins.input", side_effect=["Steve", "s", "01", "n", "01"])
+@patch("builtins.print")
+def test_select_starting_pokemon_with_pokemon_and_valid_id(
+    mock_print, mock_input
+):
+    test_trainer = trainer_setup(
+        role="Test Trainer", location="test/test_pokemon_data.md"
+    )
+    test_pokemon = select_starting_pokemon(test_trainer)
+
+    mock_input.assert_any_call("Steve, which Pokémon do you send out first?")
+
+    mock_print.assert_any_call("\nSteve's available Pokémon:")
+    mock_print.assert_any_call("01: Typicus, Type: Normal, HP: 10\n")
+
+    assert isinstance(test_pokemon, NormalPokemon) is True
+    assert test_trainer.pokeball_01.pokemon.name == "Typicus"
+
+
+@patch("builtins.input", side_effect=["Steve", "s", "01", "n", "1000", "01"])
+@patch("builtins.print")
+def test_select_starting_pokemon_with_pokemon_and_invalid_id(
+    mock_print, mock_input
+):
+    test_trainer = trainer_setup(
+        role="Test Trainer", location="test/test_pokemon_data.md"
+    )
+
+    test_pokemon = select_starting_pokemon(test_trainer)
+
+    mock_input.assert_any_call("Steve, which Pokémon do you send out first?")
+
+    mock_print.assert_any_call("\nSteve's available Pokémon:")
+    mock_print.assert_any_call("01: Typicus, Type: Normal, HP: 10\n")
+    mock_print.assert_any_call("Invalid Pokémon ID. Please try again.")
+
+    assert isinstance(test_pokemon, NormalPokemon) is True
+    assert test_trainer.pokeball_01.pokemon.name == "Typicus"

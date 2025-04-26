@@ -191,9 +191,9 @@ def trainer_setup(role, location):
                 f"{role.capitalize()}, do you want to [s]elect pokemon, "
                 "choose [r]andom pokemon or [c]ancel?\n"
             )
-            if further_selection.lower() == "c":
+            if pokemon_selection.lower() == "c":
                 print("Cancelled Pokemon selection.")
-                break
+                return trainer
             while pokemon_selection.lower() not in "sr":
                 pokemon_selection = input_manager(
                     "Invalid input. Please specify: "
@@ -201,7 +201,7 @@ def trainer_setup(role, location):
                 )
                 if pokemon_selection.lower() == "c":
                     print("Cancelled Pokemon selection.")
-                    break
+                    return trainer
             if pokemon_selection.lower() == "s":
                 while True:
                     pokemon_id = input_manager(
@@ -209,7 +209,7 @@ def trainer_setup(role, location):
                     )
                     if pokemon_id.lower() == "c":
                         print("Cancelled Pokemon selection.")
-                        break
+                        return trainer
                     pokemon = get_pokemon_data(pokemon_id, location)
                     if pokemon:
                         trainer.throw_pokeball(pokemon)
@@ -221,7 +221,7 @@ def trainer_setup(role, location):
                 trainer.throw_pokeball(random_pokemon)
         if further_selection.lower() == "n":
             print("Thank you for your choice.\n\n")
-            break
+            return trainer
     return trainer
 
 
@@ -240,7 +240,7 @@ def select_starting_pokemon(trainer):
                 )
 
         selected_id = input_manager(
-            f"{trainer.name}, which Pokémon do you send out first? "
+            f"{trainer.name}, which Pokémon do you send out first?"
         )
 
         selected_pokemon = trainer.get_pokemon_by_id(selected_id)
