@@ -1,11 +1,11 @@
-from utils_funcs import (
+from src.utils_funcs import (
     input_manager,
     pokemon_data_reader,
     pokemon_table_display,
     trainer_setup,
     select_starting_pokemon,
 )
-from battle import Battle
+from src.battle import Battle
 
 
 def pokemon_game():

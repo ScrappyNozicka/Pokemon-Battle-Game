@@ -5,11 +5,10 @@ from src.utils_funcs import (
     create_pokemon_instance,
     catch_random_pokemon,
     get_pokemon_data,
+    trainer_setup,
 )
 
-# trainer_setup,
 # select_starting_pokemon
-from unittest.mock import patch
 from rich.table import Table
 from src.pokemon import (
     FirePokemon,
@@ -28,6 +27,8 @@ from src.pokemon import (
 )
 import pytest
 import random
+from src.trainer import Trainer
+from unittest.mock import patch
 
 
 def test_input_manager_valid_input():
@@ -292,3 +293,352 @@ def test_get_pokemon_data_returns_expected_values_with_invalid_id():
         get_pokemon_data(id_num=25, location="test/test_pokemon_data.md")
         is None
     )
+
+
+@patch("builtins.input", side_effect=["Steve", "s", "10", "n"])
+def test_trainer_setup_returns_instance_of_trainer_with_selected_one_pokemon(
+    mock_input,
+):
+    test_trainer = trainer_setup(
+        role="Test Trainer", location="test/test_pokemon_data.md"
+    )
+    assert test_trainer.space_on_belt == 5
+    assert test_trainer.pokeball_01.pokemon.name == "Ghost Pokemon"
+    assert isinstance(test_trainer, Trainer) is True
+
+
+@patch("builtins.input", side_effect=["Steve", "r", "n"])
+def test_trainer_setup_returns_instance_of_trainer_with_random_one_pokemon(
+    mock_input, monkeypatch
+):
+    test_data = pokemon_data_reader(location="test/test_pokemon_data.md")
+    monkeypatch.setattr(random, "choice", lambda x: test_data[0])
+
+    test_trainer = trainer_setup(
+        role="Test Trainer", location="test/test_pokemon_data.md"
+    )
+    assert test_trainer.space_on_belt == 5
+    assert test_trainer.pokeball_01.pokemon.name == "Typicus"
+    assert isinstance(test_trainer, Trainer) is True
+
+
+@patch(
+    "builtins.input",
+    side_effect=["Steve", "s", "01", "y", "s", "02", "y", "s", "03", "n"],
+)
+def test_trainer_setup_returns_instance_of_trainer_with_selected_some_pokemon(
+    mock_input,
+):
+    test_trainer = trainer_setup(
+        role="Test Trainer", location="test/test_pokemon_data.md"
+    )
+    assert test_trainer.space_on_belt == 3
+    assert test_trainer.pokeball_01.pokemon.name == "Typicus"
+    assert test_trainer.pokeball_02.pokemon.name == "Grass Pokemon"
+    assert test_trainer.pokeball_03.pokemon.name == "Fire Pokemon"
+    assert isinstance(test_trainer, Trainer) is True
+
+
+@patch(
+    "builtins.input",
+    side_effect=[
+        "Steve",
+        "s",
+        "01",
+        "y",
+        "s",
+        "02",
+        "y",
+        "s",
+        "03",
+        "y",
+        "s",
+        "04",
+        "y",
+        "s",
+        "05",
+        "y",
+        "s",
+        "06",
+    ],
+)
+def test_trainer_setup_returns_instance_of_trainer_with_selected_max_pokemon(
+    mock_input,
+):
+    test_trainer = trainer_setup(
+        role="Test Trainer", location="test/test_pokemon_data.md"
+    )
+
+    assert test_trainer.space_on_belt == 0
+    assert test_trainer.pokeball_01.pokemon.name == "Typicus"
+    assert test_trainer.pokeball_02.pokemon.name == "Grass Pokemon"
+    assert test_trainer.pokeball_03.pokemon.name == "Fire Pokemon"
+    assert test_trainer.pokeball_04.pokemon.name == "Water Pokemon"
+    assert test_trainer.pokeball_05.pokemon.name == "Electric Pokemon"
+    assert test_trainer.pokeball_06.pokemon.name == "Fighting Pokemon"
+    assert isinstance(test_trainer, Trainer) is True
+
+
+@patch("builtins.input", side_effect=["Steve", "r", "y", "r", "y", "r", "n"])
+def test_trainer_setup_returns_instance_of_trainer_with_random_some_pokemon(
+    mock_input, monkeypatch
+):
+    test_data = pokemon_data_reader(location="test/test_pokemon_data.md")
+
+    choices = [test_data[0], test_data[5], test_data[10]]
+
+    def mock_random_choice(seq):
+        return choices.pop(0)
+
+    monkeypatch.setattr(random, "choice", mock_random_choice)
+
+    test_trainer = trainer_setup(
+        role="Test Trainer", location="test/test_pokemon_data.md"
+    )
+
+    assert test_trainer.space_on_belt == 3
+    assert test_trainer.pokeball_01.pokemon.name == "Typicus"
+    assert test_trainer.pokeball_02.pokemon.name == "Fighting Pokemon"
+    assert test_trainer.pokeball_03.pokemon.name == "Dragon Pokemon"
+    assert isinstance(test_trainer, Trainer) is True
+
+
+@patch(
+    "builtins.input",
+    side_effect=[
+        "Steve",
+        "r",
+        "y",
+        "r",
+        "y",
+        "r",
+        "y",
+        "r",
+        "y",
+        "r",
+        "y",
+        "r",
+    ],
+)
+def test_trainer_setup_returns_instance_of_trainer_with_random_max_pokemon(
+    mock_input, monkeypatch
+):
+    test_data = pokemon_data_reader(location="test/test_pokemon_data.md")
+
+    choices = [
+        test_data[0],
+        test_data[5],
+        test_data[10],
+        test_data[1],
+        test_data[6],
+        test_data[11],
+    ]
+
+    def mock_random_choice(seq):
+        return choices.pop(0)
+
+    monkeypatch.setattr(random, "choice", mock_random_choice)
+
+    test_trainer = trainer_setup(
+        role="Test Trainer", location="test/test_pokemon_data.md"
+    )
+
+    assert test_trainer.space_on_belt == 0
+    assert test_trainer.pokeball_01.pokemon.name == "Typicus"
+    assert test_trainer.pokeball_02.pokemon.name == "Fighting Pokemon"
+    assert test_trainer.pokeball_03.pokemon.name == "Dragon Pokemon"
+    assert test_trainer.pokeball_04.pokemon.name == "Grass Pokemon"
+    assert test_trainer.pokeball_05.pokemon.name == "Poison Pokemon"
+    assert test_trainer.pokeball_06.pokemon.name == "Fairy Pokemon"
+    assert isinstance(test_trainer, Trainer) is True
+
+
+@patch(
+    "builtins.input",
+    side_effect=["Steve", "r", "y", "s", "05", "y", "r", "n"],
+)
+def test_trainer_setup_returns_instance_of_trainer_with_mixed_some_pokemon(
+    mock_input, monkeypatch
+):
+    test_data = pokemon_data_reader(location="test/test_pokemon_data.md")
+
+    choices = [test_data[0], test_data[10]]
+
+    def mock_random_choice(seq):
+        return choices.pop(0)
+
+    monkeypatch.setattr(random, "choice", mock_random_choice)
+
+    test_trainer = trainer_setup(
+        role="Test Trainer", location="test/test_pokemon_data.md"
+    )
+
+    assert test_trainer.space_on_belt == 3
+    assert test_trainer.pokeball_01.pokemon.name == "Typicus"
+    assert test_trainer.pokeball_02.pokemon.name == "Electric Pokemon"
+    assert test_trainer.pokeball_03.pokemon.name == "Dragon Pokemon"
+    assert isinstance(test_trainer, Trainer) is True
+
+
+@patch(
+    "builtins.input",
+    side_effect=[
+        "Steve",
+        "s",
+        "12",
+        "y",
+        "s",
+        "11",
+        "y",
+        "r",
+        "y",
+        "r",
+        "y",
+        "s",
+        "01",
+        "y",
+        "r",
+    ],
+)
+def test_trainer_setup_returns_instance_of_trainer_with_mixed_max_pokemon(
+    mock_input, monkeypatch
+):
+    test_data = pokemon_data_reader(location="test/test_pokemon_data.md")
+
+    choices = [
+        test_data[0],
+        test_data[5],
+        test_data[10],
+    ]
+
+    def mock_random_choice(seq):
+        return choices.pop(0)
+
+    monkeypatch.setattr(random, "choice", mock_random_choice)
+
+    test_trainer = trainer_setup(
+        role="Test Trainer", location="test/test_pokemon_data.md"
+    )
+
+    assert test_trainer.space_on_belt == 0
+    assert test_trainer.pokeball_01.pokemon.name == "Fairy Pokemon"
+    assert test_trainer.pokeball_02.pokemon.name == "Dragon Pokemon"
+    assert test_trainer.pokeball_03.pokemon.name == "Typicus"
+    assert test_trainer.pokeball_04.pokemon.name == "Fighting Pokemon"
+    assert test_trainer.pokeball_05.pokemon.name == "Typicus"
+    assert test_trainer.pokeball_06.pokemon.name == "Dragon Pokemon"
+    assert isinstance(test_trainer, Trainer) is True
+
+
+@patch("builtins.input", side_effect=["Steve", "s", "10", "n"])
+@patch("builtins.print")
+def test_trainer_setup_returns_expected_output_if_selecting_pokemon(
+    mock_print, mock_input
+):
+
+    trainer_setup(role="Test Trainer", location="test/test_pokemon_data.md")
+
+    mock_input.assert_any_call("What's the Test Trainer's trainer name?\n")
+    mock_input.assert_any_call(
+        "Test trainer, do you want to [s]elect your first pokemon,"
+        " choose [r]andom pokemon or [c]ancel?\n"
+    )
+    mock_input.assert_any_call("What's the pokemon id? (or [c]ancel)\n")
+
+    mock_print.assert_any_call("Thank you for your choice.\n\n")
+
+
+@patch("builtins.input", side_effect=["Steve", "r", "n"])
+@patch("builtins.print")
+def test_trainer_setup_returns_expected_output_if_random_pokemon(
+    mock_print, mock_input, monkeypatch
+):
+
+    test_data = pokemon_data_reader(location="test/test_pokemon_data.md")
+    monkeypatch.setattr(random, "choice", lambda x: test_data[0])
+
+    trainer_setup(role="Test Trainer", location="test/test_pokemon_data.md")
+
+    mock_input.assert_any_call("What's the Test Trainer's trainer name?\n")
+    mock_input.assert_any_call(
+        "Test trainer, do you want to [s]elect your first pokemon,"
+        " choose [r]andom pokemon or [c]ancel?\n"
+    )
+
+    mock_print.assert_any_call("You caught a wild Typicus!")
+    mock_print.assert_any_call("Thank you for your choice.\n\n")
+
+
+@patch("builtins.input", side_effect=["Steve", "c"])
+@patch("builtins.print")
+def test_trainer_setup_returns_expected_output_if_pokemon_selection_cancelled(
+    mock_print, mock_input
+):
+
+    trainer_setup(role="Test Trainer", location="test/test_pokemon_data.md")
+
+    mock_input.assert_any_call("What's the Test Trainer's trainer name?\n")
+    mock_input.assert_any_call(
+        "Test trainer, do you want to [s]elect your first pokemon,"
+        " choose [r]andom pokemon or [c]ancel?\n"
+    )
+
+    mock_print.assert_any_call("Cancelled Pokemon selection.")
+
+
+@patch("builtins.input", side_effect=["Steve", "m", "c"])
+@patch("builtins.print")
+def test_trainer_setup_returns_expected_output_if_invalid_char_and_cancel(
+    mock_print, mock_input
+):
+
+    trainer_setup(role="Test Trainer", location="test/test_pokemon_data.md")
+
+    mock_input.assert_any_call("What's the Test Trainer's trainer name?\n")
+    mock_input.assert_any_call(
+        "Test trainer, do you want to [s]elect your first pokemon,"
+        " choose [r]andom pokemon or [c]ancel?\n"
+    )
+    mock_input.assert_any_call(
+        "Invalid input. Please specify: "
+        "[s]elect pokemon, choose [r]andom pokemon or [c]ancel.\n"
+    )
+
+    mock_print.assert_any_call("Cancelled Pokemon selection.")
+
+
+@patch("builtins.input", side_effect=["Steve", "s", "c"])
+@patch("builtins.print")
+def test_trainer_setup_returns_expected_output_if_selecting_cancelled(
+    mock_print, mock_input
+):
+
+    trainer_setup(role="Test Trainer", location="test/test_pokemon_data.md")
+
+    mock_input.assert_any_call("What's the Test Trainer's trainer name?\n")
+    mock_input.assert_any_call(
+        "Test trainer, do you want to [s]elect your first pokemon,"
+        " choose [r]andom pokemon or [c]ancel?\n"
+    )
+    mock_input.assert_any_call("What's the pokemon id? (or [c]ancel)\n")
+
+    mock_print.assert_any_call("Cancelled Pokemon selection.")
+
+
+@patch("builtins.input", side_effect=["Steve", "s", "1000", "c"])
+@patch("builtins.print")
+def test_trainer_setup_returns_expected_output_if_selecting_with_invalid_id(
+    mock_print, mock_input
+):
+
+    trainer_setup(role="Test Trainer", location="test/test_pokemon_data.md")
+
+    mock_input.assert_any_call("What's the Test Trainer's trainer name?\n")
+    mock_input.assert_any_call(
+        "Test trainer, do you want to [s]elect your first pokemon,"
+        " choose [r]andom pokemon or [c]ancel?\n"
+    )
+    mock_input.assert_any_call("What's the pokemon id? (or [c]ancel)\n")
+
+    mock_print.assert_any_call("Pokemon not found, please try again.")
+    mock_print.assert_any_call("Cancelled Pokemon selection.")

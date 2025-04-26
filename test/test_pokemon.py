@@ -1,19 +1,20 @@
-from src.pokemon import Pokemon
 from src.move import Move
-
-from src.pokemon import FirePokemon
-from src.pokemon import WaterPokemon
-from src.pokemon import GrassPokemon
-from src.pokemon import NormalPokemon
-from src.pokemon import ElectricPokemon
-from src.pokemon import FightingPokemon
-from src.pokemon import PoisonPokemon
-from src.pokemon import PsychicPokemon
-from src.pokemon import BugPokemon
-from src.pokemon import GhostPokemon
-from src.pokemon import DragonPokemon
-from src.pokemon import FairyPokemon
-from src.pokemon import GroundPokemon
+from src.pokemon import (
+    Pokemon,
+    FirePokemon,
+    WaterPokemon,
+    GrassPokemon,
+    NormalPokemon,
+    ElectricPokemon,
+    FightingPokemon,
+    PoisonPokemon,
+    PsychicPokemon,
+    BugPokemon,
+    GhostPokemon,
+    DragonPokemon,
+    FairyPokemon,
+    GroundPokemon,
+)
 
 
 def test_pokemon_has_id():

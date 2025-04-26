@@ -1,7 +1,7 @@
 from rich.table import Table
 from rich.console import Console
 from bs4 import BeautifulSoup
-from pokemon import (
+from src.pokemon import (
     FirePokemon,
     WaterPokemon,
     GrassPokemon,
@@ -17,8 +17,8 @@ from pokemon import (
     GroundPokemon,
 )
 import random
-from move import Move
-from trainer import Trainer
+from src.move import Move
+from src.trainer import Trainer
 
 
 def input_manager(prompt):
@@ -148,24 +148,24 @@ def trainer_setup(role, location):
             " choose [r]andom pokemon or [c]ancel?\n"
         )
         if first_pokemon_selection.lower() == "c":
-            print("Cancelled Pokémon selection.")
-            break
+            print("Cancelled Pokemon selection.")
+            return trainer
         while first_pokemon_selection.lower() not in "sr":
             first_pokemon_selection = input_manager(
                 "Invalid input. Please specify: "
                 "[s]elect pokemon, choose [r]andom pokemon or [c]ancel.\n"
             )
             if first_pokemon_selection.lower() == "c":
-                print("Cancelled Pokémon selection.")
-                break
+                print("Cancelled Pokemon selection.")
+                return trainer
         if first_pokemon_selection.lower() == "s":
             while True:
                 pokemon_id = input_manager(
-                    "What's the pokemon id? (or [c]ancel)\n\n"
+                    "What's the pokemon id? (or [c]ancel)\n"
                 )
                 if pokemon_id.lower() == "c":
-                    print("Cancelled Pokémon selection.")
-                    break
+                    print("Cancelled Pokemon selection.")
+                    return trainer
                 pokemon = get_pokemon_data(pokemon_id, location)
                 if pokemon:
                     trainer.throw_pokeball(pokemon)
@@ -192,7 +192,7 @@ def trainer_setup(role, location):
                 "choose [r]andom pokemon or [c]ancel?\n"
             )
             if further_selection.lower() == "c":
-                print("Cancelled Pokémon selection.")
+                print("Cancelled Pokemon selection.")
                 break
             while pokemon_selection.lower() not in "sr":
                 pokemon_selection = input_manager(
@@ -200,7 +200,7 @@ def trainer_setup(role, location):
                     "[s]elect pokemon, choose [r]andom pokemon or [c]ancel.\n"
                 )
                 if pokemon_selection.lower() == "c":
-                    print("Cancelled Pokémon selection.")
+                    print("Cancelled Pokemon selection.")
                     break
             if pokemon_selection.lower() == "s":
                 while True:
@@ -208,7 +208,7 @@ def trainer_setup(role, location):
                         "What's the pokemon id? (or [c]ancel)\n"
                     )
                     if pokemon_id.lower() == "c":
-                        print("Cancelled Pokémon selection.")
+                        print("Cancelled Pokemon selection.")
                         break
                     pokemon = get_pokemon_data(pokemon_id, location)
                     if pokemon:
