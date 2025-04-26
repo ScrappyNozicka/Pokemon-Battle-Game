@@ -54,7 +54,7 @@ class Battle:
 
         while True:
             choice = input_manager(
-                f"{trainer.name}, choose a replacement Pokémon by ID: "
+                f"{trainer.name}, choose a replacement Pokémon by ID:"
             )
             selected = trainer.get_pokemon_by_id(choice)
             if selected and not selected.has_fainted():
@@ -77,7 +77,7 @@ class Battle:
             )
 
         while True:
-            move_choice = input_manager("Select move by number: ")
+            move_choice = input_manager("Select move by number:")
 
             if not move_choice.isdigit():
                 print("Please enter a number.")
@@ -88,7 +88,7 @@ class Battle:
             if 0 <= move_index < len(pokemon.moves):
                 move = pokemon.moves[move_index]
                 self.__pokemon_attack(move)
-                break
+                return move
             else:
                 print("Invalid move number. Try again.")
 
@@ -104,8 +104,10 @@ class Battle:
                 new_pokemon = self.__change_pokemon(new_pokemon_id)
                 if new_pokemon:
                     print(
-                        f"{'Player 1' if self.pokemon_1_turn else 'Player 2'} "
-                        f"switched to {new_pokemon.name}"
+                        f"{self.trainer_1.name.capitalize()
+                           if self.pokemon_1_turn
+                           else self.trainer_2.name.capitalize()} "
+                        f"switched to {new_pokemon.name}."
                     )
                     break
 
