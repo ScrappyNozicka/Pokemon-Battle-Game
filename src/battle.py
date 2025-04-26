@@ -7,11 +7,6 @@ class NoPokemonError(Exception):
         super().__init__(message)
 
 
-class NoMoveError(Exception):
-    def __init__(self, message="This move is not available"):
-        super().__init__(message)
-
-
 class Battle:
     def __init__(self, trainer_1, trainer_2, pokemon_1, pokemon_2):
         self.trainer_1 = trainer_1

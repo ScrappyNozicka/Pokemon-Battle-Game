@@ -453,7 +453,7 @@ def test_battle_select_action_valid_switch_action_input(
     test_trainer_02.throw_pokeball(test_pokemon_03)
 
     test_battle = Battle(
-        test_trainer_01, test_trainer_02, test_pokemon_01, test_pokemon_02
+        test_trainer_01, test_trainer_02, test_pokemon_01, test_pokemon_03
     )
 
     test_battle._Battle__select_action()
@@ -533,7 +533,7 @@ def test_battle_select_action_invalid_input(mock_print, mock_input):
     test_trainer_02.throw_pokeball(test_pokemon_03)
 
     test_battle = Battle(
-        test_trainer_01, test_trainer_02, test_pokemon_01, test_pokemon_02
+        test_trainer_01, test_trainer_02, test_pokemon_01, test_pokemon_03
     )
 
     test_battle._Battle__select_action()
@@ -546,43 +546,396 @@ def test_battle_select_action_invalid_input(mock_print, mock_input):
     mock_print.assert_any_call("Invalid action. Please try again.")
 
 
-# # @patch("builtins.input", side_effect=["magic", "999", "3"])
-# # @patch("builtins.print")
-# # def test_battle_select_action_invalid_switch_action_input(mock_print, mock_input):
-# #     test_trainer_01 = Trainer(trainer_name="Steve")
-# #     test_trainer_02 = Trainer(trainer_name="Paul")
+def test_battle_get_damage_standard(monkeypatch):
+    test_trainer_01 = Trainer(trainer_name="Steve")
+    test_trainer_02 = Trainer(trainer_name="Paul")
 
-# #     move1 = Move("Flamethrow", 10, 10)
-# #     move2 = Move("Ember", 15, 3)
-# #     move3 = Move("Lavalamp", 20, 2)
-# #     test_pokemon_01 = FirePokemon("02", "Infernus", 30, move1, move2, move3)
+    move1 = Move("Flamethrow", 10, 10)
+    move2 = Move("Ember", 15, 3)
+    move3 = Move("Lavalamp", 20, 2)
+    test_pokemon_01 = FirePokemon("02", "Infernus", 30, move1, move2, move3)
 
-# #     move4 = Move("Hurricane", 10, 5)
-# #     move5 = Move("Surf", 15, 10)
-# #     move6 = Move("Cowabunga", 20, 5)
-# #     test_pokemon_02 = WaterPokemon("04", "Voda", 60, move4, move5, move6)
+    move4 = Move("Hurricane", 10, 5)
+    move5 = Move("Surf", 15, 10)
+    move6 = Move("Cowabunga", 20, 5)
+    test_pokemon_02 = WaterPokemon("04", "Voda", 60, move4, move5, move6)
 
-# #     test_battle = Battle(
-# #         test_trainer_01, test_trainer_02, test_pokemon_01, test_pokemon_02
-# #     )
+    test_battle = Battle(
+        test_trainer_01, test_trainer_02, test_pokemon_01, test_pokemon_02
+    )
+
+    monkeypatch.setattr("random.randint", lambda *args, **kwargs: 1)
+
+    expected_damage = test_battle._Battle__get_damage(move1)
+
+    assert isinstance(expected_damage, float)
+    assert expected_damage == 5
 
 
-# # @patch("builtins.input", side_effect=["magic", "999", "3"])
-# # @patch("builtins.print")
-# # def test_battle_select_action_invalid_attack_action_input(mock_print, mock_input):
-# #     test_trainer_01 = Trainer(trainer_name="Steve")
-# #     test_trainer_02 = Trainer(trainer_name="Paul")
+def test_battle_get_damage_critical(monkeypatch):
+    test_trainer_01 = Trainer(trainer_name="Steve")
+    test_trainer_02 = Trainer(trainer_name="Paul")
 
-# #     move1 = Move("Flamethrow", 10, 10)
-# #     move2 = Move("Ember", 15, 3)
-# #     move3 = Move("Lavalamp", 20, 2)
-# #     test_pokemon_01 = FirePokemon("02", "Infernus", 30, move1, move2, move3)
+    move1 = Move("Flamethrow", 10, 10)
+    move2 = Move("Ember", 15, 3)
+    move3 = Move("Lavalamp", 20, 2)
+    test_pokemon_01 = FirePokemon("02", "Infernus", 30, move1, move2, move3)
 
-# #     move4 = Move("Hurricane", 10, 5)
-# #     move5 = Move("Surf", 15, 10)
-# #     move6 = Move("Cowabunga", 20, 5)
-# #     test_pokemon_02 = WaterPokemon("04", "Voda", 60, move4, move5, move6)
+    move4 = Move("Hurricane", 10, 5)
+    move5 = Move("Surf", 15, 10)
+    move6 = Move("Cowabunga", 20, 5)
+    test_pokemon_02 = WaterPokemon("04", "Voda", 60, move4, move5, move6)
 
-# #     test_battle = Battle(
-# #         test_trainer_01, test_trainer_02, test_pokemon_01, test_pokemon_02
-# #     )
+    test_battle = Battle(
+        test_trainer_01, test_trainer_02, test_pokemon_01, test_pokemon_02
+    )
+
+    monkeypatch.setattr("random.randint", lambda *args, **kwargs: 20)
+
+    expected_damage = test_battle._Battle__get_damage(move1)
+
+    assert isinstance(expected_damage, float)
+    assert expected_damage == 7.5
+
+
+@patch("builtins.print")
+def test_battle_pokemon_attack_valid_powerpoints(mock_print, monkeypatch):
+    test_trainer_01 = Trainer(trainer_name="Steve")
+    test_trainer_02 = Trainer(trainer_name="Paul")
+
+    move1 = Move("Flamethrow", 10, 10)
+    move2 = Move("Ember", 15, 3)
+    move3 = Move("Lavalamp", 20, 2)
+    test_pokemon_01 = FirePokemon("02", "Infernus", 30, move1, move2, move3)
+
+    move4 = Move("Hurricane", 10, 5)
+    move5 = Move("Surf", 15, 10)
+    move6 = Move("Cowabunga", 20, 5)
+    test_pokemon_02 = WaterPokemon("04", "Voda", 60, move4, move5, move6)
+
+    test_battle = Battle(
+        test_trainer_01, test_trainer_02, test_pokemon_01, test_pokemon_02
+    )
+
+    monkeypatch.setattr("random.randint", lambda *args, **kwargs: 1)
+
+    test_battle._Battle__pokemon_attack(move1)
+
+    mock_print.assert_any_call("Infernus used Flamethrow (AP: 10)")
+    mock_print.assert_any_call(
+        "Voda has taken 5.0 damage and has 55.0 HP left."
+    )
+
+
+@patch("builtins.print")
+def test_battle_pokemon_attack_invalid_powerpoints(mock_print, monkeypatch):
+    test_trainer_01 = Trainer(trainer_name="Steve")
+    test_trainer_02 = Trainer(trainer_name="Paul")
+
+    move1 = Move("Flamethrow", 10, 0)
+    move2 = Move("Ember", 15, 3)
+    move3 = Move("Lavalamp", 20, 2)
+    test_pokemon_01 = FirePokemon("02", "Infernus", 30, move1, move2, move3)
+
+    move4 = Move("Hurricane", 10, 5)
+    move5 = Move("Surf", 15, 10)
+    move6 = Move("Cowabunga", 20, 5)
+    test_pokemon_02 = WaterPokemon("04", "Voda", 60, move4, move5, move6)
+
+    test_battle = Battle(
+        test_trainer_01, test_trainer_02, test_pokemon_01, test_pokemon_02
+    )
+
+    monkeypatch.setattr("random.randint", lambda *args, **kwargs: 1)
+
+    test_attack = test_battle._Battle__pokemon_attack(move1)
+
+    mock_print.assert_any_call(
+        "Infernus can't use Flamethrow! " "Not enough PowerPoints."
+    )
+    assert test_attack is None
+
+
+@patch("builtins.input", side_effect=["03"])
+@patch("builtins.print")
+def test_battle_pokemon_attack_defender_pokemon_fainted(
+    mock_print, mock_input, monkeypatch
+):
+    test_trainer_01 = Trainer(trainer_name="Steve")
+    test_trainer_02 = Trainer(trainer_name="Paul")
+
+    move1 = Move("Flamethrow", 10, 10)
+    move2 = Move("Ember", 15, 3)
+    move3 = Move("Lavalamp", 20, 2)
+    test_pokemon_01 = FirePokemon("02", "Infernus", 30, move1, move2, move3)
+
+    move4 = Move("Hurricane", 10, 5)
+    move5 = Move("Surf", 15, 10)
+    move6 = Move("Cowabunga", 20, 5)
+    test_pokemon_02 = WaterPokemon("04", "Voda", 5, move4, move5, move6)
+
+    move7 = Move("Grow", 10, 10)
+    move8 = Move("Bloom", 13, 8)
+    move9 = Move("Thorn Whip", 16, 6)
+    test_pokemon_03 = GrassPokemon("03", "Herbus", 45, move7, move8, move9)
+
+    test_trainer_01.throw_pokeball(test_pokemon_01)
+    test_trainer_02.throw_pokeball(test_pokemon_02)
+    test_trainer_02.throw_pokeball(test_pokemon_03)
+
+    test_battle = Battle(
+        test_trainer_01, test_trainer_02, test_pokemon_01, test_pokemon_02
+    )
+
+    monkeypatch.setattr("random.randint", lambda *args, **kwargs: 1)
+
+    test_battle._Battle__pokemon_attack(move1)
+
+    mock_print.assert_any_call("Infernus used Flamethrow (AP: 10)")
+    mock_print.assert_any_call(
+        "Voda has taken 5.0 damage and has 0.0 HP left."
+    )
+    mock_print.assert_any_call("Paul switched to Herbus!")
+
+
+@patch("builtins.print")
+def test_battle_pokemon_attack_defender_no_pokemon_left(
+    mock_print, monkeypatch
+):
+    test_trainer_01 = Trainer(trainer_name="Steve")
+    test_trainer_02 = Trainer(trainer_name="Paul")
+
+    move1 = Move("Flamethrow", 10, 10)
+    move2 = Move("Ember", 15, 3)
+    move3 = Move("Lavalamp", 20, 2)
+    test_pokemon_01 = FirePokemon("02", "Infernus", 30, move1, move2, move3)
+
+    move4 = Move("Hurricane", 10, 5)
+    move5 = Move("Surf", 15, 10)
+    move6 = Move("Cowabunga", 20, 5)
+    test_pokemon_02 = WaterPokemon("04", "Voda", 5, move4, move5, move6)
+
+    test_trainer_01.throw_pokeball(test_pokemon_01)
+    test_trainer_02.throw_pokeball(test_pokemon_02)
+
+    test_battle = Battle(
+        test_trainer_01, test_trainer_02, test_pokemon_01, test_pokemon_02
+    )
+
+    monkeypatch.setattr("random.randint", lambda *args, **kwargs: 1)
+
+    test_battle._Battle__pokemon_attack(move1)
+
+    mock_print.assert_any_call("Infernus used Flamethrow (AP: 10)")
+    mock_print.assert_any_call(
+        "Voda has taken 5.0 damage and has 0.0 HP left."
+    )
+    mock_print.assert_any_call("Paul has no Pokémon left!")
+
+
+@patch("builtins.input", side_effect=["a", "1"])
+@patch("builtins.print")
+def test_battle_take_turn_challenger_win_defender_faints(
+    mock_print, mock_input, monkeypatch
+):
+    test_trainer_01 = Trainer(trainer_name="Steve")
+    test_trainer_02 = Trainer(trainer_name="Paul")
+
+    move1 = Move("Flamethrow", 10, 10)
+    move2 = Move("Ember", 15, 3)
+    move3 = Move("Lavalamp", 20, 2)
+    test_pokemon_01 = FirePokemon("02", "Infernus", 30, move1, move2, move3)
+
+    move4 = Move("Hurricane", 10, 5)
+    move5 = Move("Surf", 15, 10)
+    move6 = Move("Cowabunga", 20, 5)
+    test_pokemon_02 = WaterPokemon("04", "Voda", 5, move4, move5, move6)
+
+    test_battle = Battle(
+        test_trainer_01, test_trainer_02, test_pokemon_01, test_pokemon_02
+    )
+
+    monkeypatch.setattr("random.randint", lambda *args, **kwargs: 1)
+
+    test_battle.take_turn()
+
+    assert test_pokemon_02.hit_points == 0.0
+
+    mock_print.assert_any_call("\nIt's Infernus's turn!")
+    mock_print.assert_any_call("Voda has fainted!")
+
+
+@patch("builtins.input", side_effect=["a", "1", "a", "1"])
+@patch("builtins.print")
+def test_battle_take_turn_defender_win_challenger_faints(
+    mock_print, mock_input, monkeypatch
+):
+    test_trainer_01 = Trainer(trainer_name="Steve")
+    test_trainer_02 = Trainer(trainer_name="Paul")
+
+    move1 = Move("Flamethrow", 10, 10)
+    move2 = Move("Ember", 15, 3)
+    move3 = Move("Lavalamp", 20, 2)
+    test_pokemon_01 = FirePokemon("02", "Infernus", 15, move1, move2, move3)
+
+    move4 = Move("Hurricane", 10, 5)
+    move5 = Move("Surf", 15, 10)
+    move6 = Move("Cowabunga", 20, 5)
+    test_pokemon_02 = WaterPokemon("04", "Voda", 10, move4, move5, move6)
+
+    test_battle = Battle(
+        test_trainer_01, test_trainer_02, test_pokemon_01, test_pokemon_02
+    )
+
+    monkeypatch.setattr("random.randint", lambda *args, **kwargs: 1)
+
+    test_battle.take_turn()
+
+    assert test_pokemon_01.hit_points == 0.0
+    assert test_pokemon_02.hit_points == 5.0
+
+    mock_print.assert_any_call("\nIt's Infernus's turn!")
+    mock_print.assert_any_call(
+        "Voda has taken 5.0 damage and has 5.0 HP left."
+    )
+    mock_print.assert_any_call("\nIt's Voda's turn!")
+    mock_print.assert_any_call(
+        "Infernus has taken 15.0 damage and has 0.0 HP left."
+    )
+    mock_print.assert_any_call("Infernus has fainted!")
+
+
+@patch("builtins.input", side_effect=["a", "1", "a", "1"])
+@patch("builtins.print")
+def test_battle_get_winner_challenger_pokemon_faints(mock_print, mock_input):
+    test_trainer_01 = Trainer(trainer_name="Steve")
+    test_trainer_02 = Trainer(trainer_name="Paul")
+
+    move1 = Move("Flamethrow", 10, 10)
+    move2 = Move("Ember", 15, 3)
+    move3 = Move("Lavalamp", 20, 2)
+    test_pokemon_01 = FirePokemon("02", "Infernus", 15, move1, move2, move3)
+
+    move4 = Move("Hurricane", 10, 5)
+    move5 = Move("Surf", 15, 10)
+    move6 = Move("Cowabunga", 20, 5)
+    test_pokemon_02 = WaterPokemon("04", "Voda", 10, move4, move5, move6)
+
+    test_battle = Battle(
+        test_trainer_01, test_trainer_02, test_pokemon_01, test_pokemon_02
+    )
+
+    test_battle.take_turn()
+
+    test_winner = test_battle._Battle__get_winner()
+
+    assert isinstance(test_winner, bool)
+    assert test_winner is True
+
+    mock_print.assert_any_call("Infernus has fainted!")
+
+
+@patch("builtins.input", side_effect=["a", "1"])
+@patch("builtins.print")
+def test_battle_get_winner_defender_pokemon_faints(mock_print, mock_input):
+    test_trainer_01 = Trainer(trainer_name="Steve")
+    test_trainer_02 = Trainer(trainer_name="Paul")
+
+    move1 = Move("Flamethrow", 10, 10)
+    move2 = Move("Ember", 15, 3)
+    move3 = Move("Lavalamp", 20, 2)
+    test_pokemon_01 = FirePokemon("02", "Infernus", 60, move1, move2, move3)
+
+    move4 = Move("Hurricane", 10, 5)
+    move5 = Move("Surf", 15, 10)
+    move6 = Move("Cowabunga", 20, 5)
+    test_pokemon_02 = WaterPokemon("04", "Voda", 5, move4, move5, move6)
+
+    test_battle = Battle(
+        test_trainer_01, test_trainer_02, test_pokemon_01, test_pokemon_02
+    )
+
+    test_battle.take_turn()
+
+    test_winner = test_battle._Battle__get_winner()
+
+    assert isinstance(test_winner, bool)
+    assert test_winner is True
+
+    mock_print.assert_any_call("Voda has fainted!")
+
+
+def test_battle_get_winner_none_fainted():
+    test_trainer_01 = Trainer(trainer_name="Steve")
+    test_trainer_02 = Trainer(trainer_name="Paul")
+
+    move1 = Move("Flamethrow", 10, 10)
+    move2 = Move("Ember", 15, 3)
+    move3 = Move("Lavalamp", 20, 2)
+    test_pokemon_01 = FirePokemon("02", "Infernus", 60, move1, move2, move3)
+
+    move4 = Move("Hurricane", 10, 5)
+    move5 = Move("Surf", 15, 10)
+    move6 = Move("Cowabunga", 20, 5)
+    test_pokemon_02 = WaterPokemon("04", "Voda", 45, move4, move5, move6)
+
+    test_battle = Battle(
+        test_trainer_01, test_trainer_02, test_pokemon_01, test_pokemon_02
+    )
+
+    test_winner = test_battle._Battle__get_winner()
+
+    assert isinstance(test_winner, bool)
+    assert test_winner is False
+
+
+def test_battle_str_method_returns_expected_output_when_challenger_turn():
+    test_trainer_01 = Trainer(trainer_name="Steve")
+    test_trainer_02 = Trainer(trainer_name="Paul")
+
+    move1 = Move("Flamethrow", 10, 10)
+    move2 = Move("Ember", 15, 3)
+    move3 = Move("Lavalamp", 20, 2)
+    test_pokemon_01 = FirePokemon("02", "Infernus", 60, move1, move2, move3)
+
+    move4 = Move("Hurricane", 10, 5)
+    move5 = Move("Surf", 15, 10)
+    move6 = Move("Cowabunga", 20, 5)
+    test_pokemon_02 = WaterPokemon("04", "Voda", 45, move4, move5, move6)
+
+    test_battle = Battle(
+        test_trainer_01, test_trainer_02, test_pokemon_01, test_pokemon_02
+    )
+
+    expected_output = (
+        "Battle between:\n" "Infernus\n" "Voda\n" "Next turn: Infernus"
+    )
+
+    assert str(test_battle) == expected_output
+
+
+def test_battle_str_method_returns_expected_output_when_defender_turn():
+    test_trainer_01 = Trainer(trainer_name="Steve")
+    test_trainer_02 = Trainer(trainer_name="Paul")
+
+    move1 = Move("Flamethrow", 10, 10)
+    move2 = Move("Ember", 15, 3)
+    move3 = Move("Lavalamp", 20, 2)
+    test_pokemon_01 = FirePokemon("02", "Infernus", 60, move1, move2, move3)
+
+    move4 = Move("Hurricane", 10, 5)
+    move5 = Move("Surf", 15, 10)
+    move6 = Move("Cowabunga", 20, 5)
+    test_pokemon_02 = WaterPokemon("04", "Voda", 45, move4, move5, move6)
+
+    test_battle = Battle(
+        test_trainer_01, test_trainer_02, test_pokemon_01, test_pokemon_02
+    )
+
+    test_battle.pokemon_1_turn = False
+
+    expected_output = (
+        "Battle between:\n" "Infernus\n" "Voda\n" "Next turn: Voda"
+    )
+
+    assert str(test_battle) == expected_output
