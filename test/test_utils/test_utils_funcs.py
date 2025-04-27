@@ -218,7 +218,7 @@ def test_create_pokemon_instance_raises_exception_as_expected():
     test_data = pokemon_data_reader(location="test/test_pokemon_data.md")
     pokemon_dict_14 = test_data[13]
 
-    with pytest.raises(ValueError, match="Unknown Pokémon type: Ice"):
+    with pytest.raises(ValueError, match="Unknown Pokemon type: Ice"):
         create_pokemon_instance(pokemon_dict_14)
 
 
@@ -842,9 +842,9 @@ def test_select_starting_pokemon_with_pokemon_and_valid_id(
     )
     test_pokemon = select_starting_pokemon(test_trainer)
 
-    mock_input.assert_any_call("Steve, which Pokémon do you send out first?")
+    mock_input.assert_any_call("Steve, which Pokemon do you send out first?")
 
-    mock_print.assert_any_call("\nSteve's available Pokémon:")
+    mock_print.assert_any_call("\nSteve's available Pokemon:")
     mock_print.assert_any_call("01: Typicus, Type: Normal, HP: 10\n")
 
     assert isinstance(test_pokemon, NormalPokemon) is True
@@ -862,11 +862,11 @@ def test_select_starting_pokemon_with_pokemon_and_invalid_id(
 
     test_pokemon = select_starting_pokemon(test_trainer)
 
-    mock_input.assert_any_call("Steve, which Pokémon do you send out first?")
+    mock_input.assert_any_call("Steve, which Pokemon do you send out first?")
 
-    mock_print.assert_any_call("\nSteve's available Pokémon:")
+    mock_print.assert_any_call("\nSteve's available Pokemon:")
     mock_print.assert_any_call("01: Typicus, Type: Normal, HP: 10\n")
-    mock_print.assert_any_call("Invalid Pokémon ID. Please try again.")
+    mock_print.assert_any_call("Invalid Pokemon ID. Please try again.")
 
     assert isinstance(test_pokemon, NormalPokemon) is True
     assert test_trainer.pokeball_01.pokemon.name == "Typicus"

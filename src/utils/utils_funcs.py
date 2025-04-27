@@ -23,12 +23,14 @@ from src.classes.trainer import Trainer
 
 def input_manager(prompt):
     """
-    Handler of empty input in main script of Password Manager.
+    Handles user input and prevents empty entries.
 
     Args:
-        promt: User input.
-    """
+        prompt (str): The input prompt to display.
 
+    Returns:
+        str: The user's input, stripped of leading/trailing whitespace.
+    """
     while True:
         user_input = input(prompt)
         if not user_input:
@@ -38,6 +40,15 @@ def input_manager(prompt):
 
 
 def pokemon_data_reader(location):
+    """
+    Reads and parses Pokemon data from a Markdown HTML table.
+
+    Args:
+        location (str): The file path of the data source.
+
+    Returns:
+        list[dict]: A list of dictionaries representing Pokemon data.
+    """
     with open(location, "r", encoding="utf-8") as file:
         soup = BeautifulSoup(file.read(), "html.parser")
 
@@ -52,6 +63,15 @@ def pokemon_data_reader(location):
 
 
 def pokemon_table_display(data):
+    """
+    Displays Pokemon data in a table format using Rich.
+
+    Args:
+        data (list[dict]): The Pokemon data to display.
+
+    Returns:
+        Table: The rendered Rich Table object.
+    """
     console = Console()
 
     headers = data[0].keys()
@@ -68,6 +88,15 @@ def pokemon_table_display(data):
 
 
 def create_pokemon_instance(pokemon_dict):
+    """
+    Creates a Pokemon object instance from a dictionary of stats.
+
+    Args:
+        pokemon_dict (dict): A dictionary with Pokemon attributes.
+
+    Returns:
+        Pokemon: An instance of a specific Pokemon subclass.
+    """
     pokemon_id = pokemon_dict["Id"]
     name = pokemon_dict["Name"]
     type_ = pokemon_dict["Type"]
@@ -118,10 +147,19 @@ def create_pokemon_instance(pokemon_dict):
     elif type_ == "Ground":
         return GroundPokemon(*args)
     else:
-        raise ValueError(f"Unknown Pokémon type: {type_}")
+        raise ValueError(f"Unknown Pokemon type: {type_}")
 
 
 def catch_random_pokemon(location):
+    """
+    Creates a random Pokemon instance and announces the catch.
+
+    Args:
+        location (str): The file path of the Pokemon data.
+
+    Returns:
+        Pokemon: The caught Pokemon object.
+    """
     data = pokemon_data_reader(location)
     chosen = random.choice(data)
     pokemon = create_pokemon_instance(chosen)
@@ -130,6 +168,16 @@ def catch_random_pokemon(location):
 
 
 def get_pokemon_data(id_num, location):
+    """
+    Retrieves a specific Pokemon by its ID.
+
+    Args:
+        id_num (str): The ID number of the desired Pokemon.
+        location (str): The file path of the Pokemon data.
+
+    Returns:
+        Pokemon or None: The Pokemon object or None if not found.
+    """
     data = pokemon_data_reader(location)
     for row in data:
         if row.get("Id") == str(id_num):
@@ -138,6 +186,16 @@ def get_pokemon_data(id_num, location):
 
 
 def trainer_setup(role, location):
+    """
+    Sets up a trainer by allowing Pokemon selection or random assignment.
+
+    Args:
+        role (str): 'challenger' or 'defender'.
+        location (str): The file path of the Pokemon data.
+
+    Returns:
+        Trainer: The trainer object with selected Pokemon.
+    """
     trainer_name = input_manager(f"What's the {role}'s trainer name?\n")
     trainer = Trainer(trainer_name)
     print(trainer)
@@ -226,11 +284,20 @@ def trainer_setup(role, location):
 
 
 def select_starting_pokemon(trainer):
+    """
+    Prompts the trainer to choose which Pokemon to send into battle first.
+
+    Args:
+        trainer (Trainer): The trainer choosing their Pokemon.
+
+    Returns:
+        Pokemon: The selected Pokemon to start the battle.
+    """
     while True:
         if trainer.space_on_belt == 6:
             print(f"\n{trainer.name} has chosen no Pokemon, ending the game.")
             break
-        print(f"\n{trainer.name}'s available Pokémon:")
+        print(f"\n{trainer.name}'s available Pokemon:")
         for pokeball in trainer.trainer_belt:
             if not pokeball.is_empty():
                 p = pokeball.pokemon
@@ -240,11 +307,11 @@ def select_starting_pokemon(trainer):
                 )
 
         selected_id = input_manager(
-            f"{trainer.name}, which Pokémon do you send out first?"
+            f"{trainer.name}, which Pokemon do you send out first?"
         )
 
         selected_pokemon = trainer.get_pokemon_by_id(selected_id)
         if selected_pokemon:
             return selected_pokemon
         else:
-            print("Invalid Pokémon ID. Please try again.")
+            print("Invalid Pokemon ID. Please try again.")

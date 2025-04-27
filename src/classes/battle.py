@@ -3,12 +3,30 @@ from src.utils.utils_funcs import input_manager
 
 
 class NoPokemonError(Exception):
+    """Exception raised when a Pokemon is not available or has fainted."""
+
     def __init__(self, message="This pokemon is not available"):
         super().__init__(message)
 
 
 class Battle:
+    """
+    Represents a battle between two trainers and their selected Pokemon.
+
+    Handles turn-based combat, move selection, Pokemon switching,
+    damage calculation, and determining the winner.
+    """
+
     def __init__(self, trainer_1, trainer_2, pokemon_1, pokemon_2):
+        """
+        Initialize the battle.
+
+        Args:
+            trainer_1 (Trainer): First trainer.
+            trainer_2 (Trainer): Second trainer.
+            pokemon_1 (Pokemon): Pokemon selected by trainer_1.
+            pokemon_2 (Pokemon): Pokemon selected by trainer_2.
+        """
         self.trainer_1 = trainer_1
         self.trainer_2 = trainer_2
         self.pokemon_1 = pokemon_1
@@ -17,6 +35,18 @@ class Battle:
         self.available_pokemon = [pokemon_1, pokemon_2]
 
     def __change_pokemon(self, pokemon_id_to_change=None):
+        """
+        Switch the current Pokemon with another from the trainer's belt.
+
+        Args:
+            pokemon_id_to_change (str): The ID of the new Pokemon.
+
+        Returns:
+            Pokemon: The new Pokemon selected.
+
+        Raises:
+            NoPokemonError: If the Pokemon ID is invalid or has fainted.
+        """
         trainer = self.trainer_1 if self.pokemon_1_turn else self.trainer_2
 
         new_pokemon = trainer.get_pokemon_by_id(pokemon_id_to_change)
@@ -30,6 +60,15 @@ class Battle:
             raise NoPokemonError("Pokemon ID is invalid or unavailable.")
 
     def __force_switch(self, trainer):
+        """
+        Forces a trainer to switch Pokemon after one faints.
+
+        Args:
+            trainer (Trainer): Trainer whose Pokemon has fainted.
+
+        Returns:
+            Pokemon or None: Replacement Pokemon or None if none available.
+        """
         print(f"{trainer.name}, your pokemon has fainted!")
         available = [
             p.pokemon
@@ -41,7 +80,7 @@ class Battle:
             print(f"{trainer.name} has no more usable pokemon!")
             return None
 
-        print(f"{trainer.name}'s available Pokémon:")
+        print(f"{trainer.name}'s available Pokemon:")
         for p in available:
             print(
                 f"{p.pokemon_id}: {p.name}, Type: {p.type}, HP: {p.hit_points}"
@@ -49,7 +88,7 @@ class Battle:
 
         while True:
             choice = input_manager(
-                f"{trainer.name}, choose a replacement Pokémon by ID:"
+                f"{trainer.name}, choose a replacement Pokemon by ID:"
             )
             selected = trainer.get_pokemon_by_id(choice)
             if selected and not selected.has_fainted():
@@ -59,9 +98,13 @@ class Battle:
                     self.pokemon_2 = selected
                 print(f"{trainer.name} sent out {selected.name}!")
                 return selected
-            print("Invalid choice or that Pokémon has fainted. Try again.")
+            print("Invalid choice or that Pokemon has fainted. Try again.")
 
     def __select_move(self):
+        """
+        Prompts the trainer to select a move for their active Pokemon.
+        Executes the selected move.
+        """
         pokemon = self.pokemon_1 if self.pokemon_1_turn else self.pokemon_2
 
         print("Available moves:")
@@ -88,6 +131,9 @@ class Battle:
                 print("Invalid move number. Try again.")
 
     def __select_action(self):
+        """
+        Allows the trainer to choose an action: switch Pokemon or attack.
+        """
         while True:
             action = input_manager(
                 "Please select action: [s]witch pokemon "
@@ -114,6 +160,16 @@ class Battle:
                 print("Invalid action. Please try again.")
 
     def __get_damage(self, move):
+        """
+        Calculates damage dealt by the given move,
+        including multipliers and critical hits.
+
+        Args:
+            move (Move): The move being used.
+
+        Returns:
+            float: Calculated damage.
+        """
         attacker = self.pokemon_1 if self.pokemon_1_turn else self.pokemon_2
         defender = self.pokemon_2 if self.pokemon_1_turn else self.pokemon_1
         critical_hit_success = random.randint(1, 20)
@@ -127,6 +183,13 @@ class Battle:
         return damage
 
     def __pokemon_attack(self, move):
+        """
+        Executes an attack with the specified move
+        and applies damage to the opposing Pokemon.
+
+        Args:
+            move (Move): The selected move to use.
+        """
         attacker = self.pokemon_1 if self.pokemon_1_turn else self.pokemon_2
         defender = self.pokemon_2 if self.pokemon_1_turn else self.pokemon_1
         defender_trainer = (
@@ -156,7 +219,7 @@ class Battle:
             ]
 
             if not available:
-                print(f"{defender_trainer.name} has no Pokémon left!")
+                print(f"{defender_trainer.name} has no Pokemon left!")
                 return
             else:
                 replacement = self.__force_switch(defender_trainer)
@@ -168,6 +231,12 @@ class Battle:
                     return
 
     def take_turn(self):
+        """
+        Runs a full turn for both trainers until one wins the battle.
+
+        Returns:
+            Trainer: The winning trainer.
+        """
         while not self.__get_winner():
             current_pokemon = (
                 self.pokemon_1 if self.pokemon_1_turn else self.pokemon_2
@@ -201,6 +270,12 @@ class Battle:
         )
 
     def __get_winner(self):
+        """
+        Checks if the battle has a winner.
+
+        Returns:
+            bool: True if a Pokemon has fainted and the battle is over.
+        """
         if self.pokemon_1.has_fainted():
             print(f"{self.pokemon_1.name} has fainted!")
             return True
@@ -210,6 +285,12 @@ class Battle:
         return False
 
     def __str__(self):
+        """
+        Returns a string representation of the battle status.
+
+        Returns:
+            str: Current state of the battle.
+        """
         return (
             f"Battle between:\n"
             f"{self.pokemon_1.name}\n"

@@ -211,10 +211,10 @@ def test_battle_force_switch_challenger_available_pokemon(
     assert switched_pokemon.name == "Voda"
     assert isinstance(switched_pokemon, WaterPokemon)
 
-    mock_input.assert_any_call("Steve, choose a replacement Pokémon by ID:")
+    mock_input.assert_any_call("Steve, choose a replacement Pokemon by ID:")
 
     mock_print.assert_any_call("Steve, your pokemon has fainted!")
-    mock_print.assert_any_call("Steve's available Pokémon:")
+    mock_print.assert_any_call("Steve's available Pokemon:")
     mock_print.assert_any_call("04: Voda, Type: Water, HP: 60")
     mock_print.assert_any_call("Steve sent out Voda!")
 
@@ -257,10 +257,10 @@ def test_battle_force_switch_defender_available_pokemon(
     assert switched_pokemon.name == "Herbus"
     assert isinstance(switched_pokemon, GrassPokemon)
 
-    mock_input.assert_any_call("Paul, choose a replacement Pokémon by ID:")
+    mock_input.assert_any_call("Paul, choose a replacement Pokemon by ID:")
 
     mock_print.assert_any_call("Paul, your pokemon has fainted!")
-    mock_print.assert_any_call("Paul's available Pokémon:")
+    mock_print.assert_any_call("Paul's available Pokemon:")
     mock_print.assert_any_call("03: Herbus, Type: Grass, HP: 45")
     mock_print.assert_any_call("Paul sent out Herbus!")
 
@@ -343,13 +343,13 @@ def test_battle_force_switch_challenger_invalid_id(mock_print, mock_input):
     assert switched_pokemon.name == "Voda"
     assert isinstance(switched_pokemon, WaterPokemon)
 
-    mock_input.assert_any_call("Steve, choose a replacement Pokémon by ID:")
+    mock_input.assert_any_call("Steve, choose a replacement Pokemon by ID:")
 
     mock_print.assert_any_call("Steve, your pokemon has fainted!")
-    mock_print.assert_any_call("Steve's available Pokémon:")
+    mock_print.assert_any_call("Steve's available Pokemon:")
     mock_print.assert_any_call("04: Voda, Type: Water, HP: 60")
     mock_print.assert_any_call(
-        "Invalid choice or that Pokémon has fainted. Try again."
+        "Invalid choice or that Pokemon has fainted. Try again."
     )
     mock_print.assert_any_call("Steve sent out Voda!")
 
@@ -730,7 +730,7 @@ def test_battle_pokemon_attack_defender_no_pokemon_left(
     mock_print.assert_any_call(
         "Voda has taken 5.0 damage and has 0.0 HP left."
     )
-    mock_print.assert_any_call("Paul has no Pokémon left!")
+    mock_print.assert_any_call("Paul has no Pokemon left!")
 
 
 @patch("builtins.input", side_effect=["a", "1"])

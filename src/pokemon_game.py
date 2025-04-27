@@ -9,6 +9,11 @@ from src.classes.battle import Battle
 
 
 def pokemon_game():
+    """
+    Entry point for the Pokemon Battle Simulator game.
+
+    Prints a welcome message and starts the main game loop.
+    """
     print(
         """
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -22,6 +27,17 @@ def pokemon_game():
 
 
 def main_script():
+    """
+    Main game loop for the Pokemon Battle Simulator.
+
+    Allows the player to:
+    - List all available Pokemon.
+    - Start a new battle match between two trainers.
+    - Exit the game.
+
+    Handles player input, sets up trainers and Pokemon,
+    and initiates a turn-based battle.
+    """
     while True:
         location = "pokemon_data.md"
         choice = input_manager(
