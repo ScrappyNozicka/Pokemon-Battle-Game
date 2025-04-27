@@ -29,7 +29,7 @@ class Pokemon:
     def use_move(self, move_number):
         """
         Executes a move if the selected move number is valid
-        and has PowerPoints.
+            and has PowerPoints.
 
         Args:
             move_number (int): The move number (1-3).

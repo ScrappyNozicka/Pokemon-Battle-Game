@@ -3,8 +3,9 @@ class Pokeball:
     Represents a Pokeball that can hold a single Pokemon.
 
     Attributes:
-        pokemon (Pokemon or None): The Pokemon currently inside the Pokeball,
-                                   or None if the Pokeball is empty.
+        pokemon (Pokemon or None): 
+            The Pokemon currently inside the Pokeball,
+            or None if the Pokeball is empty.
     """
 
     def __init__(self):
@@ -58,7 +59,7 @@ class Pokeball:
         Returns:
             str:
                 Description of whether the Pokeball is empty
-                or what Pokemon it contains.
+                    or what Pokemon it contains.
         """
         if not self.pokemon:
             return "This pokeball is empty and ready to be used."

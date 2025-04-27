@@ -36,7 +36,7 @@ def main_script():
     - Exit the game.
 
     Handles player input, sets up trainers and Pokemon,
-    and initiates a turn-based battle.
+        and initiates a turn-based battle.
     """
     while True:
         location = "pokemon_data.md"

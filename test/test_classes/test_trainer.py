@@ -14,6 +14,11 @@ import pytest
 
 
 def test_trainer_has_empty_belt():
+    """
+    Test that a new trainer's belt is initialized with 6 empty Pokeballs.
+    Each Pokeball should be of type Pokeball, and the pokemon inside each
+        Pokeball should be None.
+    """
     test_trainer = Trainer("Scrooge")
 
     for pokeball in test_trainer.trainer_belt:
@@ -26,6 +31,11 @@ def test_trainer_has_empty_belt():
 
 
 def test_throw_pokeball_catches_pokemon_if_pokeballs_available():
+    """
+    Test that a trainer can successfully catch a Pokemon when there is space
+    in the Pokeballs. The first Pokeball in the trainer's belt should contain
+        the caught Pokemon.
+    """
     test_trainer = Trainer("Scrooge")
 
     move1 = Move("Complain", 5, 10)
@@ -41,6 +51,10 @@ def test_throw_pokeball_catches_pokemon_if_pokeballs_available():
 
 
 def test_throw_pokeball_catches_multiple_pokemon_subsequently():
+    """
+    Test that a trainer can catch multiple Pokemon subsequently, with each
+    Pokemon being placed in the next available Pokeball in the trainer's belt.
+    """
     test_trainer = Trainer("Scrooge")
 
     move1 = Move("Complain", 5, 10)
@@ -64,6 +78,11 @@ def test_throw_pokeball_catches_multiple_pokemon_subsequently():
 
 
 def test_throw_pokeball_catch_pokemon_while_some_pokemon_caught_already():
+    """
+    Test that a trainer can continue catching Pokemon even after having
+        caught previous Pokemon, ensuring the Pokemon are placed in successive
+            Pokeballs in the trainer's belt.
+    """
     test_trainer = Trainer("Scrooge")
 
     move1 = Move("Complain", 5, 10)
@@ -88,6 +107,10 @@ def test_throw_pokeball_catch_pokemon_while_some_pokemon_caught_already():
 
 
 def test_throw_pokeball_does_not_catch_pokemon_if_no_available_pokeballs():
+    """
+    Test that a trainer cannot catch a Pokemon if there are no available
+        Pokeballs left in the belt. It should raise a NoEmptyPokeballError.
+    """
     test_trainer = Trainer("Scrooge")
 
     move1 = Move("Flamethrow", 10, 10)
@@ -141,12 +164,20 @@ def test_throw_pokeball_does_not_catch_pokemon_if_no_available_pokeballs():
 
 
 def test_trainer_belt_space_returns_true_when_all_space():
+    """
+    Test that the belt_space method returns True when there is space available
+        on the trainer's belt for more Pokemon.
+    """
     test_trainer = Trainer("Scrooge")
 
     assert test_trainer.belt_space() is True
 
 
 def test_trainer_belt_space_returns_true_when_some_space():
+    """
+    Test that the belt_space method returns True when there is some space
+        available on the trainer's belt after catching a few Pokemon.
+    """
     test_trainer = Trainer("Scrooge")
 
     move1 = Move("Complain", 5, 10)
@@ -166,6 +197,10 @@ def test_trainer_belt_space_returns_true_when_some_space():
 
 
 def test_trainer_belt_space_returns_false_when_no_space():
+    """
+    Test that the belt_space method returns False when there is no space
+        available on the trainer's belt to catch more Pokemon.
+    """
     test_trainer = Trainer("Scrooge")
 
     move1 = Move("Flamethrow", 10, 10)
@@ -211,6 +246,11 @@ def test_trainer_belt_space_returns_false_when_no_space():
 
 
 def test_trainer_get_pokemon_by_id_if_pokemon_available():
+    """
+    Test that the get_pokemon_by_id method correctly retrieves a Pokemon
+        by its ID, and that the string representation of the Pokemon matches
+            the expected format.
+    """
     test_trainer = Trainer("Scrooge")
 
     move1 = Move("Flamethrow", 10, 10)
@@ -246,12 +286,20 @@ def test_trainer_get_pokemon_by_id_if_pokemon_available():
 
 
 def test_trainer_get_pokemon_by_id_if_no_pokemon_available():
+    """
+    Test that the get_pokemon_by_id method returns None when no Pokemon
+        with the specified ID is found on the trainer's belt.
+    """
     test_trainer = Trainer("Scrooge")
 
     assert test_trainer.get_pokemon_by_id("04") is None
 
 
 def test_trainer_str_method_return_expected_output_when_all_empty_pkbls():
+    """
+    Test that the __str__ method correctly returns the expected string output
+        when the trainer's belt is empty (no Pokemon caught yet).
+    """
     test_trainer = Trainer("Scrooge")
     expected_output = (
         "You have 0 pokemon's with you,\n" "you can catch 6 more."
@@ -260,6 +308,10 @@ def test_trainer_str_method_return_expected_output_when_all_empty_pkbls():
 
 
 def test_trainer_str_method_return_expected_output_when_all_some_pokeballs():
+    """
+    Test that the __str__ method correctly returns the expected string output
+        when the trainer has some Pokemon caught in the Pokeballs.
+    """
     test_trainer = Trainer("Scrooge")
 
     move1 = Move("Flamethrow", 10, 10)
@@ -287,6 +339,10 @@ def test_trainer_str_method_return_expected_output_when_all_some_pokeballs():
 
 
 def test_trainer_str_method_return_expected_output_when_all_none_pokeballs():
+    """
+    Test that the __str__ method correctly returns the expected string output
+        when the trainer's belt is full, with 6 Pokemon caught.
+    """
     test_trainer = Trainer("Scrooge")
 
     move1 = Move("Flamethrow", 10, 10)

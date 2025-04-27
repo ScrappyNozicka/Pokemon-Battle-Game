@@ -14,7 +14,7 @@ class Battle:
     Represents a battle between two trainers and their selected Pokemon.
 
     Handles turn-based combat, move selection, Pokemon switching,
-    damage calculation, and determining the winner.
+        damage calculation, and determining the winner.
     """
 
     def __init__(self, trainer_1, trainer_2, pokemon_1, pokemon_2):
@@ -162,7 +162,7 @@ class Battle:
     def __get_damage(self, move):
         """
         Calculates damage dealt by the given move,
-        including multipliers and critical hits.
+            including multipliers and critical hits.
 
         Args:
             move (Move): The move being used.
@@ -185,7 +185,7 @@ class Battle:
     def __pokemon_attack(self, move):
         """
         Executes an attack with the specified move
-        and applies damage to the opposing Pokemon.
+            and applies damage to the opposing Pokemon.
 
         Args:
             move (Move): The selected move to use.

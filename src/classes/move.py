@@ -29,7 +29,8 @@ class Move:
         Attempts to use the move, reducing its available PowerPoints.
 
         Returns:
-            bool:   True if the move was successfully used,
+            bool:   
+                True if the move was successfully used,
                     False if no PowerPoints remain.
         """
         if self.powerpoints > 0:
