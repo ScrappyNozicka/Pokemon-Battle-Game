@@ -1,5 +1,5 @@
-from src.move import Move
-from src.pokemon import (
+from src.classes.move import Move
+from src.classes.pokemon import (
     Pokemon,
     FirePokemon,
     WaterPokemon,

@@ -1,4 +1,4 @@
-from src.utils_funcs import (
+from src.utils.utils_funcs import (
     input_manager,
     pokemon_data_reader,
     pokemon_table_display,
@@ -9,7 +9,7 @@ from src.utils_funcs import (
     select_starting_pokemon,
 )
 from rich.table import Table
-from src.pokemon import (
+from src.classes.pokemon import (
     FirePokemon,
     WaterPokemon,
     GrassPokemon,
@@ -26,7 +26,7 @@ from src.pokemon import (
 )
 import pytest
 import random
-from src.trainer import Trainer
+from src.classes.trainer import Trainer
 from unittest.mock import patch
 
 

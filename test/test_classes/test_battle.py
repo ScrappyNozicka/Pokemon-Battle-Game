@@ -1,9 +1,9 @@
-from src.battle import Battle, NoPokemonError
-from src.move import Move
-from src.trainer import Trainer
-from src.pokemon import FirePokemon
-from src.pokemon import WaterPokemon
-from src.pokemon import GrassPokemon
+from src.classes.battle import Battle, NoPokemonError
+from src.classes.move import Move
+from src.classes.trainer import Trainer
+from src.classes.pokemon import FirePokemon
+from src.classes.pokemon import WaterPokemon
+from src.classes.pokemon import GrassPokemon
 import pytest
 from unittest.mock import patch, MagicMock
 

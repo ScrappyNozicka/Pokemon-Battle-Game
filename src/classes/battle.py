@@ -1,5 +1,5 @@
 import random
-from src.utils_funcs import input_manager
+from src.utils.utils_funcs import input_manager
 
 
 class NoPokemonError(Exception):

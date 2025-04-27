@@ -1,5 +1,5 @@
-from src.trainer import Trainer, NoEmptyPokeballError
-from src.pokemon import (
+from src.classes.trainer import Trainer, NoEmptyPokeballError
+from src.classes.pokemon import (
     NormalPokemon,
     ElectricPokemon,
     PoisonPokemon,
@@ -8,8 +8,8 @@ from src.pokemon import (
     WaterPokemon,
     FirePokemon,
 )
-from src.pokeball import Pokeball
-from src.move import Move
+from src.classes.pokeball import Pokeball
+from src.classes.move import Move
 import pytest
 
 

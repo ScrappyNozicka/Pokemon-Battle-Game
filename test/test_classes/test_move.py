@@ -1,4 +1,4 @@
-from src.move import Move
+from src.classes.move import Move
 
 
 def test_move_has_name():

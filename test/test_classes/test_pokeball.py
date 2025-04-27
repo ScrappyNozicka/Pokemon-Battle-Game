@@ -1,6 +1,6 @@
-from src.pokeball import Pokeball
-from src.pokemon import FirePokemon, NormalPokemon
-from src.move import Move
+from src.classes.pokeball import Pokeball
+from src.classes.pokemon import FirePokemon, NormalPokemon
+from src.classes.move import Move
 
 
 def test_pokeball_is_empty():

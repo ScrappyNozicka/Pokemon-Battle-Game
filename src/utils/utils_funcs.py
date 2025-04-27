@@ -1,7 +1,7 @@
 from rich.table import Table
 from rich.console import Console
 from bs4 import BeautifulSoup
-from src.pokemon import (
+from src.classes.pokemon import (
     FirePokemon,
     WaterPokemon,
     GrassPokemon,
@@ -17,8 +17,8 @@ from src.pokemon import (
     GroundPokemon,
 )
 import random
-from src.move import Move
-from src.trainer import Trainer
+from src.classes.move import Move
+from src.classes.trainer import Trainer
 
 
 def input_manager(prompt):
