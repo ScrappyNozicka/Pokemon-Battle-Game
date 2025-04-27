@@ -4,7 +4,7 @@
 #
 #################################################################################
 
-PROJECT_NAME = Project-03
+PROJECT_NAME = Pokemon-Battle-Game
 REGION = eu-west-2
 PYTHON_INTERPRETER = python
 WD=$(shell pwd)
@@ -71,11 +71,11 @@ security-test:
 
 ## Run the black code check
 run-black:
-	$(call execute_in_env, black --line-length 79 ./src/*.py ./test/*.py)
+	$(call execute_in_env, black --line-length 79 ./src/*/*.py ./test/*/*.py)
 
 ## Run flake8 code check
 run-flake8:
-	$(call execute_in_env, flake8  ./src/*.py ./test/*.py)	
+	$(call execute_in_env, flake8  ./src/*/*.py ./test/*/*.py)	
 
 ## Run the unit tests
 unit-test:
