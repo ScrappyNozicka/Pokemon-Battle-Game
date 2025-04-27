@@ -31,15 +31,20 @@ from unittest.mock import patch
 
 
 def test_input_manager_valid_input():
-    """Test the get_non_empty_input function handles input as expected."""
-
+    """
+    Tests that the 'input_manager' function handles valid input as expected.
+    """
     with patch("builtins.input", return_value="testing"):
         assert input_manager("") is not None
         assert input_manager("") == "testing"
 
 
 def test_input_manager_invalid_followed_by_valid_input(capsys):
-    """Test the get_non_empty_input function handles no input as expected."""
+    """
+    Tests that the 'input_manager' function handles invalid input
+        followed by valid input,
+            and prints the appropriate error message.
+    """
 
     with patch("builtins.input", side_effect=["", "testing"]):
         result = input_manager("")
@@ -49,6 +54,10 @@ def test_input_manager_invalid_followed_by_valid_input(capsys):
 
 
 def test_pokemon_data_reader_returns_expected_format():
+    """
+    Tests that the 'pokemon_data_reader' function returns
+        a list of dictionaries in the expected format.
+    """
     result = pokemon_data_reader(location="test/test_pokemon_data.md")
     assert isinstance(result, list)
     for pokemon in result:
@@ -57,6 +66,10 @@ def test_pokemon_data_reader_returns_expected_format():
 
 
 def test_pokemon_data_reader_returns_expected_values():
+    """
+    Tests that the 'pokemon_data_reader' function returns
+        the expected values for specific Pokemon data.
+    """
     result = pokemon_data_reader(location="test/test_pokemon_data.md")
     assert result[0] == {
         "Id": "01",
@@ -115,6 +128,10 @@ def test_pokemon_data_reader_returns_expected_values():
 
 
 def test_pokemon_table_display_returns_expected_format():
+    """
+    Tests that the 'pokemon_table_display' function returns
+        a Table object with the expected format.
+    """
     test_data = pokemon_data_reader(location="test/test_pokemon_data.md")
     result = pokemon_table_display(test_data)
     assert isinstance(result, Table)
@@ -123,6 +140,10 @@ def test_pokemon_table_display_returns_expected_format():
 
 
 def test_pokemon_table_display_returns_expected_header_values():
+    """
+    Tests that the 'pokemon_table_display' function returns
+        a table with the expected header values.
+    """
     test_data = pokemon_data_reader(location="test/test_pokemon_data.md")
     result = pokemon_table_display(test_data)
     expected_headers = [
@@ -150,6 +171,10 @@ def test_pokemon_table_display_returns_expected_header_values():
 
 
 def test_create_pokemon_instance_values_as_expected():
+    """
+    Tests that the 'create_pokemon_instance' function returns
+        a Pokemon instance with the expected attributes.
+    """
     test_data = pokemon_data_reader(location="test/test_pokemon_data.md")
     pokemon_dict_01 = test_data[0]
 
@@ -172,6 +197,10 @@ def test_create_pokemon_instance_values_as_expected():
 
 
 def test_create_pokemon_instance_subclasses_as_expected():
+    """
+    Tests that the 'create_pokemon_instance' function returns
+        Pokemon instances of the correct subclass type.
+    """
     test_data = pokemon_data_reader(location="test/test_pokemon_data.md")
 
     pokemon_dict_02 = test_data[1]
@@ -215,6 +244,10 @@ def test_create_pokemon_instance_subclasses_as_expected():
 
 
 def test_create_pokemon_instance_raises_exception_as_expected():
+    """
+    Tests that the 'create_pokemon_instance' function raises
+        an exception when given invalid Pokemon data.
+    """
     test_data = pokemon_data_reader(location="test/test_pokemon_data.md")
     pokemon_dict_14 = test_data[13]
 
@@ -223,6 +256,10 @@ def test_create_pokemon_instance_raises_exception_as_expected():
 
 
 def test_catch_random_pokemon_returns_first_pokemon(monkeypatch):
+    """
+    Tests that the 'catch_random_pokemon' function returns
+        the first Pokemon when the random selection is patched.
+    """
     test_data = pokemon_data_reader(location="test/test_pokemon_data.md")
     monkeypatch.setattr(random, "choice", lambda x: test_data[0])
 
@@ -245,6 +282,10 @@ def test_catch_random_pokemon_returns_first_pokemon(monkeypatch):
 
 
 def test_catch_random_pokemon_returns_final_pokemon(monkeypatch):
+    """
+    Tests that the 'catch_random_pokemon' function returns
+        the final Pokemon when the random selection is patched.
+    """
     test_data = pokemon_data_reader(location="test/test_pokemon_data.md")
     monkeypatch.setattr(random, "choice", lambda x: test_data[12])
 
@@ -267,6 +308,10 @@ def test_catch_random_pokemon_returns_final_pokemon(monkeypatch):
 
 
 def test_get_pokemon_data_returns_expected_values_with_valid_id():
+    """
+    Tests that the 'get_pokemon_data' function returns
+        the expected Pokemon data when given a valid ID.
+    """
     expected_pokemon = get_pokemon_data(
         id_num=10, location="test/test_pokemon_data.md"
     )
@@ -288,6 +333,10 @@ def test_get_pokemon_data_returns_expected_values_with_valid_id():
 
 
 def test_get_pokemon_data_returns_expected_values_with_invalid_id():
+    """
+    Tests that the 'get_pokemon_data' function returns
+        None when given an invalid ID.
+    """
     assert (
         get_pokemon_data(id_num=25, location="test/test_pokemon_data.md")
         is None
@@ -298,6 +347,10 @@ def test_get_pokemon_data_returns_expected_values_with_invalid_id():
 def test_trainer_setup_returns_instance_of_trainer_with_selected_one_pokemon(
     mock_input,
 ):
+    """
+    Tests that the 'trainer_setup' function correctly sets up a trainer
+        with one selected Pokemon.
+    """
     test_trainer = trainer_setup(
         role="Test Trainer", location="test/test_pokemon_data.md"
     )
@@ -310,6 +363,10 @@ def test_trainer_setup_returns_instance_of_trainer_with_selected_one_pokemon(
 def test_trainer_setup_returns_instance_of_trainer_with_random_one_pokemon(
     mock_input, monkeypatch
 ):
+    """
+    Tests that the 'trainer_setup' function correctly sets up a trainer
+        with one random Pokemon.
+    """
     test_data = pokemon_data_reader(location="test/test_pokemon_data.md")
     monkeypatch.setattr(random, "choice", lambda x: test_data[0])
 
@@ -328,6 +385,10 @@ def test_trainer_setup_returns_instance_of_trainer_with_random_one_pokemon(
 def test_trainer_setup_returns_instance_of_trainer_with_selected_some_pokemon(
     mock_input,
 ):
+    """
+    Tests that the 'trainer_setup' function correctly sets up a trainer
+        with some selected Pokemon.
+    """
     test_trainer = trainer_setup(
         role="Test Trainer", location="test/test_pokemon_data.md"
     )
@@ -364,6 +425,10 @@ def test_trainer_setup_returns_instance_of_trainer_with_selected_some_pokemon(
 def test_trainer_setup_returns_instance_of_trainer_with_selected_max_pokemon(
     mock_input,
 ):
+    """
+    Tests that the 'trainer_setup' function correctly sets up a trainer
+        with the maximum number of selected Pokemon.
+    """
     test_trainer = trainer_setup(
         role="Test Trainer", location="test/test_pokemon_data.md"
     )
@@ -382,6 +447,10 @@ def test_trainer_setup_returns_instance_of_trainer_with_selected_max_pokemon(
 def test_trainer_setup_returns_instance_of_trainer_with_random_some_pokemon(
     mock_input, monkeypatch
 ):
+    """
+    Tests that the 'trainer_setup' function correctly sets up a trainer
+        with some random Pokemon.
+    """
     test_data = pokemon_data_reader(location="test/test_pokemon_data.md")
 
     choices = [test_data[0], test_data[5], test_data[10]]
@@ -422,6 +491,10 @@ def test_trainer_setup_returns_instance_of_trainer_with_random_some_pokemon(
 def test_trainer_setup_returns_instance_of_trainer_with_random_max_pokemon(
     mock_input, monkeypatch
 ):
+    """
+    Tests that the 'trainer_setup' function correctly sets up a trainer
+        with the maximum number of random Pokemon.
+    """
     test_data = pokemon_data_reader(location="test/test_pokemon_data.md")
 
     choices = [
@@ -459,6 +532,10 @@ def test_trainer_setup_returns_instance_of_trainer_with_random_max_pokemon(
 def test_trainer_setup_returns_instance_of_trainer_with_mixed_some_pokemon(
     mock_input, monkeypatch
 ):
+    """
+    Tests that the 'trainer_setup' function correctly sets up a trainer
+        with a mix of some selected and random Pokemon.
+    """
     test_data = pokemon_data_reader(location="test/test_pokemon_data.md")
 
     choices = [test_data[0], test_data[10]]
@@ -502,6 +579,10 @@ def test_trainer_setup_returns_instance_of_trainer_with_mixed_some_pokemon(
 def test_trainer_setup_returns_instance_of_trainer_with_mixed_max_pokemon(
     mock_input, monkeypatch
 ):
+    """
+    Tests that the 'trainer_setup' function correctly sets up a trainer
+        with a mix of some selected and random Pokemon up to the maximum limit.
+    """
     test_data = pokemon_data_reader(location="test/test_pokemon_data.md")
 
     choices = [
@@ -534,7 +615,10 @@ def test_trainer_setup_returns_instance_of_trainer_with_mixed_max_pokemon(
 def test_trainer_setup_returns_expected_output_if_selecting_pokemon(
     mock_print, mock_input
 ):
-
+    """
+    Tests that the 'trainer_setup' function prints the expected output
+        when selecting a Pokemon.
+    """
     trainer_setup(role="Test Trainer", location="test/test_pokemon_data.md")
 
     mock_input.assert_any_call("What's the Test Trainer's trainer name?\n")
@@ -552,7 +636,10 @@ def test_trainer_setup_returns_expected_output_if_selecting_pokemon(
 def test_trainer_setup_returns_expected_output_if_random_pokemon(
     mock_print, mock_input, monkeypatch
 ):
-
+    """
+    Tests that the 'trainer_setup' function prints the expected output
+        when selecting a random Pokemon.
+    """
     test_data = pokemon_data_reader(location="test/test_pokemon_data.md")
     monkeypatch.setattr(random, "choice", lambda x: test_data[0])
 
@@ -573,6 +660,10 @@ def test_trainer_setup_returns_expected_output_if_random_pokemon(
 def test_trainer_setup_returns_expected_output_if_pokemon_selection_cancelled(
     mock_print, mock_input
 ):
+    """
+    Tests that the 'trainer_setup' function prints the expected output
+        when the Pokemon selection is cancelled.
+    """
 
     trainer_setup(role="Test Trainer", location="test/test_pokemon_data.md")
 
@@ -590,7 +681,10 @@ def test_trainer_setup_returns_expected_output_if_pokemon_selection_cancelled(
 def test_trainer_setup_returns_expected_output_if_invalid_char_and_cancel(
     mock_print, mock_input
 ):
-
+    """
+    Tests that the 'trainer_setup' function handles invalid character input
+        and cancels the Pokemon selection.
+    """
     trainer_setup(role="Test Trainer", location="test/test_pokemon_data.md")
 
     mock_input.assert_any_call("What's the Test Trainer's trainer name?\n")
@@ -611,7 +705,10 @@ def test_trainer_setup_returns_expected_output_if_invalid_char_and_cancel(
 def test_trainer_setup_returns_expected_output_if_selecting_cancelled(
     mock_print, mock_input
 ):
-
+    """
+    Tests that the 'trainer_setup' function handles the Pokemon selection
+        being cancelled after selecting.
+    """
     trainer_setup(role="Test Trainer", location="test/test_pokemon_data.md")
 
     mock_input.assert_any_call("What's the Test Trainer's trainer name?\n")
@@ -629,7 +726,10 @@ def test_trainer_setup_returns_expected_output_if_selecting_cancelled(
 def test_trainer_setup_returns_expected_output_if_selecting_with_invalid_id(
     mock_print, mock_input
 ):
-
+    """
+    Tests that the 'trainer_setup' function handles an invalid Pokemon ID
+        during selection and cancels the selection.
+    """
     trainer_setup(role="Test Trainer", location="test/test_pokemon_data.md")
 
     mock_input.assert_any_call("What's the Test Trainer's trainer name?\n")
@@ -648,7 +748,10 @@ def test_trainer_setup_returns_expected_output_if_selecting_with_invalid_id(
 def test_trainer_setup_returns_expected_output_selecting_followed_by_inv_char(
     mock_print, mock_input
 ):
-
+    """
+    Tests that the 'trainer_setup' function handles selecting a Pokemon,
+        followed by an invalid character input.
+    """
     trainer_setup(role="Test Trainer", location="test/test_pokemon_data.md")
 
     mock_input.assert_any_call("What's the Test Trainer's trainer name?\n")
@@ -673,7 +776,10 @@ def test_trainer_setup_returns_expected_output_selecting_followed_by_inv_char(
 def test_trainer_setup_returns_expected_output_selecting_followed_by_random(
     mock_print, mock_input, monkeypatch
 ):
-
+    """
+    Tests that the 'trainer_setup' function handles selecting a Pokemon,
+        followed by a random Pokemon selection.
+    """
     test_data = pokemon_data_reader(location="test/test_pokemon_data.md")
     monkeypatch.setattr(random, "choice", lambda x: test_data[0])
 
@@ -698,6 +804,11 @@ def test_trainer_setup_returns_expected_output_selecting_followed_by_random(
 def test_trainer_setup_returns_expected_output_further_selecting_cancel(
     mock_print, mock_input
 ):
+    """
+    Tests that the 'trainer_setup' function handles further selection
+        of Pokemon and then cancelling the selection.
+    """
+
     trainer_setup(role="Test Trainer", location="test/test_pokemon_data.md")
 
     mock_input.assert_any_call("What's the Test Trainer's trainer name?\n")
@@ -718,6 +829,10 @@ def test_trainer_setup_returns_expected_output_further_selecting_cancel(
 def test_trainer_setup_returns_expected_output_selecting_further_pokemon(
     mock_print, mock_input
 ):
+    """
+    Tests that the 'trainer_setup' function handles selecting further Pokemon
+         after an initial selection.
+    """
     trainer_setup(role="Test Trainer", location="test/test_pokemon_data.md")
 
     mock_input.assert_any_call("What's the Test Trainer's trainer name?\n")
@@ -739,7 +854,10 @@ def test_trainer_setup_returns_expected_output_selecting_further_pokemon(
 def test_trainer_setup_returns_expected_output_selecting_further_inv_char(
     mock_print, mock_input
 ):
-
+    """
+    Tests that the 'trainer_setup' function handles selecting further Pokemon,
+        followed by an invalid character input.
+    """
     trainer_setup(role="Test Trainer", location="test/test_pokemon_data.md")
 
     mock_input.assert_any_call("What's the Test Trainer's trainer name?\n")
@@ -768,7 +886,10 @@ def test_trainer_setup_returns_expected_output_selecting_further_inv_char(
 def test_trainer_setup_returns_expected_output_selecting_further_inv_id(
     mock_print, mock_input
 ):
-
+    """
+    Tests that the 'trainer_setup' function handles selecting further Pokemon,
+        followed by an invalid Pokemon ID and then cancelling the selection.
+    """
     trainer_setup(role="Test Trainer", location="test/test_pokemon_data.md")
 
     mock_input.assert_any_call("What's the Test Trainer's trainer name?\n")
@@ -797,6 +918,10 @@ def test_trainer_setup_returns_expected_output_selecting_further_inv_id(
 def test_trainer_setup_returns_expected_output_selecting_followed_by_cancel(
     mock_print, mock_input
 ):
+    """
+    Tests that the 'trainer_setup' function handles selecting a Pokemon
+        and then cancelling the selection afterward.
+    """
 
     trainer_setup(role="Test Trainer", location="test/test_pokemon_data.md")
 
@@ -822,6 +947,10 @@ def test_trainer_setup_returns_expected_output_selecting_followed_by_cancel(
 @patch("builtins.input", side_effect=["Steve", "c"])
 @patch("builtins.print")
 def test_select_starting_pokemon_with_no_pokemon(mock_print, mock_input):
+    """
+    Tests that the 'select_starting_pokemon' function handles the scenario
+        where no Pokemon are selected.
+    """
     test_trainer = trainer_setup(
         role="Test Trainer", location="test/test_pokemon_data.md"
     )
@@ -837,6 +966,10 @@ def test_select_starting_pokemon_with_no_pokemon(mock_print, mock_input):
 def test_select_starting_pokemon_with_pokemon_and_valid_id(
     mock_print, mock_input
 ):
+    """
+    Tests that the 'select_starting_pokemon' function selects the Pokemon
+        with a valid ID correctly.
+    """
     test_trainer = trainer_setup(
         role="Test Trainer", location="test/test_pokemon_data.md"
     )
@@ -856,6 +989,10 @@ def test_select_starting_pokemon_with_pokemon_and_valid_id(
 def test_select_starting_pokemon_with_pokemon_and_invalid_id(
     mock_print, mock_input
 ):
+    """
+    Tests that the 'select_starting_pokemon' function handles
+        invalid Pokemon IDs when selecting a starting Pokemon.
+    """
     test_trainer = trainer_setup(
         role="Test Trainer", location="test/test_pokemon_data.md"
     )

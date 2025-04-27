@@ -3,7 +3,7 @@ class Pokeball:
     Represents a Pokeball that can hold a single Pokemon.
 
     Attributes:
-        pokemon (Pokemon or None): 
+        pokemon (Pokemon or None):
             The Pokemon currently inside the Pokeball,
             or None if the Pokeball is empty.
     """

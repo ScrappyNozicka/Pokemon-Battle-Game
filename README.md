@@ -1,7 +1,15 @@
 # Pokemon Battle Game
 
 ## Description
-Terminal based pokemon battle game utilising python script and Object-Oriented Programming. It allows two players to list and view available pokemon, select up to six of them and battle until one player's pokemon have all fainted. Each battle allows for swapping between pokemon, selecting different moves each round and accounts for strengths and weaknesses against specific types of each pokemon.
+Terminal based pokemon battle game utilising python script.
+
+It allows two players to list and view available pokemon, select up to six of them and battle until one player's pokemon have all fainted. 
+
+Each battle allows for:
+ - Swapping between pokemon during battle.
+ - Selecting from three different Pokemon moves each round.
+ - Accounts for PoperPoints being decresed when move is being used.
+ - Accounts for strengths and weaknesses against specific types of each Pokemon.
 
 
 ## Technologies used

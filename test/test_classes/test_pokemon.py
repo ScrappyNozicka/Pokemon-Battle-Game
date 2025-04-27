@@ -18,6 +18,10 @@ from src.classes.pokemon import (
 
 
 def test_pokemon_has_id():
+    """
+    Tests that the 'Pokemon' object correctly initializes
+        and returns the pokemon ID.
+    """
     test_pokemon = Pokemon(
         "01", "Bob", 500, "Attack", "Stronger Attack", "Max Attack"
     )
@@ -26,6 +30,10 @@ def test_pokemon_has_id():
 
 
 def test_pokemon_has_name():
+    """
+    Tests that the 'Pokemon' object correctly initializes
+        and returns the pokemon name.
+    """
     test_pokemon = Pokemon(
         "01", "Bob", 500, "Attack", "Stronger Attack", "Max Attack"
     )
@@ -34,6 +42,10 @@ def test_pokemon_has_name():
 
 
 def test_pokemon_has_hit_points():
+    """
+    Tests that the 'Pokemon' object initializes
+        with the correct hit points as an integer.
+    """
     test_pokemon = Pokemon(
         "01", "Bob", 500, "Attack", "Stronger Attack", "Max Attack"
     )
@@ -43,6 +55,10 @@ def test_pokemon_has_hit_points():
 
 
 def test_pokemon_has_moves():
+    """
+    Tests that the 'Pokemon' object correctly initializes
+        and returns a list of moves.
+    """
     test_pokemon = Pokemon(
         "01", "Bob", 500, "Attack", "Stronger Attack", "Max Attack"
     )
@@ -55,6 +71,10 @@ def test_pokemon_has_moves():
 
 
 def test_pokemon_used_move():
+    """
+    Tests that the 'Pokemon' object correctly uses a move
+        and returns the expected string output.
+    """
     move1 = Move("Attack", 10, 5)
     move2 = Move("Stronger Attack", 15, 3)
     move3 = Move("Max Attack", 20, 2)
@@ -65,6 +85,10 @@ def test_pokemon_used_move():
 
 
 def test_pokemon_used_all_moves():
+    """
+    Tests that the 'Pokemon' object correctly uses all available moves
+        and returns the expected output.
+    """
     move1 = Move("Attack", 10, 5)
     move2 = Move("Stronger Attack", 15, 3)
     move3 = Move("Max Attack", 20, 2)
@@ -87,6 +111,10 @@ def test_pokemon_used_all_moves():
 
 
 def test_pokemon_used_move_with_no_powerpoints():
+    """
+    Tests that the 'Pokemon' object correctly handles using a move
+        with no power points (PP).
+    """
     move1 = Move("Attack", 10, 0)
     move2 = Move("Stronger Attack", 15, 3)
     move3 = Move("Max Attack", 20, 2)
@@ -100,6 +128,10 @@ def test_pokemon_used_move_with_no_powerpoints():
 
 
 def test_pokemon_used_move_with_invalid_value():
+    """
+    Tests that the 'Pokemon' object returns the correct message
+        when an invalid move index is provided.
+    """
     move1 = Move("Attack", 10, 0)
     move2 = Move("Stronger Attack", 15, 3)
     move3 = Move("Max Attack", 20, 2)
@@ -112,6 +144,10 @@ def test_pokemon_used_move_with_invalid_value():
 
 
 def test_pokemon_take_damage_once_with_remaining_lives():
+    """
+    Tests that the 'Pokemon' object correctly calculates
+        remaining hit points after taking damage.
+    """
     test_pokemon = Pokemon(
         "01", "Bob", 500, "Attack", "Stronger Attack", "Max Attack"
     )
@@ -120,6 +156,10 @@ def test_pokemon_take_damage_once_with_remaining_lives():
 
 
 def test_pokemon_take_damage_multi_times_with_remaining_lives():
+    """
+    Tests that the 'Pokemon' object correctly calculates
+        remaining hit points after taking multiple instances of damage.
+    """
     test_pokemon = Pokemon(
         "01", "Bob", 500, "Attack", "Stronger Attack", "Max Attack"
     )
@@ -130,6 +170,10 @@ def test_pokemon_take_damage_multi_times_with_remaining_lives():
 
 
 def test_pokemon_take_damage_returns_zero_if_damage_over_max_hp_received():
+    """
+    Tests that the 'Pokemon' object returns 0 hit points
+        if the damage received exceeds the maximum hit points.
+    """
     test_pokemon = Pokemon(
         "01", "Bob", 500, "Attack", "Stronger Attack", "Max Attack"
     )
@@ -138,6 +182,10 @@ def test_pokemon_take_damage_returns_zero_if_damage_over_max_hp_received():
 
 
 def test_pokemon_has_not_fainted():
+    """
+    Tests that the 'Pokemon' object correctly returns False
+        when the Pokemon has not fainted after taking damage.
+    """
     test_pokemon = Pokemon(
         "01", "Bob", 500, "Attack", "Stronger Attack", "Max Attack"
     )
@@ -150,6 +198,10 @@ def test_pokemon_has_not_fainted():
 
 
 def test_pokemon_has_fainted():
+    """
+    Tests that the 'Pokemon' object correctly returns True
+        when the Pokemon has fainted after taking sufficient damage.
+    """
     test_pokemon = Pokemon(
         "01", "Bob", 500, "Attack", "Stronger Attack", "Max Attack"
     )
@@ -163,6 +215,10 @@ def test_pokemon_has_fainted():
 
 
 def test_normal_pokemon_str_method_return_expected_output_with_damage():
+    """
+    Tests that the string representation of a 'NormalPokemon' object
+        returns the expected output when it has taken damage.
+    """
     move1 = Move("Complain", 5, 10)
     move2 = Move("Call Manager", 15, 5)
     move3 = Move("Scratch", 10, 10)
@@ -182,6 +238,10 @@ def test_normal_pokemon_str_method_return_expected_output_with_damage():
 
 
 def test_get_multiplier_returns_1point5_when_strong_against_passed_pokemon():
+    """
+    Tests that the 'get_multiplier' method correctly returns 1.5
+        when the Pokemon is strong against the passed opponent.
+    """
     test_pokemon = FirePokemon(
         "02", "Infernus", 30, "Flamethrow", "Ember", "Lavalamp"
     )
@@ -192,6 +252,10 @@ def test_get_multiplier_returns_1point5_when_strong_against_passed_pokemon():
 
 
 def test_get_multiplier_returns_0point5_when_weak_against_passed_pokemon():
+    """
+    Tests that the 'get_multiplier' method correctly returns 0.5
+        when the Pokemon is weak against the passed opponent.
+    """
     test_pokemon = WaterPokemon(
         "04", "Voda", 60, "Hurricane", "Surf", "Cowabunga"
     )
@@ -202,6 +266,11 @@ def test_get_multiplier_returns_0point5_when_weak_against_passed_pokemon():
 
 
 def test_get_multiplier_returns_1_when_neither_strong_nor_weak_against():
+    """
+    Tests that the 'get_multiplier' method correctly returns 1
+        when the Pokemon neither has an advantage nor disadvantage
+            against the passed opponent.
+    """
     test_pokemon = NormalPokemon(
         "05", "Typicus", 10, "Complain", "Call Manager", "Scratch"
     )
@@ -212,6 +281,10 @@ def test_get_multiplier_returns_1_when_neither_strong_nor_weak_against():
 
 
 def test_pokemon_fire_is_strong_against_grass_weak_against_water():
+    """
+    Tests that the 'FirePokemon' object has the correct type interactions
+        for being strong against Grass and weak against Water.
+    """
     test_pokemon = FirePokemon(
         "02", "Infernus", 30, "Flamethrow", "Ember", "Lavalamp"
     )
@@ -221,6 +294,10 @@ def test_pokemon_fire_is_strong_against_grass_weak_against_water():
 
 
 def test_fire_pokemon_str_method_return_expected_output():
+    """
+    Tests that the string representation of a 'FirePokemon' object
+        returns the expected output.
+    """
     move1 = Move("Flamethrow", 10, 10)
     move2 = Move("Ember", 15, 3)
     move3 = Move("Lavalamp", 20, 2)
@@ -235,6 +312,10 @@ def test_fire_pokemon_str_method_return_expected_output():
 
 
 def test_pokemon_water_is_strong_against_fire_weak_against_grass():
+    """
+    Tests that the 'WaterPokemon' object has the correct type interactions
+        for being strong against Fire and weak against Grass.
+    """
     test_pokemon = WaterPokemon(
         "04", "Voda", 60, "Hurricane", "Surf", "Cowabunga"
     )
@@ -245,6 +326,10 @@ def test_pokemon_water_is_strong_against_fire_weak_against_grass():
 
 
 def test_water_pokemon_str_method_return_expected_output():
+    """
+    Tests that the string representation of a 'WaterPokemon' object
+        returns the expected output.
+    """
     move1 = Move("Hurricane", 10, 5)
     move2 = Move("Surf", 15, 10)
     move3 = Move("Cowabunga", 20, 5)
@@ -259,6 +344,10 @@ def test_water_pokemon_str_method_return_expected_output():
 
 
 def test_pokemon_grass_is_strong_against_water_weak_against_fire():
+    """
+    Tests that the 'GrassPokemon' object has the correct type interactions
+        for being strong against Water and weak against Fire.
+    """
     test_pokemon = GrassPokemon(
         "03", "Herbus", 45, "Grow", "Bloom", "Thorn Whip"
     )
@@ -268,6 +357,10 @@ def test_pokemon_grass_is_strong_against_water_weak_against_fire():
 
 
 def test_grass_pokemon_str_method_return_expected_output():
+    """
+    Tests that the string representation of a 'GrassPokemon' object
+        returns the expected output.
+    """
     move1 = Move("Grow", 10, 10)
     move2 = Move("Bloom", 13, 8)
     move3 = Move("Thorn Whip", 16, 6)
@@ -282,6 +375,10 @@ def test_grass_pokemon_str_method_return_expected_output():
 
 
 def test_pokemon_normal_is_strong_and_weak_against_none():
+    """
+    Tests that the 'NormalPokemon' object has the correct type interactions
+        for being strong against None and weak against None.
+    """
     test_pokemon = NormalPokemon(
         "05", "Typicus", 10, "Complain", "Call Manager", "Scratch"
     )
@@ -291,6 +388,10 @@ def test_pokemon_normal_is_strong_and_weak_against_none():
 
 
 def test_normal_pokemon_str_method_return_expected_output():
+    """
+    Tests that the string representation of a 'NormalPokemon' object
+        returns the expected output.
+    """
     move1 = Move("Complain", 5, 10)
     move2 = Move("Call Manager", 15, 5)
     move3 = Move("Scratch", 10, 10)
@@ -305,6 +406,10 @@ def test_normal_pokemon_str_method_return_expected_output():
 
 
 def test_pokemon_electric_is_strong_against_water_and_weak_against_ground():
+    """
+    Tests that the 'ElectricPokemon' object has the correct type interactions
+        for being strong against Water and weak against Ground.
+    """
     test_pokemon = ElectricPokemon(
         "06", "Sparky", 10, "Thunder", "Lighting", "Lightbulb"
     )
@@ -314,6 +419,10 @@ def test_pokemon_electric_is_strong_against_water_and_weak_against_ground():
 
 
 def test_electric_pokemon_str_method_return_expected_output():
+    """
+    Tests that the string representation of a 'ElectricPokemon' object
+        returns the expected output.
+    """
     move1 = Move("Thunder", 2, 10)
     move2 = Move("Lighting", 10, 10)
     move3 = Move("Lightbulb", 12, 15)
@@ -328,6 +437,10 @@ def test_electric_pokemon_str_method_return_expected_output():
 
 
 def test_pokemon_fighting_is_strong_against_normal_and_weak_against_flying():
+    """
+    Tests that the 'FightingPokemon' object has the correct type interactions
+        for being strong against Normal and weak against Flying.
+    """
     test_pokemon = FightingPokemon(
         "07", "One-Puncher", 10, "Light Punch", "Light Kick", "Fatal Punch"
     )
@@ -337,6 +450,10 @@ def test_pokemon_fighting_is_strong_against_normal_and_weak_against_flying():
 
 
 def test_fighting_pokemon_str_method_return_expected_output():
+    """
+    Tests that the string representation of a 'FightingPokemon' object
+        returns the expected output.
+    """
     move1 = Move("Light Punch", 10, 15)
     move2 = Move("Light Kick", 15, 10)
     move3 = Move("Fatal Punch", 20, 5)
@@ -353,6 +470,10 @@ def test_fighting_pokemon_str_method_return_expected_output():
 
 
 def test_pokemon_poison_is_strong_against_fairy_and_weak_against_psychic():
+    """
+    Tests that the 'PoisonPokemon' object has the correct type interactions
+        for being strong against Fairy and weak against Psychic.
+    """
     test_pokemon = PoisonPokemon(
         "08", "Foxglove", 45, "Irregular", "Sting", "Sleep"
     )
@@ -362,6 +483,10 @@ def test_pokemon_poison_is_strong_against_fairy_and_weak_against_psychic():
 
 
 def test_poison_pokemon_str_method_return_expected_output():
+    """
+    Tests that the string representation of a 'PoisonPokemon' object
+        returns the expected output.
+    """
     move1 = Move("Irregular", 15, 12)
     move2 = Move("Sting", 12, 20)
     move3 = Move("Sleep", 8, 35)
@@ -376,6 +501,10 @@ def test_poison_pokemon_str_method_return_expected_output():
 
 
 def test_pokemon_psychic_is_strong_against_fighting_and_weak_against_bug():
+    """
+    Tests that the 'PsychicPokemon' object has the correct type interactions
+        for being strong against Fighting and weak against Bug.
+    """
     test_pokemon = PsychicPokemon(
         "09", "Shazam", 30, "Psybeam", "Telekinesis", "Spoon Bending"
     )
@@ -385,6 +514,10 @@ def test_pokemon_psychic_is_strong_against_fighting_and_weak_against_bug():
 
 
 def test_psychic_pokemon_str_method_return_expected_output():
+    """
+    Tests that the string representation of a 'PsychicPokemon' object
+        returns the expected output.
+    """
     move1 = Move("Psybeam", 10, 25)
     move2 = Move("Telekinesis", 15, 15)
     move3 = Move("Spoon Bending", 25, 2)
@@ -399,6 +532,10 @@ def test_psychic_pokemon_str_method_return_expected_output():
 
 
 def test_pokemon_bug_is_strong_against_psychic_and_weak_against_fire():
+    """
+    Tests that the 'BugPokemon' object has the correct type interactions
+        for being strong against Psychic and weak against Fire.
+    """
     test_pokemon = BugPokemon(
         "10", "Mantis", 44, "Cut", "Gossamer", "Bug Bite"
     )
@@ -408,6 +545,10 @@ def test_pokemon_bug_is_strong_against_psychic_and_weak_against_fire():
 
 
 def test_bug_pokemon_str_method_return_expected_output():
+    """
+    Tests that the string representation of a 'BugPokemon' object
+        returns the expected output.
+    """
     move1 = Move("Cut", 15, 10)
     move2 = Move("Gossamer", 20, 5)
     move3 = Move("Bug Bite", 10, 25)
@@ -422,6 +563,10 @@ def test_bug_pokemon_str_method_return_expected_output():
 
 
 def test_pokemon_ghost_is_strong_against_psychic_and_weak_against_ghost():
+    """
+    Tests that the 'GhostPokemon' object has the correct type interactions
+        for being strong against Psychic and weak against Ghost.
+    """
     test_pokemon = GhostPokemon(
         "11", "Casper", 100, "Scream", "Scary Face", "Darklight"
     )
@@ -431,6 +576,10 @@ def test_pokemon_ghost_is_strong_against_psychic_and_weak_against_ghost():
 
 
 def test_ghost_pokemon_str_method_return_expected_output():
+    """
+    Tests that the string representation of a 'GhostPokemon' object
+        returns the expected output.
+    """
     move1 = Move("Scream", 10, 15)
     move2 = Move("Scary Face", 5, 35)
     move3 = Move("Darklight", 12, 20)
@@ -445,6 +594,10 @@ def test_ghost_pokemon_str_method_return_expected_output():
 
 
 def test_pokemon_dragon_is_strong_against_dragon_and_weak_against_ice():
+    """
+    Tests that the 'DragonPokemon' object has the correct type interactions
+        for being strong against Dragon and weak against Ice.
+    """
     test_pokemon = DragonPokemon(
         "12", "Mushu", 80, "Dragon Claw", "Roar", "Wing Slam"
     )
@@ -454,6 +607,10 @@ def test_pokemon_dragon_is_strong_against_dragon_and_weak_against_ice():
 
 
 def test_dragon_pokemon_str_method_return_expected_output():
+    """
+    Tests that the string representation of a 'DragonPokemon' object
+        returns the expected output.
+    """
     move1 = Move("Dragon Claw", 15, 10)
     move2 = Move("Roar", 10, 35)
     move3 = Move("Wing Slam", 20, 5)
@@ -468,6 +625,10 @@ def test_dragon_pokemon_str_method_return_expected_output():
 
 
 def test_pokemon_fairy_is_strong_against_dragon_and_weak_against_ice():
+    """
+    Tests that the 'FairyPokemon' object has the correct type interactions
+        for being strong against Dragon and weak against Steel.
+    """
     test_pokemon = FairyPokemon(
         "13", "Oberon", 50, "Fairy Dust", "Dreaming", "Fairytales"
     )
@@ -477,6 +638,10 @@ def test_pokemon_fairy_is_strong_against_dragon_and_weak_against_ice():
 
 
 def test_fairy_pokemon_str_method_return_expected_output():
+    """
+    Tests that the string representation of a 'FairyPokemon' object
+        returns the expected output.
+    """
     move1 = Move("Fairy Dust", 10, 30)
     move2 = Move("Dreaming", 12, 25)
     move3 = Move("Fairytales", 14, 20)
@@ -491,6 +656,10 @@ def test_fairy_pokemon_str_method_return_expected_output():
 
 
 def test_pokemon_ground_is_strong_against_dragon_and_weak_against_ice():
+    """
+    Tests that the 'GroundPokemon' object has the correct type interactions
+        for being strong against Fire and weak against Water.
+    """
     test_pokemon = GroundPokemon(
         "14", "Sandworm", 45, "Tunnel", "Devour", "Sandstorm"
     )
@@ -500,6 +669,10 @@ def test_pokemon_ground_is_strong_against_dragon_and_weak_against_ice():
 
 
 def test_ground_pokemon_str_method_return_expected_output():
+    """
+    Tests that the string representation of a 'GroundPokemon' object
+        returns the expected output.
+    """
     move1 = Move("Tunnel", 15, 15)
     move2 = Move("Devour", 10, 30)
     move3 = Move("Sandstorm", 25, 5)

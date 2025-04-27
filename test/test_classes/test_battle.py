@@ -9,6 +9,11 @@ from unittest.mock import patch, MagicMock
 
 
 def test_battle_returns_trainer_values():
+    """
+    Test to ensure that the battle correctly returns the trainer values.
+    Verifies that the trainer names are set correctly
+        and the objects are instances of the Trainer class.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -33,6 +38,11 @@ def test_battle_returns_trainer_values():
 
 
 def test_battle_returns_pokemon_values():
+    """
+    Test to verify that the battle correctly returns the Pokemon values.
+    Confirms that the Pokemon names, types, and available Pokemon list
+        are correctly initialized.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -59,6 +69,11 @@ def test_battle_returns_pokemon_values():
 
 
 def test_battle_returns_pokemon_turn_value():
+    """
+    Test to ensure the Pokemon turn value is correctly set
+        for the first Pokemon in the battle.
+    Verifies that the `pokemon_1_turn` is set as expected (True or False).
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -81,6 +96,12 @@ def test_battle_returns_pokemon_turn_value():
 
 
 def test_battle_change_available_pokemon_challenger_trainer():
+    """
+    Test that the challenger trainer can correctly change their Pokemon
+        during the battle.
+    Ensures that the correct Pokemon is selected
+        based on the Pokemon ID provided.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -113,6 +134,12 @@ def test_battle_change_available_pokemon_challenger_trainer():
 
 
 def test_battle_change_available_pokemon_defender_trainer():
+    """
+    Test that the defender trainer can correctly change their Pokemon
+        during the battle.
+    Ensures that the defender's Pokemon switches
+        when the appropriate ID is chosen.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -147,6 +174,12 @@ def test_battle_change_available_pokemon_defender_trainer():
 
 
 def test_battle_change_unavailable_pokemon_challenger_trainer():
+    """
+    Test that an error is raised when a challenger trainer tries to change
+        to an unavailable Pokemon.
+    Ensures that a NoPokemonError is raised
+        when an invalid Pokemon ID is selected.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -178,6 +211,12 @@ def test_battle_change_unavailable_pokemon_challenger_trainer():
 def test_battle_force_switch_challenger_available_pokemon(
     mock_print, mock_input
 ):
+    """
+    Test to verify the challenger trainer can be forced to switch
+        to an available Pokemon.
+    Ensures the correct Pokemon is selected and displayed
+        after the forced switch.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -224,6 +263,12 @@ def test_battle_force_switch_challenger_available_pokemon(
 def test_battle_force_switch_defender_available_pokemon(
     mock_print, mock_input
 ):
+    """
+    Test to verify the defender trainer can be forced to switch
+        to an available Pokemon.
+    Ensures the correct Pokemon is selected and displayed
+        after the forced switch.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -270,6 +315,12 @@ def test_battle_force_switch_defender_available_pokemon(
 def test_battle_force_switch_challenger_no_available_pokemon(
     mock_print, mock_input
 ):
+    """
+    Test to verify that when the challenger trainer has no available Pokemon,
+        no Pokemon is switched.
+    Ensures that the game correctly handles the scenario
+        where the challenger has no usable Pokemon.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -310,6 +361,12 @@ def test_battle_force_switch_challenger_no_available_pokemon(
 @patch("builtins.input", side_effect=["999", "04"])
 @patch("builtins.print")
 def test_battle_force_switch_challenger_invalid_id(mock_print, mock_input):
+    """
+    Test to verify that the challenger trainer cannot switch
+        to an invalid Pokemon ID.
+    Ensures that invalid inputs are handled properly
+        and the correct error message is displayed.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -357,6 +414,11 @@ def test_battle_force_switch_challenger_invalid_id(mock_print, mock_input):
 @patch("builtins.input", side_effect=["1"])
 @patch("builtins.print")
 def test_battle_select_move_valid_input(mock_print, mock_input):
+    """
+    Test to ensure that the Pokemon move selection process works correctly
+        when a valid input is provided.
+    Verifies that the correct move is selected and executed.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -392,6 +454,12 @@ def test_battle_select_move_valid_input(mock_print, mock_input):
 @patch("builtins.input", side_effect=["magic", "999", "03"])
 @patch("builtins.print")
 def test_battle_select_move_invalid_input(mock_print, mock_input):
+    """
+    Test to ensure that the Pokemon move selection process
+        handles invalid inputs gracefully.
+    Verifies that when an invalid move number is entered,
+        the prompt is repeated with an appropriate error message.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -430,6 +498,12 @@ def test_battle_select_move_invalid_input(mock_print, mock_input):
 def test_battle_select_action_valid_switch_action_input(
     mock_print, mock_input
 ):
+    """
+    Test to verify that when the player selects the 'switch' action,
+        the Pokemon switch happens as expected.
+    Verifies that the correct Pokemon is switched
+        and the action is confirmed with a print statement.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -471,6 +545,12 @@ def test_battle_select_action_valid_switch_action_input(
 def test_battle_select_action_valid_attack_action_input(
     mock_print, mock_input
 ):
+    """
+    Test to verify that when the player selects the 'attack' action,
+        the correct move is selected.
+    Verifies that the selected attack is executed correctly
+        based on user input.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -510,6 +590,11 @@ def test_battle_select_action_valid_attack_action_input(
 @patch("builtins.input", side_effect=["999", "s", "04"])
 @patch("builtins.print")
 def test_battle_select_action_invalid_input(mock_print, mock_input):
+    """
+    Tests the case where the user selects an invalid action during a battle.
+    Verifies that the system prompts the user again
+        and prints an error message.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -547,6 +632,11 @@ def test_battle_select_action_invalid_input(mock_print, mock_input):
 
 
 def test_battle_get_damage_standard(monkeypatch):
+    """
+    Tests the calculation of damage when the move is executed
+        with standard conditions (no critical hit).
+    Verifies that the expected damage is calculated correctly.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -573,6 +663,11 @@ def test_battle_get_damage_standard(monkeypatch):
 
 
 def test_battle_get_damage_critical(monkeypatch):
+    """
+    Tests the calculation of damage when a critical hit occurs.
+    Verifies that the expected damage is calculated correctly
+        with a critical hit.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -600,6 +695,11 @@ def test_battle_get_damage_critical(monkeypatch):
 
 @patch("builtins.print")
 def test_battle_pokemon_attack_valid_powerpoints(mock_print, monkeypatch):
+    """
+    Tests a valid attack with enough powerpoints.
+    Verifies that the attack is executed, damage is dealt,
+        and the correct output is printed.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -629,6 +729,10 @@ def test_battle_pokemon_attack_valid_powerpoints(mock_print, monkeypatch):
 
 @patch("builtins.print")
 def test_battle_pokemon_attack_invalid_powerpoints(mock_print, monkeypatch):
+    """
+    Tests an attack attempt when a Pokemon doesn't have enough powerpoints.
+    Verifies that an appropriate message is printed and no attack is executed.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -661,6 +765,12 @@ def test_battle_pokemon_attack_invalid_powerpoints(mock_print, monkeypatch):
 def test_battle_pokemon_attack_defender_pokemon_fainted(
     mock_print, mock_input, monkeypatch
 ):
+    """
+    Tests the scenario where the defender's Pokemon faints
+        after being attacked.
+    Verifies that the correct switch action is prompted
+        and the defender's Pokemon is switched.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -702,6 +812,11 @@ def test_battle_pokemon_attack_defender_pokemon_fainted(
 def test_battle_pokemon_attack_defender_no_pokemon_left(
     mock_print, monkeypatch
 ):
+    """
+    Tests the case where the defender has no remaining Pokemon after an attack.
+    Verifies that the correct message is printed
+        when the defender has no Pokemon left.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -738,6 +853,11 @@ def test_battle_pokemon_attack_defender_no_pokemon_left(
 def test_battle_take_turn_challenger_win_defender_faints(
     mock_print, mock_input, monkeypatch
 ):
+    """
+    Tests the case where the challenger wins and the defender's Pokemon faints.
+    Verifies that the correct turn sequence is printed
+        and the battle outcome is handled.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -770,6 +890,11 @@ def test_battle_take_turn_challenger_win_defender_faints(
 def test_battle_take_turn_defender_win_challenger_faints(
     mock_print, mock_input, monkeypatch
 ):
+    """
+    Tests the case where the defender wins and the challenger's Pokemon faints.
+    Verifies that the correct turn sequence is printed
+        and the battle outcome is handled.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -808,6 +933,11 @@ def test_battle_take_turn_defender_win_challenger_faints(
 @patch("builtins.input", side_effect=["a", "1", "a", "1"])
 @patch("builtins.print")
 def test_battle_get_winner_challenger_pokemon_faints(mock_print, mock_input):
+    """
+    Tests the winner determination when the challenger's Pokemon faints.
+    Verifies that the winner is correctly identified
+        and the appropriate messages are printed.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -838,6 +968,11 @@ def test_battle_get_winner_challenger_pokemon_faints(mock_print, mock_input):
 @patch("builtins.input", side_effect=["a", "1"])
 @patch("builtins.print")
 def test_battle_get_winner_defender_pokemon_faints(mock_print, mock_input):
+    """
+    Tests the winner determination when the defender's Pokemon faints.
+    Verifies that the winner is correctly identified
+        and the appropriate messages are printed.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -866,6 +1001,10 @@ def test_battle_get_winner_defender_pokemon_faints(mock_print, mock_input):
 
 
 def test_battle_get_winner_none_fainted():
+    """
+    Tests the case where neither Pokemon has fainted and the battle is ongoing.
+    Verifies that no winner is declared and the correct result is returned.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -890,6 +1029,11 @@ def test_battle_get_winner_none_fainted():
 
 
 def test_battle_str_method_returns_expected_output_when_challenger_turn():
+    """
+    Tests the string representation of the battle
+        when it is the challenger's turn.
+    Verifies that the output matches the expected format.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
@@ -915,6 +1059,11 @@ def test_battle_str_method_returns_expected_output_when_challenger_turn():
 
 
 def test_battle_str_method_returns_expected_output_when_defender_turn():
+    """
+    Tests the string representation of the battle when
+        it is the defender's turn.
+    Verifies that the output matches the expected format.
+    """
     test_trainer_01 = Trainer(trainer_name="Steve")
     test_trainer_02 = Trainer(trainer_name="Paul")
 
