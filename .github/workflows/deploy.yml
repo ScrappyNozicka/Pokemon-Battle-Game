@@ -1,4 +1,4 @@
-name: project-03
+name: pokemon-battle-game
 
 on:
   push:
