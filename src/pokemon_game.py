@@ -64,14 +64,16 @@ def main_script():
             pokemon_01 = select_starting_pokemon(trainer_01)
             pokemon_02 = select_starting_pokemon(trainer_02)
 
-            print(f"\n{trainer_01.name} has chosen:\n{pokemon_01}")
-            print(f"\n{trainer_02.name} has chosen:\n{pokemon_02}\n")
+            print(f"\n{trainer_01.name} has chosen:")
+            print(pokemon_01)
+            print(f"\n{trainer_02.name} has chosen:")
+            print(pokemon_02)
 
             battle = Battle(trainer_01, trainer_02, pokemon_01, pokemon_02)
 
             winner = battle.take_turn()
 
-            if winner == pokemon_01:
+            if winner == trainer_01:
                 print(f"Congratulations to {trainer_01.name}.")
             else:
                 print(f"Congratulations to {trainer_02.name}.")
